@@ -14,6 +14,8 @@ import { WelcomeSectionsComponent } from '../components/welcome-sections/welcome
 import { AboutUsSectionComponent } from '../components/about-us-section/about-us-section.component';
 import { ShopInfoSectionComponent } from '../components/shop-info-section/shop-info-section.component';
 import { NavbarComponent } from '../components/navbar/navbar.component';
+import { RegisterComponent } from '../components/register/register.component';
+import { RegisterStage2Component } from '../components/register-stage2/register-stage2.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { NavbarComponent } from '../components/navbar/navbar.component';
     WelcomeSectionsComponent,
     AboutUsSectionComponent,
     ShopInfoSectionComponent,
-    NavbarComponent
+    NavbarComponent,
+    RegisterComponent,
+    RegisterStage2Component
   ],
   imports: [
     BrowserModule,
