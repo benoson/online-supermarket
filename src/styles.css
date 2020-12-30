@@ -2,3 +2,13 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* { box-sizing: border-box; }
+
+:root {
+    --primary-button-color: #22eaaa;
+}
+
+/* Global styles */
+.primary-button {
+    color: var(--primary-button-color);
+}
