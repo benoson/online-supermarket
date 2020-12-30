@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* { box-sizing: border-box; }
+
+:root {
+    --primary-button-color: #0099cc;
+    --secondary-button-color: lightslategray;
+}
+
+/* Global styles */
+
+/* a section of the 3 welcome sections */
+.section {
+    width: 400px;
+    height: 500px;
+    border: 1px solid #e2f3f5;
+    box-shadow: -5px 8px 0 0 #e2f3f5;
+    padding: 1rem;
+}
+
+.section-header {
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.primary-button {
+    color: var(--primary-button-color);
+}
+
+.secondary-button {
+    color: var(--secondary-button-color);
+}
+
+.full-width {
+    width: 100%;
+} 
