@@ -1,0 +1,14 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 1.5rem;
+    background-color: #21e6c1;
+}
+
+.nav-username-section {
+    font-size: 1.1rem;
+    font-weight: 400;
+}

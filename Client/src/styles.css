@@ -7,6 +7,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 :root {
     --primary-button-color: #0099cc;
     --secondary-button-color: lightslategray;
+    --danger-button-color: #ff1616;
 }
 
 /* Global styles */
@@ -15,8 +16,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .section {
     width: 400px;
     height: 500px;
-    border: 1px solid #e2f3f5;
-    box-shadow: -5px 8px 0 0 #e2f3f5;
+    border: 1px solid #12a7b8;
+    box-shadow: -5px 8px 0 0 #21e6c1;
     padding: 1rem;
 }
 
@@ -33,10 +34,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: var(--secondary-button-color);
 }
 
+.danger-button {
+    background-color: var(--danger-button-color);
+    color: white;
+}
+
 .full-width {
     width: 100%;
-<<<<<<< HEAD
 }
-=======
-} 
->>>>>>> ben/b1
+
+.bitten-tomato-logo-50 {
+    width: 50%;
+    display: block;
+    margin: auto;
+}
+
+.bitten-tomato-logo-small {
+    width: 85px;
+}
