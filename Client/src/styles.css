@@ -15,7 +15,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* a section of the 3 welcome sections */
 .section {
     width: 400px;
-    height: 500px;
+    min-height: 500px;
     border: 1px solid #12a7b8;
     box-shadow: -5px 8px 0 0 #21e6c1;
     padding: 1rem;
