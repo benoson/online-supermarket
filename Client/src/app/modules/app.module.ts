@@ -15,6 +15,7 @@ import { AboutUsSectionComponent } from '../components/about-us-section/about-us
 import { ShopInfoSectionComponent } from '../components/shop-info-section/shop-info-section.component';
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { RegisterComponent } from '../components/register/register.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { RegisterComponent } from '../components/register/register.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
