@@ -47,7 +47,7 @@ function executeWithParameters(SQL, parameters) {
             if (error) {
 
                 console.log("Failed interacting with DB, calling reject");
-
+                console.log(error);
                 // reject calls the 'catch' inside the DAO preset
                 reject(error);
                 return;

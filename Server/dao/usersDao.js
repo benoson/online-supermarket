@@ -7,40 +7,37 @@ const login = async (user) => {
 
     // Creating the SQL query to get the user from the DB
 
-    const SQL = "SELECT User_Name as userName, User_Type as userType, User_ID as userID FROM users where User_Name =? and Password =?";
-    const parameters = [user.userName, user.password];
-
-    let userLoginResult;
+    const SQL = "SELECT User_ID as ID, User_Type as userType, First_Name as firstName FROM users where User_Name =? and Password =?";
+    const parameters = [user.email, user.password];
 
     try {
         // Sending the SQL query and the user's login data to the 'connection wrapper' preset
-        userLoginResult = await connection.executeWithParameters(SQL, parameters);
+        const userLoginResult = await connection.executeWithParameters(SQL, parameters);
+
+        // If the user was not found in the DB
+        if (userLoginResult === null || userLoginResult.length === 0) {
+            throw new ServerError(ErrorType.USER_IS_NOT_AUTHENTICATED);
+        }
+
+        // In case the procedure went well, and we found the user in the DB
+        return userLoginResult[0];
     }
 
     catch (error) {
         // Technical Error
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
     }
-
-    // If the user was not found in the DB
-    if (userLoginResult === null || userLoginResult.length === 0) {
-        throw new ServerError(ErrorType.UNAUTHORIZED);
-    }
-
-    // In case the procedure went well, and we found the user in the DB
-    return userLoginResult[0];
 }
 
-const addUser = async (user) => {
+const addUser = async (userInfo) => {
 
-    // Creating the SQL query
-    // Not Inserting The User's ID, Because It Is Auto Incremented By The DB (Generates a unique ID for each new user)
+    // Creating an SQL query for inserting a new user to the DB
 
-    const SQL = "INSERT INTO users (First_Name, Last_Name, User_Name, Password, User_Type) VALUES (?, ?, ?, ?, ?)";
-    const parameters = [user.firstName, user.lastName, user.userName, user.hashedPassword, user.userType];
+    const SQL = "INSERT INTO users (User_ID, First_Name, Last_Name, User_Name, Password, City, Street, User_Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const parameters = [userInfo.ID, userInfo.firstName, userInfo.lastName, userInfo.email, userInfo.hashedPassword, userInfo.city, userInfo.street, "USER"];
     
     try {
-        // Sending the SQL query and the user's register data to the 'connection wrapper' preset
+        // Sending the SQL query and the user's registration data to the 'connection wrapper' preset
         await connection.executeWithParameters(SQL, parameters);
     }
     

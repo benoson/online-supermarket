@@ -3,11 +3,11 @@ const ErrorType = require('../errors/errorType')
 const crypto = require('crypto')
 
 class UsersUtils {
-    constructor() {}
+    constructor() {};
 
     // ----- Validations
 
-    static validateUserID = (ID) => {
+    static validateUserID = ID => {
         if (typeof ID === "number") {
             const IDToString = ID.toString();
             if (IDToString.length == 9) {
@@ -16,9 +16,9 @@ class UsersUtils {
             throw new ServerError(ErrorType.INVALID_ID_LENGTH)
         }
         throw new ServerError(ErrorType.INVALID_ID);
-    }
+    };
     
-    static validateUserEmail = (email) => {
+    static validateUserEmail = email => {
         if (typeof email === "string") {
             const trimmedEmail = email.trim();
         
@@ -35,7 +35,7 @@ class UsersUtils {
             throw new ServerError(ErrorType.INVALID_EMAIL_FORMAT);
         }
         throw new ServerError(ErrorType.INVALID_EMAIL_TYPE);
-    }
+    };
     
     static validateUserPassword = (password, verifiedPassword) => {
         const passwordToString = password.toString();
@@ -51,9 +51,9 @@ class UsersUtils {
             throw new ServerError(ErrorType.PASSWORDS_DO_NOT_MATCH);
         }
         throw new ServerError(ErrorType.INVALID_PASSWORD_LENGTH);
-    }
+    };
     
-    static validateUserFirstName = (firstName) => {
+    static validateUserFirstName = firstName => {
         if (typeof firstName === "string") {
             const trimmedFirstName = firstName.trim();
     
@@ -63,9 +63,9 @@ class UsersUtils {
             throw new ServerError(ErrorType.INVALID_FIRST_NAME_LENGTH);
         }
         throw new ServerError(ErrorType.INVALID_FIRST_NAME_TYPE);
-    }
+    };
     
-    static validateUserLastName = (lastName) => {
+    static validateUserLastName = lastName => {
         if (typeof lastName === "string") {
             const trimmedLastName = lastName.trim();
     
@@ -75,9 +75,9 @@ class UsersUtils {
             throw new ServerError(ErrorType.INVALID_LAST_NAME_LENGTH);
         }
         throw new ServerError(ErrorType.INVALID_LAST_NAME_TYPE);
-    }
+    };
     
-    static validateUserCity = (city) => {
+    static validateUserCity = city => {
         if (typeof city === "string") {
             const trimmedCity = city.trim();
     
@@ -87,9 +87,9 @@ class UsersUtils {
             throw new ServerError(ErrorType.INVALID_CITY_LENGTH);
         }
         throw new ServerError(ErrorType.INVALID_CITY_TYPE);
-    }
+    };
     
-    static validateUserStreet = (street) => {
+    static validateUserStreet = street => {
         if (typeof street === "string") {
             const trimmedStreet = street.trim();
     
@@ -99,29 +99,45 @@ class UsersUtils {
             throw new ServerError(ErrorType.INVALID_STREET_LENGTH);
         }
         throw new ServerError(ErrorType.INVALID_STREET_TYPE);
-    }
+    };
 
     
     // ----- Hashing
 
     /**
      * This function salts the password
-     * @param password of type string
+     * @param password of type `string`
      */
-    static getSaltedPassword = (password) => {
+    static getSaltedPassword = password => {
         const leftPasswordSalt = '!@$g00gl3A$$i$t4nt$@!';
         const rightPasswordSalt = 'I-L0v3-Fu115t4ck';
         const saltedPassword = leftPasswordSalt + password + rightPasswordSalt;
 
         return saltedPassword;
-    }
+    };
 
     /**
      * This function hashes the password
-     * @param saltedPassword of type string
+     * @param saltedPassword of type `string`
      */
-    static generateHashedPassword = (saltedPassword) => {
+    static generateHashedPassword = saltedPassword => {
         return crypto.createHash('md5').update(saltedPassword).digest('hex');
+    };
+
+    /**
+     * 
+     * @param email of type `string`
+     */
+    static generateSaltedEmail = email => {
+        const leftSalt = `b12%e3&$n!`;
+        const rightSalt = 'xHzG$!*^&!';
+        const saltedUserName = leftSalt + email + rightSalt;
+    
+        return saltedUserName;
+    };
+
+    static generateJWTtoken = saltedEmail => {
+        
     }
 }
 
