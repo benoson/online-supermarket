@@ -8,7 +8,6 @@ const usersLogic = require('../logic/usersLogic');
 
 router.post('/register', async (request, response, next) => {
 
-    console.log("aaaa");
     // Extracting the user's info from the request's body
     const userInfo = request.body;
 
@@ -26,3 +25,5 @@ router.post('/register', async (request, response, next) => {
         return next(error);
     }
 });
+
+module.exports = router;

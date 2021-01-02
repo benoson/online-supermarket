@@ -7,11 +7,9 @@ const errorHandler = (error, request, response, next) => {
         return;
     }
 
-
     // If the error received is defined, and we want to send it to the client
     else if (error.errorType !== undefined) {
         console.log(error.errorType.message);
-        
         if (error.errorType.isShowStackTrace) {
             response.status(error.errorType.httpCode).json({ error: error.errorType.message });
             return;

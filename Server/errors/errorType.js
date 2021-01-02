@@ -30,6 +30,13 @@ const ErrorType = {
         isShowStackTrace: true,
     },
 
+    INVALID_ID_LENGTH: {
+        id: 10,
+        httpCode: 401,
+        message: "ID Length should be 9 digits",
+        isShowStackTrace: true,
+    },
+
     ID_ALREADY_EXIST: {
         id: 4,
         httpCode: 601,
@@ -41,6 +48,13 @@ const ErrorType = {
         id: 9,
         httpCode: 401,
         message: "Invalid Email Length",
+        isShowStackTrace: true,
+    },
+
+    INVALID_EMAIL_TYPE: {
+        id: 13,
+        httpCode: 401,
+        message: "Invalid Email Type",
         isShowStackTrace: true,
     },
 
@@ -64,11 +78,25 @@ const ErrorType = {
         message: "Invalid password length",
         isShowStackTrace: true,
     },
+
+    INVALID_FIRST_NAME_TYPE: {
+        id: 13,
+        httpCode: 401,
+        message: "Invalid First Name Type",
+        isShowStackTrace: true,
+    },
   
     INVALID_FIRST_NAME_LENGTH: {
         id: 10,
         httpCode: 401,
         message: "Invalid First Name Length",
+        isShowStackTrace: true,
+    },
+
+    INVALID_LAST_NAME_TYPE: {
+        id: 13,
+        httpCode: 401,
+        message: "Invalid Last Name Type",
         isShowStackTrace: true,
     },
 
@@ -79,10 +107,24 @@ const ErrorType = {
         isShowStackTrace: true,
     },
 
+    INVALID_CITY_TYPE: {
+        id: 99,
+        httpCode: 401,
+        message: "Invalid City Type",
+        isShowStackTrace: true,
+    },
+
     INVALID_CITY_LENGTH: {
         id: 10,
         httpCode: 401,
         message: "Invalid City Length",
+        isShowStackTrace: true,
+    },
+
+    INVALID_STREET_TYPE: {
+        id: 10,
+        httpCode: 401,
+        message: "Invalid Street Type",
         isShowStackTrace: true,
     },
 
@@ -92,6 +134,8 @@ const ErrorType = {
         message: "Invalid Street Length",
         isShowStackTrace: true,
     },
+
+
   
     BAD_IMAGE: {
         id: 11,
