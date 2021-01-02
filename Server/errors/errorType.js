@@ -1,84 +1,118 @@
 // Defining an ENUM-like list, for specific errors definitions, and the data about the error
 
-let ErrorType = {
+const ErrorType = {
 
     GENERAL_ERROR: {
-      id: 1,
-      httpCode: 600,
-      message: "A General Error Has Occurred",
-      isShowStackTrace: true,
+        id: 1,
+        httpCode: 600,
+        message: "A General Error Has Occurred",
+        isShowStackTrace: true,
     },
-  
-    ID_ALREADY_EXIST: {
-      id: 2,
-      httpCode: 601,
-      message: "The Username Chosen Already Exists",
-      isShowStackTrace: true,
+
+    USER_IS_NOT_AUTHENTICATED: {
+        id: 2,
+        httpCode: 401,
+        message: "Login Failed, Invalid Username or Password",
+        isShowStackTrace: true,
     },
-  
-    UNAUTHORIZED: {
-      id: 3,
-      httpCode: 401,
-      message: "Login Failed, Invalid Username or Password",
-      isShowStackTrace: true,
-    },
-  
-    THERE_ARE_NO_VACATIONS: {
-        id: 4,
-        httpCode: 204,
-        message: "There Are No Vacations",
+    
+    USER_IS_NOT_AUTHORIZED: {
+        id: 3,
+        httpCode: 404,
+        message: "You are not authorized to do that",
         isShowStackTrace: true,
     },
   
-    USER_IS_NO_LONGER_LOGGED_IN: {
-      id: 5,
-      httpCode: 500,
-      message: "You are no longer logged in, try relogging",
-      isShowStackTrace: true,
+    INVALID_ID: {
+        id: 4,
+        httpCode: 601,
+        message: "Invalid ID",
+        isShowStackTrace: true,
+    },
+
+    ID_ALREADY_EXIST: {
+        id: 4,
+        httpCode: 601,
+        message: "ID already exists",
+        isShowStackTrace: true,
     },
   
-    USER_IS_NOT_AUTHORIZED: {
-      id: 6,
-      httpCode: 404,
-      message: "You are not authorized to do that",
-      isShowStackTrace: true,
+    INVALID_EMAIL_LENGTH: {
+        id: 9,
+        httpCode: 401,
+        message: "Invalid Email Length",
+        isShowStackTrace: true,
+    },
+
+    INVALID_EMAIL_FORMAT: {
+        id: 9,
+        httpCode: 401,
+        message: "Invalid Email Format",
+        isShowStackTrace: true,
+    },
+
+    PASSWORDS_DO_NOT_MATCH: {
+        id: 4,
+        httpCode: 401,
+        message: "Passwords do not match",
+        isShowStackTrace: true,
     },
   
-    INVALID_TOKEN: {
-      id: 9,
-      httpCode: 401,
-      message: "Token Is Not Valid",
-      isShowStackTrace: true,
+    INVALID_PASSWORD_LENGTH: {
+        id: 5,
+        httpCode: 401,
+        message: "Invalid password length",
+        isShowStackTrace: true,
     },
   
-    USER_IS_ALREADY_LOGGED_IN: {
-      id: 10,
-      httpCode: 401,
-      message: "You are already logged in. Try logging out first",
-      isShowStackTrace: true,
+    INVALID_FIRST_NAME_LENGTH: {
+        id: 10,
+        httpCode: 401,
+        message: "Invalid First Name Length",
+        isShowStackTrace: true,
+    },
+
+    INVALID_LAST_NAME_LENGTH: {
+        id: 10,
+        httpCode: 401,
+        message: "Invalid Last Name Length",
+        isShowStackTrace: true,
+    },
+
+    INVALID_CITY_LENGTH: {
+        id: 10,
+        httpCode: 401,
+        message: "Invalid City Length",
+        isShowStackTrace: true,
+    },
+
+    INVALID_STREET_LENGTH: {
+        id: 10,
+        httpCode: 401,
+        message: "Invalid Street Length",
+        isShowStackTrace: true,
     },
   
     BAD_IMAGE: {
-      id: 11,
-      httpCode: 406,
-      message: "The New Image Is Not Acceptable. Please Try Another One",
-      isShowStackTrace: true,
+        id: 11,
+        httpCode: 406,
+        message: "The New Image Is Not Acceptable. Please Try Another One",
+        isShowStackTrace: true,
     },
   
     ACTION_NOT_ALLOWED: {
-      id: 12,
-      httpCode: 403,
-      message: "You are not allowed to do that action",
-      isShowStackTrace: true,
+        id: 12,
+        httpCode: 403,
+        message: "You are not allowed to do that action",
+        isShowStackTrace: true,
     },
   
     INVALID_DATA: {
-      id: 13,
-      httpCode: 406,
-      message: "The data you have entered is invalid",
-      isShowStackTrace: true,
+        id: 13,
+        httpCode: 406,
+        message: "The data you have entered is invalid",
+        isShowStackTrace: true,
     },
-  
-  };
+};
   
   module.exports = ErrorType;
