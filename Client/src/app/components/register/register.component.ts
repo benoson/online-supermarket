@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserRegistrationDetails from 'src/app/models/UserRegistrationDetials';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -11,14 +12,18 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  private userRegistrationDetails: UserRegistrationDetails;
+  public userRegistrationDetails: UserRegistrationDetails;
 
   constructor(
     private userService: UserService,
     private router: Router
-  ) { }
+  ) { };
 
   ngOnInit(): void {
+
+    // NEED TO SOLVE PROBLEM - NEED TO INSERT EMPTY VALUE TO THE 'ID' INPUT, BUT HE DEMENDS A NUMBER................
+    
+    this.userRegistrationDetails = new UserRegistrationDetails(111111111, "", "", "", "", "", "", "");
   }
 
   public register = (): void => {
@@ -32,15 +37,21 @@ export class RegisterComponent implements OnInit {
 
       // inserting the user's info to the sessionStorage
       sessionStorage.setItem('userInfo', JSON.stringify(userInfoFromServer));
-      this.handleRoutingAfterLogin(succesfulServerResponse);
+      this.handleRoutingAfterLogin(userType);
 
     }, error => {
-      // MAKE POPUP MESSAGE (MAYBE MUI............)
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: error.message,
+        showConfirmButton: false,
+        timer: 2500
+      })
     });
   }
 
-  public handleRoutingAfterLogin = (succesfulServerResponse: SuccessfulLoginServerResponse): void => {
-    if (succesfulServerResponse.userType === "ADMIN") {
+  public handleRoutingAfterLogin = (userType: string): void => {
+    if (userType === "ADMIN") {
       this.router.navigate(['/admin']);
     }
     else {

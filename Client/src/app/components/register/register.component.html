@@ -6,53 +6,53 @@
             <!-- email input -->
             <mat-form-field>
                 <mat-label>ID</mat-label>
-                <input matInput type="number" value="">
+                <input matInput type="number" value="" [(ngModel)]="userRegistrationDetails.ID">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input matInput type="email" placeholder="bittenTomato@gmail.com" value="">
+                <input matInput type="email" placeholder="bittenTomato@gmail.com" value="" [(ngModel)]="userRegistrationDetails.email">
             </mat-form-field>
 
             <!-- password input -->
             <mat-form-field>
                 <mat-label>Password</mat-label>
-                <input matInput type="password" value="">
+                <input matInput type="password" value="" [(ngModel)]="userRegistrationDetails.password">
             </mat-form-field>
 
             <!-- varify password input -->
             <mat-form-field>
                 <mat-label>Verify Password</mat-label>
-                <input matInput type="password" value="">
+                <input matInput type="password" value="" [(ngModel)]="userRegistrationDetails.verifiedPassword">
             </mat-form-field>
 
             <!-- first name input -->
             <mat-form-field>
                 <mat-label>First Name</mat-label>
-                <input matInput type="text" value="">
+                <input matInput type="text" value="" [(ngModel)]="userRegistrationDetails.firstName">
             </mat-form-field>
 
             <!-- last name input -->
             <mat-form-field>
                 <mat-label>Last Name</mat-label>
-                <input matInput type="text" value="">
+                <input matInput type="text" value="" [(ngModel)]="userRegistrationDetails.lastName">
             </mat-form-field>
 
             <!-- city input -->
             <mat-form-field>
                 <mat-label>City</mat-label>
-                <input matInput type="text" value="">
+                <input matInput type="text" value="" [(ngModel)]="userRegistrationDetails.ID">
             </mat-form-field>
 
             <!-- street input -->
             <mat-form-field>
                 <mat-label>Street</mat-label>
-                <input matInput type="text" value="">
+                <input matInput type="text" value="" [(ngModel)]="userRegistrationDetails.ID">
             </mat-form-field>
         </div>
 
         <!-- login button -->
-        <button mat-stroked-button class="primary-button full-width">Done</button>
+        <button mat-stroked-button class="primary-button full-width" (click)="register()">Done</button>
     </div>
 
     <p>Already registered ?</p>

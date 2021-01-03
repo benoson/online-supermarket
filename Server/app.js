@@ -15,6 +15,7 @@ server.use(express.json());
 server.use(cors({origin: "http://localhost:4200"}));
 
 server.use('/users', usersController);
+server.use('/users', usersController);
 
 // Registering the use of our Error Handler
 server.use(errorHandler);

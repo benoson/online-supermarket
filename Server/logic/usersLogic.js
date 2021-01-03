@@ -2,6 +2,8 @@ const ErrorType = require('../errors/errorType');
 const ServerError = require('../errors/ServerError');
 const UsersUtils = require('../models/UsersUtils');
 const usersDao = require('../dao/usersDao');
+const SuccesfulLoginServerResponse = require('../models/SuccesfulLoginServerResponse');
+const ServerCacheDetails = require('../cache/ServerCacheDetails');
 
 
 /**
@@ -36,14 +38,7 @@ const addUser = async (userInfo) => {
 
         await usersDao.addUser(userInfo);
 
-        const succesfulLoginData = login(userInfo, true);
-        return succesfulLoginData;
-
-        return {
-            token: "b1e2n3",
-            userType: "USER",
-            firstName: userInfo.firstName
-        }
+        return login(userInfo, true);
     }
 }
 
@@ -62,31 +57,24 @@ const login = async (userInfo, isFreshUser) => {
     // Sending the user's data to the DAO preset, and waiting to get the response
     const userLoginData = await usersDao.login(userInfo);
 
-    // Getting the user's type and name from the data received from the DAO preset
-    const userID = userLoginData.ID;
-    const userType = userLoginData.userType;
-    const userFirstName = userLoginData.firstName;
-    
     // Salting the user's email for a better token protection
     const saltedEmail = UsersUtils.generateSaltedEmail(userInfo.email);
 
     // Getting a token based on the salted email and a secret
     const token = UsersUtils.generateJWTtoken(saltedEmail);
 
-    // Saving The User's Data To The Server's Cache
-    saveUserDataToServerCache(userID, userName, userType, token);
+    const serverCacheDetails = new ServerCacheDetails(token, userLoginData.ID, userLoginData.userType, userLoginData.firstName);
 
-    // Defining the result object that will be sent back to the 'controller' preset
-    const userSuccessfulLoginServerResponse = {
-        token: token,
-        userType: userType,
-        userName: userName
-    }
+    // Saving the user's info to the server's cache
+    UsersUtils.saveUserInfoToServerCache(serverCacheDetails);
+
+    const succesfulLoginServerResponse = new SuccesfulLoginServerResponse(token, userLoginData.userType, userLoginData.firstName);
 
     // Returning the 'successful login response' object to the 'controller' preset
-    return userSuccessfulLoginServerResponse;
+    return succesfulLoginServerResponse;
 }
 
 module.exports = {
-    addUser
+    addUser,
+    login
 }

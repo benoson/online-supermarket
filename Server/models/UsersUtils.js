@@ -1,6 +1,11 @@
-const ServerError = require('../errors/ServerError')
-const ErrorType = require('../errors/errorType')
-const crypto = require('crypto')
+const ServerError = require('../errors/ServerError');
+const ErrorType = require('../errors/errorType');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+
+const config = require('../config/config.json');
+const usersCache = require('../cache/UserDataCache');
+
 
 class UsersUtils {
     constructor() {};
@@ -105,7 +110,7 @@ class UsersUtils {
     // ----- Hashing
 
     /**
-     * This function salts the password
+     * This function salts a password
      * @param password of type `string`
      */
     static getSaltedPassword = password => {
@@ -117,7 +122,7 @@ class UsersUtils {
     };
 
     /**
-     * This function hashes the password
+     * This function accepts a salted password (or a regular `string` password) and returns a hashed password
      * @param saltedPassword of type `string`
      */
     static generateHashedPassword = saltedPassword => {
@@ -125,7 +130,7 @@ class UsersUtils {
     };
 
     /**
-     * 
+     * Generating a salted email based on a regular email. Can be used with normal `string`
      * @param email of type `string`
      */
     static generateSaltedEmail = email => {
@@ -136,8 +141,23 @@ class UsersUtils {
         return saltedUserName;
     };
 
+    /**
+     * Generating a JWT token using an email of type `string` and a secret of type `json`. Can be used with normal `string`
+     * @param saltedEmail - of type `string` and an `Email` format - `address@hosting.com`
+     */
     static generateJWTtoken = saltedEmail => {
-        
+        return jwt.sign( { sub: saltedEmail }, config.secret);
+    }
+
+
+    // ----- Caching
+
+    /**
+     * Saves a succesfull login response from the DB into the users cache
+     * @param succesfulLoginServerResponse - of type `succesfulLoginServerResponse`
+     */
+    static saveUserInfoToServerCache = succesfulLoginServerResponse => {
+        usersCache.set(succesfulLoginServerResponse)
     }
 }
 
