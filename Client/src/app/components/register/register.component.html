@@ -61,39 +61,72 @@
                         Password is <strong>required</strong>
                     </mat-error>
                     
-                    <mat-error *ngIf="verifiedPasswordInput.value !== passwordInput.value">
+                    <!-- FIX THIS SHIT -->
+                    <!-- <mat-error *ngIf="verifiedPasswordInput.value !== passwordInput.value">
                         Passwords <strong>do not match</strong>
-                    </mat-error>
+                    </mat-error> -->
                 </mat-form-field>
 
                 <!-- first name input -->
-                <!-- <mat-form-field> -->
-                    <!-- <mat-label>First Name</mat-label> -->
-                    <!-- <input name="firstNameInput" matInput type="text" [(ngModel)]="userRegistrationDetails.firstName"> -->
-                <!-- </mat-form-field> -->
+                <mat-form-field>
+                    <mat-label>First Name</mat-label>
+                    <input [formControl]="firstNameInput" name="firstNameInput" matInput type="text" required>
+
+                    <mat-error *ngIf="firstNameInput.errors?.required">
+                        First name is <strong>required</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="firstNameInput.errors?.minlength || firstNameInput.errors?.maxlength">
+                        First name should be <strong>2 - 15 chars</strong>
+                    </mat-error>
+                </mat-form-field>
 
                 <!-- last name input -->
-                <!-- <mat-form-field>
+                <mat-form-field>
                     <mat-label>Last Name</mat-label>
-                    <input name="lastNameInput" matInput type="text" [(ngModel)]="userRegistrationDetails.lastName">
-                </mat-form-field> -->
+                    <input [formControl]="lastNameInput" matInput type="text" required>
+
+                    <mat-error *ngIf="lastNameInput.errors?.required">
+                        First name is <strong>required</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="lastNameInput.errors?.minlength || lastNameInput.errors?.maxlength">
+                        Last name should be <strong>2 - 15 chars</strong>
+                    </mat-error>
+                </mat-form-field>
 
                 <!-- city input -->
-                <!-- <mat-form-field>
+                <mat-form-field>
                     <mat-label>City</mat-label>
-                    <input name="cityInput" matInput type="text" [(ngModel)]="userRegistrationDetails.city">
-                </mat-form-field> -->
+                    <input [formControl]="cityInput" matInput type="text" required>
+
+                    <mat-error *ngIf="cityInput.errors?.required">
+                        City name is <strong>required</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="cityInput.errors?.minlength || cityInput.errors?.maxlength">
+                        City name should be <strong>2 - 15 chars</strong>
+                    </mat-error>
+                </mat-form-field>
 
                 <!-- street input -->
-                <!-- <mat-form-field>
+                <mat-form-field>
                     <mat-label>Street</mat-label>
-                    <input name="streetInput" matInput type="text" [(ngModel)]="userRegistrationDetails.street">
-                </mat-form-field> -->
+                    <input [formControl]="streetInput" matInput type="text" required>
+
+                    <mat-error *ngIf="streetInput.errors?.required">
+                        Street name is <strong>required</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="streetInput.errors?.minlength || cityInput.errors?.maxlength">
+                        Street name should be <strong>2 - 15 chars</strong>
+                    </mat-error>
+                </mat-form-field>
             </div>
     </form>
 
         <!-- login button -->
-        <button mat-stroked-button class="primary-button full-width" (click)="register()" [disabled]="registrationForm.form.invalid">Done</button>
+        <button mat-stroked-button class="primary-button full-width" [disabled]="registrationForm.form.invalid" (click)="register()">Done</button>
     </div>
 
     <p>Already registered ?</p>

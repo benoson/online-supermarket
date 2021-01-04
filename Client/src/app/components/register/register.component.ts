@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserRegistrationDetails from 'src/app/models/UserRegistrationDetials';
 import { UserService } from 'src/app/services/user.service';
 import UsersUtils from 'src/app/Utils/UsersUtils';
@@ -21,6 +20,10 @@ export class RegisterComponent implements OnInit {
   public emailInput: FormControl;
   public passwordInput: FormControl;
   public verifiedPasswordInput: FormControl;
+  public firstNameInput: FormControl;
+  public lastNameInput: FormControl;
+  public cityInput: FormControl;
+  public streetInput: FormControl;
 
   constructor(
     private userService: UserService,
@@ -72,16 +75,15 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public passCheck(c: AbstractControl): {invalid: boolean} {
-    if (c.get('this.passwordInput').value !== c.get('this.verifiedPassword').value) {
-      return {invalid: true};
-    }
-  }
-
   public assignFormControlsValues = (): void => {
     this.userRegistrationDetails.ID = this.IDInput.value;
     this.userRegistrationDetails.email = this.emailInput.value;
     this.userRegistrationDetails.password = this.passwordInput.value;
+    this.userRegistrationDetails.verifiedPassword = this.verifiedPasswordInput.value;
+    this.userRegistrationDetails.firstName = this.firstNameInput.value;
+    this.userRegistrationDetails.lastName = this.lastNameInput.value;
+    this.userRegistrationDetails.city = this.cityInput.value;
+    this.userRegistrationDetails.street = this.streetInput.value;
   }
 
   public initializeFormControlsValidations = (): void => {
@@ -89,14 +91,22 @@ export class RegisterComponent implements OnInit {
     this.emailInput = new FormControl("", [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,3}$'), Validators.maxLength(35)]);
     this.passwordInput = new FormControl("", [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,15}$')]);
     this.verifiedPasswordInput = new FormControl("", [Validators.required]);
+    this.firstNameInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
+    this.lastNameInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
+    this.cityInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)])
+    this.streetInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)])
     
 
     this.registrationValues = new FormGroup({
       ID: this.IDInput,
       email: this.emailInput,
       password: this.passwordInput,
-      verifiedPassword: this.verifiedPasswordInput
-    }, this.passCheck)
+      verifiedPassword: this.verifiedPasswordInput,
+      firstName: this.firstNameInput,
+      lastName: this.lastNameInput,
+      city: this.cityInput,
+      street: this.streetInput
+    });
   }
 
 }

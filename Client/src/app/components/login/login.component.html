@@ -2,24 +2,35 @@
     <h2 class="section-header">Login</h2>
 
     <div class="credentials-section">
-        <div class="panel-section login-fields-section">
-            <!-- email input -->
-            <mat-form-field>
-                <mat-label>Email</mat-label>
-                <input matInput type="email" placeholder="bittenTomato@gmail.com" [(ngModel)]="userLoginDetails.email">
-            </mat-form-field>
+        <form #loginForm="ngForm" [formGroup]="loginValues">
+            <div class="panel-section login-fields-section">
 
-            <!-- password input -->
-            <mat-form-field>
-                <mat-label>Password</mat-label>
-                <input matInput type="password" [(ngModel)]="userLoginDetails.password">
-            </mat-form-field>
-        </div>
+                <!-- email input -->
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input [formControl]="emailInput" matInput type="email" placeholder="bittenTomato@gmail.com">
 
+                    <mat-error *ngIf="emailInput.errors?.pattern">
+                        Email format should be <strong>John@doe.com</strong> or <strong>John@doe</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="emailInput.errors?.maxlength">
+                        Email can be a maximum of <strong>35 characters</strong>
+                    </mat-error>
+                </mat-form-field>
+    
+                <!-- password input -->
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input [formControl]="passwordInput" matInput type="password">
+                </mat-form-field>
+            </div>
+        </form>
+    
         <!-- login button -->
-        <button mat-stroked-button class="primary-button full-width" (click)="login()">Login</button>
+        <button mat-stroked-button class="primary-button full-width" [disabled]="emailInput.value === '' || passwordInput.value == '' " (click)="login()">Login</button>
     </div>
-
+    
     <div class="bottom-buttons-section">
         <p>Don't have an account ?</p>
         <!-- registration button -->
@@ -28,4 +39,4 @@
         <!-- start shopping button -->
         <button mat-stroked-button class="primary-button full-width">Start Shopping</button>
     </div>
-</div> 
+</div>

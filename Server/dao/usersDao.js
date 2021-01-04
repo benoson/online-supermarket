@@ -35,7 +35,7 @@ const addUser = async (userInfo) => {
     // Creating an SQL query for inserting a new user to the DB
 
     const SQL = "INSERT INTO users (User_ID, First_Name, Last_Name, User_Name, Password, City, Street, User_Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    const parameters = [userInfo.ID, userInfo.firstName, userInfo.lastName, userInfo.email, userInfo.hashedPassword, userInfo.city, userInfo.street, "USER"];
+    const parameters = [userInfo.ID, userInfo.firstName, userInfo.lastName, userInfo.email, userInfo.hashedPassword, userInfo.city, userInfo.street, "CUSTOMER"];
     
     try {
         // Sending the SQL query and the user's registration data to the 'connection wrapper' preset
