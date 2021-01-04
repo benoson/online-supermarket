@@ -2,13 +2,13 @@
     <h2 class="section-header">Register</h2>
 
     <div class="credentials-section">
-        <form #registrationForm="ngForm">
+        <form #registrationForm="ngForm" [formGroup]="registrationValues">
             <div class="panel-section login-fields-section">
 
                 <!-- ID input -->
                 <mat-form-field>
                     <mat-label>ID</mat-label>
-                    <input #IDInput="ngModel" name="IDInput" matInput type="number" [(ngModel)]="userRegistrationDetails.ID" pattern="^[0-9]{9}$" required>
+                    <input [formControl]="IDInput" name="IDInput" matInput type="number" required>
 
                     <mat-error *ngIf="IDInput.errors?.required">
                         ID is <strong>required</strong>
@@ -22,8 +22,8 @@
                 <!-- email input -->
                 <mat-form-field>
                     <mat-label>Email</mat-label>
-                    <input #emailInput="ngModel" name="emailInput" matInput type="email" placeholder="bittenTomato@gmail.com"
-                        [(ngModel)]="userRegistrationDetails.email" pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,3}$' [attr.maxlength]="35" required>
+                    <input [formControl]="emailInput" name="emailInput" matInput type="email"
+                        placeholder="bittenTomato@gmail.com" required>
 
                     <mat-error *ngIf="emailInput.errors?.required">
                         Email is <strong>required</strong>
@@ -32,13 +32,16 @@
                     <mat-error *ngIf="emailInput.errors?.pattern">
                         Email format should be <strong>John@doe.com</strong> or <strong>John@doe</strong>
                     </mat-error>
+
+                    <mat-error *ngIf="emailInput.errors?.maxlength">
+                        Email can be a maximum of <strong>35 characters</strong>
+                    </mat-error>
                 </mat-form-field>
 
                 <!-- password input -->
                 <mat-form-field>
                     <mat-label>Password</mat-label>
-                    <input #passwordInput="ngModel" name="passwordInput" matInput type="password" [(ngModel)]="userRegistrationDetails.password"
-                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$" required>
+                    <input [formControl]="passwordInput" name="passwordInput" matInput type="password" required>
 
                     <mat-error *ngIf="passwordInput.errors?.required">
                         Password is <strong>required</strong>
@@ -52,35 +55,40 @@
                 <!-- varify password input -->
                 <mat-form-field>
                     <mat-label>Verify Password</mat-label>
-                    <input #verifiedPasswordInput="ngModel" name="verifiedPasswordInput" matInput type="password" [(ngModel)]="userRegistrationDetails.verifiedPassword" required>
-                    <!-- <mat-error *ngIf="verifiedPasswordInput !== passwordInput">
+                    <input [formControl]="verifiedPasswordInput" name="verifiedPasswordInput" matInput type="password" required>
+                    
+                    <mat-error *ngIf="verifiedPasswordInput.errors?.required">
                         Password is <strong>required</strong>
-                    </mat-error> -->
+                    </mat-error>
+                    
+                    <mat-error *ngIf="verifiedPasswordInput.value !== passwordInput.value">
+                        Passwords <strong>do not match</strong>
+                    </mat-error>
                 </mat-form-field>
 
                 <!-- first name input -->
-                <mat-form-field>
-                    <mat-label>First Name</mat-label>
-                    <input name="firstNameInput" matInput type="text" [(ngModel)]="userRegistrationDetails.firstName">
-                </mat-form-field>
+                <!-- <mat-form-field> -->
+                    <!-- <mat-label>First Name</mat-label> -->
+                    <!-- <input name="firstNameInput" matInput type="text" [(ngModel)]="userRegistrationDetails.firstName"> -->
+                <!-- </mat-form-field> -->
 
                 <!-- last name input -->
-                <mat-form-field>
+                <!-- <mat-form-field>
                     <mat-label>Last Name</mat-label>
                     <input name="lastNameInput" matInput type="text" [(ngModel)]="userRegistrationDetails.lastName">
-                </mat-form-field>
+                </mat-form-field> -->
 
                 <!-- city input -->
-                <mat-form-field>
+                <!-- <mat-form-field>
                     <mat-label>City</mat-label>
                     <input name="cityInput" matInput type="text" [(ngModel)]="userRegistrationDetails.city">
-                </mat-form-field>
+                </mat-form-field> -->
 
                 <!-- street input -->
-                <mat-form-field>
+                <!-- <mat-form-field>
                     <mat-label>Street</mat-label>
                     <input name="streetInput" matInput type="text" [(ngModel)]="userRegistrationDetails.street">
-                </mat-form-field>
+                </mat-form-field> -->
             </div>
     </form>
 
