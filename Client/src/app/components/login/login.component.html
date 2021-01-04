@@ -6,18 +6,18 @@
             <!-- email input -->
             <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input matInput type="email" placeholder="bittenTomato@gmail.com" value="">
+                <input matInput type="email" placeholder="bittenTomato@gmail.com" [(ngModel)]="userLoginDetails.email">
             </mat-form-field>
 
             <!-- password input -->
             <mat-form-field>
                 <mat-label>Password</mat-label>
-                <input matInput type="password" value="">
+                <input matInput type="password" [(ngModel)]="userLoginDetails.password">
             </mat-form-field>
         </div>
 
         <!-- login button -->
-        <button mat-stroked-button class="primary-button full-width">Login</button>
+        <button mat-stroked-button class="primary-button full-width" (click)="login()">Login</button>
     </div>
 
     <div class="bottom-buttons-section">

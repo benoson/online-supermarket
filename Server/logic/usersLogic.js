@@ -1,6 +1,6 @@
 const ErrorType = require('../errors/errorType');
 const ServerError = require('../errors/ServerError');
-const UsersUtils = require('../models/UsersUtils');
+const UsersUtils = require('../utils/UsersUtils');
 const usersDao = require('../dao/usersDao');
 const SuccesfulLoginServerResponse = require('../models/SuccesfulLoginServerResponse');
 const ServerCacheDetails = require('../cache/ServerCacheDetails');

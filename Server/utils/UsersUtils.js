@@ -32,7 +32,7 @@ class UsersUtils {
             const isEmailRegExpValid = emailRegExp.test(trimmedEmail);
     
             if (isEmailRegExpValid) {
-                if (trimmedEmail.length <= 25) {
+                if (trimmedEmail.length <= 35) {
                     return true;
                 }
                 throw new ServerError(ErrorType.INVALID_EMAIL_LENGTH);

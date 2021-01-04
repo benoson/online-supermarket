@@ -5,6 +5,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 * { box-sizing: border-box; }
 
 :root {
+    --primary-theme-color: #21e6c1;
     --primary-button-color: #0099cc;
     --secondary-button-color: lightslategray;
     --danger-button-color: #ff1616;
@@ -17,7 +18,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 400px;
     min-height: 500px;
     border: 1px solid #12a7b8;
-    box-shadow: -5px 8px 0 0 #21e6c1;
+    box-shadow: -5px 8px 0 0 var(--primary-theme-color);
     padding: 1rem;
 }
 

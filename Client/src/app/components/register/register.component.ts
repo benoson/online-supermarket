@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserRegistrationDetails from 'src/app/models/UserRegistrationDetials';
 import { UserService } from 'src/app/services/user.service';
+import UsersUtils from 'src/app/Utils/UsersUtils';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,34 +21,36 @@ export class RegisterComponent implements OnInit {
   ) { };
 
   ngOnInit(): void {
-
-    // NEED TO SOLVE PROBLEM - NEED TO INSERT EMPTY VALUE TO THE 'ID' INPUT, BUT HE DEMENDS A NUMBER................
-    
-    this.userRegistrationDetails = new UserRegistrationDetails(111111111, "", "", "", "", "", "", "");
+    this.userRegistrationDetails = new UserRegistrationDetails(null, "", "", "", "", "", "", "");
   }
 
   public register = (): void => {
-    const observable = this.userService.register(this.userRegistrationDetails);
-
-    observable.subscribe( succesfulServerResponse => {
-      const userToken = succesfulServerResponse.token;
-      const userType = succesfulServerResponse.userType;
-      const firstName = succesfulServerResponse.firstName;
-      const userInfoFromServer = new SuccessfulLoginServerResponse(userToken, userType, firstName);
-
-      // inserting the user's info to the sessionStorage
-      sessionStorage.setItem('userInfo', JSON.stringify(userInfoFromServer));
-      this.handleRoutingAfterLogin(userType);
-
-    }, error => {
-      Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: error.message,
-        showConfirmButton: false,
-        timer: 2500
-      })
-    });
+    
+    // Validating all input fields
+    try {
+      const areAllInputsValid = UsersUtils.validateAllRegistrationFields(this.userRegistrationDetails);
+  
+      if (areAllInputsValid) {
+        const observable = this.userService.register(this.userRegistrationDetails);
+  
+        observable.subscribe( succesfulServerResponse => {
+          UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
+          this.handleRoutingAfterLogin(succesfulServerResponse.userType);
+  
+        }, badServerResponse => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: badServerResponse.error.errorMessage,
+            showConfirmButton: false,
+            timer: 2500
+          });
+        });
+      }
+    }
+    catch (error) {
+      alert(error.message);
+    }
   }
 
   public handleRoutingAfterLogin = (userType: string): void => {

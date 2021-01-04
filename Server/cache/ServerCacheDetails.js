@@ -3,7 +3,7 @@ class ServerCacheDetails {
         this.token = token,
         this.ID = ID,
         this.userType = userType,
-        this.userFirstName = userFirstName
+        this.firstName = userFirstName
      };
 }
 
