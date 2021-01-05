@@ -3,6 +3,7 @@ const cors = require('cors');
 const errorHandler = require('./errors/errorHandler');
 
 const usersController = require('./controllers/usersController');
+const productsController = require('./controllers/productsController');
 
 
 // creating an Express application
@@ -15,7 +16,7 @@ server.use(express.json());
 server.use(cors({origin: "http://localhost:4200"}));
 
 server.use('/users', usersController);
-server.use('/users', usersController);
+server.use('/products', productsController);
 
 // Registering the use of our Error Handler
 server.use(errorHandler);

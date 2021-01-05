@@ -23,7 +23,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 
-
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -32,7 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
     AboutUsSectionComponent,
     ShopInfoSectionComponent,
     NavbarComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

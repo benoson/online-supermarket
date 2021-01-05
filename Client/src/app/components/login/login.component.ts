@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserLoginDetails from 'src/app/models/UserLoginDetails';
 import { UserService } from 'src/app/services/user.service';
+import ErrorMessages from 'src/app/Utils/ErrorMessages';
 import UsersUtils from 'src/app/Utils/UsersUtils';
-import Swal from 'sweetalert2';
 
 
 @Component({
@@ -47,21 +47,21 @@ export class LoginComponent implements OnInit {
         this.handleRoutingAfterLogin(succesfulServerResponse);
   
       }, badServerResponse => {
-        this.displayErrorPopupMessage(badServerResponse.error.errorMessage)
+        ErrorMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
       })
     }
     catch (error) {
-      this.displayErrorPopupMessage(error.message);
+      ErrorMessages.displayErrorPopupMessage(error.message);
     }
   }
 
   public handleRoutingAfterLogin = (succesfulServerResponse: SuccessfulLoginServerResponse): void => {
     if (succesfulServerResponse.userType === "ADMIN") {
-      this.displaySuccessPopupMessage(`Welcome, ${succesfulServerResponse.firstName}, Logged as an Administrator`);
+      ErrorMessages.displaySuccessPopupMessage(`Welcome, ${succesfulServerResponse.firstName}, Logged as an Administrator`);
       this.router.navigate(['/admin']);
     }
     else {
-      this.displaySuccessPopupMessage(`Welcome, ${succesfulServerResponse.firstName}`);
+      ErrorMessages.displaySuccessPopupMessage(`Welcome, ${succesfulServerResponse.firstName}`);
       // this.router.navigate(['/customer']);
     }
   }
@@ -78,26 +78,6 @@ export class LoginComponent implements OnInit {
     this.loginValues = new FormGroup({
       email: this.emailInput,
       password: this.passwordInput
-    });
-  }
-
-  public displayErrorPopupMessage = (message: string): void => {
-    Swal.fire({
-      position: 'top-end',
-      icon: 'error',
-      title: message,
-      showConfirmButton: false,
-      timer: 2500
-    });
-  }
-
-  public displaySuccessPopupMessage = (message: string): void => {
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: message,
-      showConfirmButton: false,
-      timer: 2500
     });
   }
 

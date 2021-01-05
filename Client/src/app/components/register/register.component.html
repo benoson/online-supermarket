@@ -3,7 +3,7 @@
 
     <div class="credentials-section">
         <form #registrationForm="ngForm" [formGroup]="registrationValues">
-            <div class="panel-section login-fields-section">
+            <div class="panel-section registration-fields-section">
 
                 <!-- ID input -->
                 <mat-form-field>
@@ -123,7 +123,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-    </form>
+        </form>
 
         <!-- login button -->
         <button mat-stroked-button class="primary-button full-width" [disabled]="registrationForm.form.invalid" (click)="register()">Done</button>
