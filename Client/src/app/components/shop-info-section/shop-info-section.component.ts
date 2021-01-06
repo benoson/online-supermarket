@@ -11,8 +11,8 @@ import ErrorMessages from 'src/app/Utils/ErrorMessages';
 })
 export class ShopInfoSectionComponent implements OnInit {
 
-  private totalProductsAmount: number;
-  private totalOrdersAmount: number;
+  public totalProductsAmount: number;
+  public totalOrdersAmount: number;
 
   constructor(
     private productsService: ProductsService,
@@ -27,7 +27,7 @@ export class ShopInfoSectionComponent implements OnInit {
 
     this.getTotalOrdersAmount();
   }
-  
+
 
   public getTotalOrdersAmount = (): void => {
     const observable = this.ordersService.getTotalOrdersAmount();

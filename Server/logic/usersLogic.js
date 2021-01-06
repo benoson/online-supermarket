@@ -22,10 +22,14 @@ const validateUserInfo = (userInfo) => {
 
 const addUser = async (userInfo) => {
     const isUserExistByID = await usersDao.isUserExistByID(userInfo.ID);
+    const isUserExistByEmail = await usersDao.isUserExistByEmail(userInfo.email);
 
     // checking if the user's ID already exists
     if (isUserExistByID) {
         throw new ServerError(ErrorType.ID_ALREADY_EXIST);
+    }
+    else if (isUserExistByEmail) {
+        throw new ServerError(ErrorType.EMAIL_ALREADY_EXIST);
     }
 
     // checking if the user info is valid

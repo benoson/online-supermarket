@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import UserRegistrationDetails from '../models/UserRegistrationDetials';
 import SuccessfulLoginServerResponse from '../models/SuccessfulLoginServerResponse';
 import UserLoginDetails from '../models/UserLoginDetails';

@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
   
         observable.subscribe( succesfulServerResponse => {
           UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
-          this.handleRoutingAfterLogin(succesfulServerResponse.userType);
+          // this.handleRoutingAfterLogin(succesfulServerResponse.userType);
   
         }, badServerResponse => {
           Swal.fire({

@@ -43,6 +43,13 @@ const ErrorType = {
         message: "ID already exists",
         isShowStackTrace: true,
     },
+
+    EMAIL_ALREADY_EXIST: {
+        id: 98,
+        httpCode: 401,
+        message: "Email already exists",
+        isShowStackTrace: true,
+    },
   
     INVALID_EMAIL_LENGTH: {
         id: 9,

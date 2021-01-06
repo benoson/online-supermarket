@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   
       observable.subscribe( succesfulServerResponse => {
         UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
-        this.handleRoutingAfterLogin(succesfulServerResponse);
+        // this.handleRoutingAfterLogin(succesfulServerResponse); -> WHAT TO DO WITH THIS ? DO I NEED THIS? I NEED TO STAY IN THE WELCOME SCREEN...
   
       }, badServerResponse => {
         ErrorMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);

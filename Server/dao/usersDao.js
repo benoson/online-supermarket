@@ -75,9 +75,37 @@ const isUserExistByID = async (ID) => {
     return true;
 }
 
+const isUserExistByEmail = async (email) => {
+
+    // Creating an SQL query to check if the user exists by email
+
+    const SQL = "SELECT User_Name FROM users WHERE User_Name =?";
+    const parameter = [email];
+
+    try {
+        // Sending the SQL query and the user's username to the 'connection wrapper' preset
+        const emailAlreadyExists = await connection.executeWithParameters(SQL, parameter);
+
+        // If the ID was not found in the DB
+        if (emailAlreadyExists === null || emailAlreadyExists.length === 0) {
+            return false;
+        }
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+
+    // Returning 'true', indicating that the ID already exists
+    return true;
+}
+
+
 
 module.exports = {
     login,
     addUser,
-    isUserExistByID
+    isUserExistByID,
+    isUserExistByEmail
 };
