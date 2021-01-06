@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,16 +10,22 @@ export class NavbarComponent implements OnInit {
 
   public userFirstName: string;
 
-  constructor() { }
+  constructor(private userService: UserService) {
+    // listening for changes of the first name, inside the users service
+    this.userService.userFirstNameChange.subscribe( (value: string) => {
+      this.userFirstName = value;
+    });
+  }
 
   ngOnInit(): void {
     this.displayUserFirstName();
   }
 
   private displayUserFirstName = () => {
-    const userFirstNameFromSessionStorage = JSON.parse(sessionStorage.getItem('userInfo'));
-    if (userFirstNameFromSessionStorage !== null) {
-      this.userFirstName = userFirstNameFromSessionStorage.firstName;
+    const userFirstNameFromLocalStorage = JSON.parse(sessionStorage.getItem('userInfo'));
+    if (userFirstNameFromLocalStorage !== null) {
+      this.userFirstName = userFirstNameFromLocalStorage.firstName;
     }
   }
+
 }

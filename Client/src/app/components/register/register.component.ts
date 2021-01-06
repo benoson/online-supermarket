@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import UserRegistrationDetails from 'src/app/models/UserRegistrationDetials';
 import { UserService } from 'src/app/services/user.service';
+import PopupMessages from 'src/app/Utils/PopupMessages';
 import UsersUtils from 'src/app/Utils/UsersUtils';
-import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-register',
@@ -48,16 +49,15 @@ export class RegisterComponent implements OnInit {
   
         observable.subscribe( succesfulServerResponse => {
           UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
+          PopupMessages.displaySuccessPopupMessage("Registered succesfully, You are now logged in!");
+          this.registrationValues.reset();
           // this.handleRoutingAfterLogin(succesfulServerResponse.userType);
+
+          // changing the first name property in the service
+          this.userService.userFirstNameChange.next(succesfulServerResponse.firstName);
   
         }, badServerResponse => {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: badServerResponse.error.errorMessage,
-            showConfirmButton: false,
-            timer: 2500
-          });
+          PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
         });
       }
     }
@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public handleRoutingAfterLogin = (userType: string): void => {
+  private handleRoutingAfterLogin = (userType: string): void => {
     if (userType === "ADMIN") {
       this.router.navigate(['/admin']);
     }
@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public assignFormControlsValues = (): void => {
+  private assignFormControlsValues = (): void => {
     this.userRegistrationDetails.ID = this.IDInput.value;
     this.userRegistrationDetails.email = this.emailInput.value;
     this.userRegistrationDetails.password = this.passwordInput.value;
@@ -86,7 +86,7 @@ export class RegisterComponent implements OnInit {
     this.userRegistrationDetails.street = this.streetInput.value;
   }
 
-  public initializeFormControlsValidations = (): void => {
+  private initializeFormControlsValidations = (): void => {
     this.IDInput = new FormControl(null, [Validators.required, Validators.pattern('^[0-9]{9}$')]);
     this.emailInput = new FormControl("", [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,3}$'), Validators.maxLength(35)]);
     this.passwordInput = new FormControl("", [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,15}$')]);

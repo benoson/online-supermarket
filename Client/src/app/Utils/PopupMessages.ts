@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export default class ErrorMessages {
+export default class PopupMessages {
     public constructor() {}
 
     public static displayErrorPopupMessage = (message: string): void => {

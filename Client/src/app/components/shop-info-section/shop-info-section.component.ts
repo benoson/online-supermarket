@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import Product from 'src/app/models/Product';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ProductsService } from 'src/app/services/products.service';
-import ErrorMessages from 'src/app/Utils/ErrorMessages';
+import ErrorMessages from 'src/app/Utils/PopupMessages';
 
 @Component({
   selector: 'app-shop-info-section',

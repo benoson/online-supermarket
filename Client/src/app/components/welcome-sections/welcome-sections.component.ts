@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Product from 'src/app/models/Product';
 import { ProductsService } from 'src/app/services/products.service';
-import ErrorMessages from 'src/app/Utils/ErrorMessages';
+import ErrorMessages from 'src/app/Utils/PopupMessages';
 
 
 @Component({

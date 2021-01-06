@@ -2,7 +2,7 @@
     <h2 class="section-header">Login</h2>
 
     <div class="credentials-section">
-        <form #loginForm="ngForm" [formGroup]="loginValues">
+        <form #loginForm="ngForm" [formGroup]="loginValues" (submit)="login()">
             <div class="panel-section login-fields-section">
 
                 <!-- email input -->
@@ -25,10 +25,10 @@
                     <input [formControl]="passwordInput" matInput type="password">
                 </mat-form-field>
             </div>
+            <!-- login button -->
+            <button mat-stroked-button class="primary-button full-width" [disabled]="emailInput.value === '' || passwordInput.value == '' ">Login</button>
         </form>
     
-        <!-- login button -->
-        <button mat-stroked-button class="primary-button full-width" [disabled]="emailInput.value === '' || passwordInput.value == '' " (click)="login()">Login</button>
     </div>
     
     <div class="bottom-buttons-section">

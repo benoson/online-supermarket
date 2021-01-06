@@ -10,7 +10,15 @@ import UserLoginDetails from '../models/UserLoginDetails';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { };
+  public userFirstName: string;
+  public userFirstNameChange: Subject<string> = new Subject<string>();
+
+  constructor(private http: HttpClient) {
+    // listening for changes in the first name, and updating accordingly
+    this.userFirstNameChange.subscribe( (value: string) => {
+      this.userFirstName = value;
+    });
+  };
 
   public register = (userRegistrationDetails: UserRegistrationDetails) : Observable<SuccessfulLoginServerResponse> => {
     return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/register", userRegistrationDetails);
