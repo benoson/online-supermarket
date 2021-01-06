@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const productsLogic = require('../logic/usersLogic');
+const productsLogic = require('../logic/productsLogic');
 
 
 // ----- Handling the requests related to the products
 
-router.post('/', async (request, response, next) => {
+router.get('/', async (request, response, next) => {
 
     try {
         const successfullProductsData = await productsLogic.getAllProducts();

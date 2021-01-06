@@ -3,16 +3,15 @@ let ErrorType = require("../errors/errorType");
 let ServerError = require("../errors/serverError");
 
 
-const getAllProducts = async (userInfo) => {
+const getTotalOrdersAmount = async () => {
 
-    // Creating an SQL query to get all products from the DB
-    const SQL = `SELECT Product_ID as ID, Product_Name as name, Product_Category as category, Product_Price as price, Product_Image_URL as imageURL
-                    from products`;
+    // Creating an SQL query for inserting a new user to the DB
+    const SQL = `SELECT COUNT(Order_ID) as totalOrdersAmount from orders`;
     
     try {
         // Sending the SQL query to the 'connection wrapper' preset
-        const allProducts = await connection.execute(SQL);
-        return allProducts;
+        const totalOrdersAmount = await connection.execute(SQL);
+        return totalOrdersAmount[0].totalOrdersAmount;
     }
     
     catch (error) {
@@ -24,5 +23,5 @@ const getAllProducts = async (userInfo) => {
 
 
 module.exports = {
-    getAllProducts
+    getTotalOrdersAmount
 }

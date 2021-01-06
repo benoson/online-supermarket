@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import Product from 'src/app/models/Product';
+import { OrdersService } from 'src/app/services/orders.service';
+import { ProductsService } from 'src/app/services/products.service';
+import ErrorMessages from 'src/app/Utils/ErrorMessages';
 
 @Component({
   selector: 'app-shop-info-section',
@@ -7,9 +11,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopInfoSectionComponent implements OnInit {
 
-  constructor() { }
+  private totalProductsAmount: number;
+  private totalOrdersAmount: number;
+
+  constructor(
+    private productsService: ProductsService,
+    private ordersService: OrdersService
+    ) { }
 
   ngOnInit(): void {
+    // listening for changes of the products, inside the products service
+    this.productsService.allProductsChange.subscribe( value => {
+      this.totalProductsAmount = value.length;
+    });
+
+    this.getTotalOrdersAmount();
+  }
+  
+
+  public getTotalOrdersAmount = (): void => {
+    const observable = this.ordersService.getTotalOrdersAmount();
+
+    observable.subscribe( (succesfulServerResponse: number) => {
+      this.totalOrdersAmount = succesfulServerResponse;
+
+    }, badServerResponse => {
+      ErrorMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
   }
 
 }

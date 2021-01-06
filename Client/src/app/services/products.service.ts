@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import Product from '../models/Product';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
-  constructor(private http: HttpClient) { };
+  public allProducts: Product[];
+  // creating a Subject (subscription-enabler) for this property changes
+  public allProductsChange: Subject<Product[]> = new Subject<Product[]>();
+  
+
+  constructor(private http: HttpClient) {
+    // listening for changes in the prodcuts, updating the allProducts property
+    this.allProductsChange.subscribe(( value) => {
+      this.allProducts = value;
+    });
+  };
 
   public getAllProducts = (): Observable<Product[]> => {
     return this.http.get<Product[]>("http://localhost:3001/products/");

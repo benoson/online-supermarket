@@ -11,14 +11,11 @@ import ErrorMessages from 'src/app/Utils/ErrorMessages';
 })
 export class WelcomeSectionsComponent implements OnInit {
 
-  public allProducts: Product[];
-
   constructor(
-    private productsService: ProductsService
+    private productsService: ProductsService,
   ) { }
 
   ngOnInit(): void {
-    this.allProducts = new Array <Product> ();
     this.getAllProducts();
   }
 
@@ -26,8 +23,8 @@ export class WelcomeSectionsComponent implements OnInit {
     const observable = this.productsService.getAllProducts();
 
     observable.subscribe( (succesfulServerResponse: Product[]) => {
-      this.allProducts = succesfulServerResponse;
-      console.log(succesfulServerResponse);
+      // updating the value in the service, letting it know we recieved the products
+      this.productsService.allProductsChange.next(succesfulServerResponse);
 
     }, badServerResponse => {
       ErrorMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
