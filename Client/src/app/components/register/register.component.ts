@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
         observable.subscribe( succesfulServerResponse => {
           UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
           PopupMessages.displaySuccessPopupMessage("Registered succesfully, You are now logged in!");
-          this.registrationValues.reset();
+          this.registrationValues.reset(); // resets form's validations
           // this.handleRoutingAfterLogin(succesfulServerResponse.userType);
 
           // changing the first name property in the service

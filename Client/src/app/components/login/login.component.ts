@@ -91,8 +91,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * clears the form's inputs and `login` button validation
+   */
   private clearFormInputs = () => {
-    this.loginForm.form.reset()
+    this.emailInput.setValue("");
+    this.passwordInput.setValue("");
   }
 
 }

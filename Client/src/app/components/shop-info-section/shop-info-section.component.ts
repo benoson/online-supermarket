@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import Product from 'src/app/models/Product';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ProductsService } from 'src/app/services/products.service';
-import ErrorMessages from 'src/app/Utils/PopupMessages';
+import PopupMessages from 'src/app/Utils/PopupMessages';
 
 @Component({
   selector: 'app-shop-info-section',
@@ -36,7 +36,7 @@ export class ShopInfoSectionComponent implements OnInit {
       this.totalOrdersAmount = succesfulServerResponse;
 
     }, badServerResponse => {
-      ErrorMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
     });
   }
 
