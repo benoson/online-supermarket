@@ -25,6 +25,22 @@ export default class UsersUtils {
     }
 
 
+    // ----- Is logged checker
+
+    /**
+     * this function determines whether the user is logged in
+     */
+    static isUserLoggedIn = (): boolean => {
+        const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        if (userInfo !== null) {
+            if (userInfo.token !== undefined) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     // ----- UI validations
 
     static validateAllRegistrationFields = (userRegistrationDetails: UserRegistrationDetails): void | boolean => {

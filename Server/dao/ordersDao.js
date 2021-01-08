@@ -38,12 +38,12 @@ const getLastOrderDateByOwner = async (ID) => {
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
     }
 
-    // If the ID was not found in the DB
+    // If the the customer does not have a previous order
     if (ownerLastOrderDate === null || ownerLastOrderDate.length === 0) {
         return null;
     }
 
-    // In case the procedure went well, and we found the user in the DB
+    // returning the last order date of the customer
     return ownerLastOrderDate[0];
 }
 

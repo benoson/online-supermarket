@@ -10,14 +10,16 @@ export class NavbarComponent implements OnInit {
 
   public userFirstName: string;
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService
+    ) { };
+
+  ngOnInit(): void {
     // listening for changes of the first name, inside the users service
     this.userService.userFirstNameChange.subscribe( (value: string) => {
       this.userFirstName = value;
     });
-  }
 
-  ngOnInit(): void {
     this.displayUserFirstName();
   }
 

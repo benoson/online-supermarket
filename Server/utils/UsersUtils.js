@@ -167,14 +167,13 @@ class UsersUtils {
         const token = authorizationString.substring("Bearer ".length);
         const userCacheData = usersCache.get(token);
 
-        // If the Token that was sent was not found, alert the client that the user is no longer logged in
+        // If the token that was sent was not found, alert the client that the user is no longer logged in
         if (userCacheData === undefined) {
             throw new ServerError(ErrorType.USER_IS_NOT_LOGGED_IN);
         }
-
         return userCacheData;
     }
-
 }
+
 
 module.exports = UsersUtils;
