@@ -67,10 +67,10 @@ const login = async (userInfo, isFreshUser) => {
     // Getting a token based on the salted email and a secret
     const token = UsersUtils.generateJWTtoken(saltedEmail);
 
-    const serverCacheDetails = new ServerCacheDetails(token, userLoginData.ID, userLoginData.userType, userLoginData.firstName);
+    const serverCacheDetails = new ServerCacheDetails(userLoginData.ID, userLoginData.userType, userLoginData.firstName);
 
     // Saving the user's info to the server's cache
-    UsersUtils.saveUserInfoToServerCache(serverCacheDetails);
+    UsersUtils.saveUserInfoToServerCache(token, serverCacheDetails);
 
     const succesfulLoginServerResponse = new SuccesfulLoginServerResponse(token, userLoginData.userType, userLoginData.firstName);
 

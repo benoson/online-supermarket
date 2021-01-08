@@ -83,15 +83,15 @@ export default class UsersUtils {
     }
 
     static validateUserRegistrationPassword = (password: any, verifiedPassword: any): boolean | Error => {
-        const validatedTrimmedPassword = UsersUtils.validateSinglePassword(password);
-        const validatedTrimmedVerifiedPassword = UsersUtils.validateSinglePassword(verifiedPassword);
-    
-        if (validatedTrimmedPassword === validatedTrimmedVerifiedPassword) {
+        UsersUtils.validateSinglePassword(password);
+        UsersUtils.validateSinglePassword(verifiedPassword);
+
+        if (password === verifiedPassword) {
             return true;
         }
         throw Error("Passwords do not match");
     };
-    
+
     static validateUserFirstName = (firstName: string): boolean | Error => {
         const trimmedFirstName = firstName.trim();
 

@@ -1,9 +1,10 @@
 // Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationInterceptor } from '../interceptors/AuthenticationInterceptor';
 
 // Components
 import { LayoutComponent } from '../components/layout/layout.component';
@@ -44,7 +45,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     SweetAlert2Module.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
+  ],
   bootstrap: [LayoutComponent]
 })
 export class AppModule { }

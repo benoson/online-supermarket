@@ -142,7 +142,14 @@ const ErrorType = {
         isShowStackTrace: true,
     },
 
+    USER_IS_NOT_LOGGED_IN: {
+        id: 109,
+        httpCode: 401,
+        message: "User is not logged in",
+        isShowStackTrace: true,
+    },
 
+    
   
     BAD_IMAGE: {
         id: 11,

@@ -13,12 +13,14 @@ export class ShopInfoSectionComponent implements OnInit {
 
   public totalProductsAmount: number;
   public totalOrdersAmount: number;
+  public customerLastOrderDate: string | null;
 
   constructor(
     private productsService: ProductsService,
     private ordersService: OrdersService
-    ) { }
+  ) { }
 
+    
   ngOnInit(): void {
     // listening for changes of the products, inside the products service
     this.productsService.allProductsChange.subscribe( value => {
@@ -26,8 +28,8 @@ export class ShopInfoSectionComponent implements OnInit {
     });
 
     this.getTotalOrdersAmount();
+    this.getLastOrderDateByCustomer();
   }
-
 
   public getTotalOrdersAmount = (): void => {
     const observable = this.ordersService.getTotalOrdersAmount();
@@ -38,6 +40,17 @@ export class ShopInfoSectionComponent implements OnInit {
     }, badServerResponse => {
       PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
     });
-  }
+  };
+
+  public getLastOrderDateByCustomer = (): void => {
+    const observable = this.ordersService.getLastOrderDateByCustomer();
+
+    observable.subscribe( (succesfulServerResponse: string | null) => {
+      this.customerLastOrderDate = succesfulServerResponse;
+
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
+  };
 
 }

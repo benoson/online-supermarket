@@ -21,4 +21,21 @@ router.get('/totalAmount', async (request, response, next) => {
     }
 });
 
+router.get('/lastOrderDate', async (request, response, next) => {
+
+    try {
+        const successfullLastOrderDateData = await ordersLogic.getLastOrderDateByOwner(request);
+
+        console.log(successfullLastOrderDateData);
+        // converting the response to JSON before sending it to the client
+        response.json(successfullLastOrderDateData);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
+
 module.exports = router;

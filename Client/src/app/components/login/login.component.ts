@@ -21,10 +21,6 @@ export class LoginComponent implements OnInit {
   public emailInput: FormControl;
   public passwordInput: FormControl;
 
-  // getting the HTML from here, in order to clear it after a submission
-  @ViewChild('loginForm')
-  loginForm: FormGroupDirective;
-
   constructor(
     private userService: UserService,
     private router: Router

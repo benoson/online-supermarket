@@ -1,6 +1,5 @@
 class ServerCacheDetails {
-    constructor(token, ID, userType, userFirstName) {
-        this.token = token,
+    constructor(ID, userType, userFirstName) {
         this.ID = ID,
         this.userType = userType,
         this.firstName = userFirstName

@@ -156,9 +156,25 @@ class UsersUtils {
      * Saves a succesfull login response from the DB into the users cache
      * @param succesfulLoginServerResponse - of type `succesfulLoginServerResponse`
      */
-    static saveUserInfoToServerCache = succesfulLoginServerResponse => {
-        usersCache.set(succesfulLoginServerResponse)
+    static saveUserInfoToServerCache = (token, succesfulLoginServerResponse) => {
+        usersCache.set(token, succesfulLoginServerResponse)
     }
+
+    static extractUserInfoFromCache = (request) => {
+
+        // Attempting to get the user from the server's cache, from the Token received from the client
+        const authorizationString = request.headers['authorization'];
+        const token = authorizationString.substring("Bearer ".length);
+        const userCacheData = usersCache.get(token);
+
+        // If the Token that was sent was not found, alert the client that the user is no longer logged in
+        if (userCacheData === undefined) {
+            throw new ServerError(ErrorType.USER_IS_NOT_LOGGED_IN);
+        }
+
+        return userCacheData;
+    }
+
 }
 
 module.exports = UsersUtils;

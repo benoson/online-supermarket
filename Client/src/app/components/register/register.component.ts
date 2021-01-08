@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, FormGroupDirective, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import UserRegistrationDetails from 'src/app/models/UserRegistrationDetials';
 import { UserService } from 'src/app/services/user.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
@@ -30,6 +31,7 @@ export class RegisterComponent implements OnInit {
     private userService: UserService,
     private router: Router
   ) { };
+
 
   ngOnInit(): void {
     this.userRegistrationDetails = new UserRegistrationDetails(null, "", "", "", "", "", "", "");
@@ -62,7 +64,7 @@ export class RegisterComponent implements OnInit {
       }
     }
     catch (error) {
-      alert(error.message);
+      PopupMessages.displayErrorPopupMessage(error);
     }
   }
 
@@ -93,9 +95,8 @@ export class RegisterComponent implements OnInit {
     this.verifiedPasswordInput = new FormControl("", [Validators.required]);
     this.firstNameInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
     this.lastNameInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
-    this.cityInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)])
-    this.streetInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)])
-    
+    this.cityInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
+    this.streetInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
 
     this.registrationValues = new FormGroup({
       ID: this.IDInput,

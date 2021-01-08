@@ -21,7 +21,34 @@ const getTotalOrdersAmount = async () => {
     }
 }
 
+const getLastOrderDateByOwner = async (ID) => {
+    
+    // Creating the SQL query to get the user from the DB
+    const SQL = "SELECT DATE_FORMAT(Order_Date, '%d/%m/%Y') as lastOrderDate FROM orders WHERE Order_Owner = ? ORDER BY Order_Date DESC LIMIT 1";
+    const parameter = [ID];
+    let ownerLastOrderDate;
+
+    try {
+        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        ownerLastOrderDate = await connection.executeWithParameters(SQL, parameter);
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+
+    // If the ID was not found in the DB
+    if (ownerLastOrderDate === null || ownerLastOrderDate.length === 0) {
+        return null;
+    }
+
+    // In case the procedure went well, and we found the user in the DB
+    return ownerLastOrderDate[0];
+}
+
 
 module.exports = {
-    getTotalOrdersAmount
+    getTotalOrdersAmount,
+    getLastOrderDateByOwner
 }
