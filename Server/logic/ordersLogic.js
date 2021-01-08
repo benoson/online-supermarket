@@ -12,8 +12,10 @@ const getLastOrderDateByOwner = async (request) => {
     const userCacheData = UsersUtils.extractUserInfoFromCache(request);
     const userID = userCacheData.ID;
     const successfullLastDateResponse = await ordersDao.getLastOrderDateByOwner(userID);
+    if (successfullLastDateResponse === null) {
+        return null;
+    }
     const successfullLastDateData = successfullLastDateResponse.lastOrderDate;
-
     return successfullLastDateData;
 }
 

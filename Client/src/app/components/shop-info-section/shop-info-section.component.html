@@ -1,10 +1,10 @@
 <div class="section">
-    <h2 class="section-header">Some Info</h2>
+    <h2 class="section-header">Nice To Know</h2>
 
-    <h2>We Currently Have {{totalProductsAmount}} Items</h2>
-    <h2>So Far, {{totalOrdersAmount}} Customers Have Enjoyed Buying At Bitten Tomato's</h2>
+    <h3 class="sharp">We Have {{totalProductsAmount}} Items Available.</h3>
+    <h3 class="sharp">So Far, {{totalOrdersAmount}} Customers Have Enjoyed Buying At Bitten Tomato's.</h3>
 
-    <div style="border: 1px solid red;">
-        {{customerLastOrderDate}}
+    <div *ngIf="customerLastOrderDate !== null && customerLastOrderDate !== undefined ">
+        <p class="last-order-text">{{customerLastOrderDate}}</p>
     </div>
 </div>

@@ -44,6 +44,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 100%;
 }
 
+.sharp {
+    font-weight: 400;
+}
+
+.center {
+    text-align: center;
+}
+
 .bitten-tomato-logo-50 {
     width: 50%;
     display: block;

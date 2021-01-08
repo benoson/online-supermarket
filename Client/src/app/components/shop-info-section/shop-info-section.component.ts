@@ -50,8 +50,6 @@ export class ShopInfoSectionComponent implements OnInit {
       const observable = this.ordersService.getLastOrderDateByCustomer();
   
       observable.subscribe( (succesfulServerResponse: string | null) => {
-        console.log(succesfulServerResponse);
-        
         this.assignCustomerLastOrderDateText(succesfulServerResponse);
   
       }, badServerResponse => {
@@ -61,7 +59,10 @@ export class ShopInfoSectionComponent implements OnInit {
   };
 
   private assignCustomerLastOrderDateText = (lastOrderValue: string | null) => {
-    if (lastOrderValue !== null) {
+    if (lastOrderValue === null) {
+      this.customerLastOrderDate = "You don't have any previous orders";
+    }
+    else {
       this.customerLastOrderDate = "Your last order was on " + lastOrderValue;
     }
   }
