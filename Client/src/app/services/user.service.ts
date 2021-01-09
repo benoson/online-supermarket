@@ -22,7 +22,6 @@ export class UserService {
   constructor(private http: HttpClient) {
 
     this.isUserLoggedIn = UsersUtils.isUserLoggedIn();
-    console.log(this.isUserLoggedIn);
 
     // listening for changes in the first name, and updating accordingly
     this.userFirstNameChange.subscribe( (value: string) => {

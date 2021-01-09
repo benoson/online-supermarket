@@ -1,1 +1,26 @@
-<p>customer works!</p>
+<div class="customer-page">
+    <div class="my-cart-section">
+        <mat-drawer-container class="drawer-container" autosize>
+            <mat-drawer #drawer class="drawer-sidenav" mode="side">
+                <p>Auto-resizing sidenav</p>
+            </mat-drawer>
+            
+            <!-- content of the page -->
+            <div class="page-content">
+                <button type="button" mat-stroked-button class="primary-button width-100" (click)="drawer.toggle()">
+                    <mat-icon aria-hidden="false" aria-label="my cart icon">shopping_cart</mat-icon>
+                </button>
+
+                <div class="products-section">
+                    <div class="categories-navbar">
+            
+                    </div>
+                    
+                    <div class="all-products-section">
+            
+                    </div>
+                </div>
+            </div>
+        </mat-drawer-container>
+    </div>
+</div>

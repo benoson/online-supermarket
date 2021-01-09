@@ -13,8 +13,6 @@ export default class UsersUtils {
      * @param succesfulServerResponse - of type `SuccesfulLoginServerResponse`.
      */
     static insertUserInfoToSessionStorage = (succesfulServerResponse: SuccessfulLoginServerResponse): void => {
-        console.log(succesfulServerResponse);
-        
         const userToken = succesfulServerResponse.token;
         const userType = succesfulServerResponse.userType;
         const firstName = succesfulServerResponse.firstName;
@@ -30,14 +28,11 @@ export default class UsersUtils {
     // ----- Is logged checker
 
     /**
-     * this function determines whether the user is logged in `via the sessionStorage`
+     * this function determines whether the user has a `token`, and an `isLoggedIn` status, via `sessionStorage`
      */
     static isUserLoggedIn = (): boolean => {
         const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
         const isLogged = JSON.parse(sessionStorage.getItem("isLoggedIn"));
-        console.log("azaza");
-        
-        console.log(isLogged);
         
         if (isLogged) {
             if (userInfo !== null) {

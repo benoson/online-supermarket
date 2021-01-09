@@ -1,0 +1,25 @@
+.drawer-container {
+    width: 100%;
+    height: 1000px;
+    background-color: transparent;
+}
+  
+.page-content {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+  
+.drawer-sidenav {
+    padding: 20px;
+}
+
+.products-section {
+    width: 100%;
+}
+
+.categories-navbar {
+    width: 100%;
+    height: 50px;
+    background-color: black;
+}

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ProductsService } from 'src/app/services/products.service';
+import { UserService } from 'src/app/services/user.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
 import UsersUtils from 'src/app/Utils/UsersUtils';
 
@@ -17,7 +18,8 @@ export class ShopInfoSectionComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private userService: UserService
     ) { };
 
 
@@ -46,7 +48,7 @@ export class ShopInfoSectionComponent implements OnInit {
    */
   private getLastOrderDateByCustomer = (): void => {
 
-    if (UsersUtils.isUserLoggedIn()) {
+    if (this.userService.isUserLoggedIn) {
       const observable = this.ordersService.getLastOrderDateByCustomer();
   
       observable.subscribe( (succesfulServerResponse: string | null) => {

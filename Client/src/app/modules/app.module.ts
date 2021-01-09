@@ -14,6 +14,8 @@ import { NavbarComponent } from '../components/navbar/navbar.component';
 import { WelcomeSectionsComponent } from '../components/welcome-sections/welcome-sections.component';
 import { AboutUsSectionComponent } from '../components/about-us-section/about-us-section.component';
 import { ShopInfoSectionComponent } from '../components/shop-info-section/shop-info-section.component';
+import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
+import { CustomerComponent } from '../components/customer/customer.component';
 
 // Sweet Alert
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -22,8 +24,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
-import { CustomerComponent } from '../components/customer/customer.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import { CustomerComponent } from '../components/customer/customer.component';
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
     SweetAlert2Module.forRoot()
   ],
   providers: [

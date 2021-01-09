@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormGroupDirective, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserRegistrationDetails from 'src/app/models/UserRegistrationDetials';
 import { UserService } from 'src/app/services/user.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
@@ -50,13 +51,7 @@ export class RegisterComponent implements OnInit {
         const observable = this.userService.register(this.userRegistrationDetails);
   
         observable.subscribe( succesfulServerResponse => {
-          UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
-          PopupMessages.displaySuccessPopupMessage("Registered succesfully, You are now logged in!");
-          this.registrationValues.reset(); // resets form's validations
-          // this.handleRoutingAfterLogin(succesfulServerResponse.userType);
-
-          // changing the first name property in the service
-          this.userService.userFirstNameChange.next(succesfulServerResponse.firstName);
+          this.handleSuccesfulRegistrationResponse(succesfulServerResponse);
   
         }, badServerResponse => {
           PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
@@ -68,13 +63,16 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  private handleRoutingAfterLogin = (userType: string): void => {
-    if (userType === "ADMIN") {
-      this.router.navigate(['/admin']);
-    }
-    else {
-      this.router.navigate(['/customer']);
-    }
+  private handleSuccesfulRegistrationResponse = (succesfulServerResponse: SuccessfulLoginServerResponse): void => {
+    UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
+    PopupMessages.displaySuccessPopupMessage("Registered succesfully, You are now logged in!");
+    this.registrationValues.reset();
+    // updating 'is logged' property in the service
+    this.userService.isLoggedInChange.next(true);
+    // updating the first name property in the service
+    this.userService.userFirstNameChange.next(succesfulServerResponse.firstName);
+    // navigating to the customer page
+    this.router.navigate(['/customer']);
   }
 
   private assignFormControlsValues = (): void => {

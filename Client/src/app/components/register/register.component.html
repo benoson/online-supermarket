@@ -124,12 +124,12 @@
             </div>
         </form>
 
-        <!-- login button -->
+        <!-- finish registration button -->
         <button mat-stroked-button class="primary-button full-width" [disabled]="registrationForm.form.invalid || (passwordInput.value !== verifiedPasswordInput.value)" (click)="register()">Done</button>
     </div>
 
     <p>Already registered ?</p>
-    <!-- registration button -->
+    <!-- login button -->
     <button routerLink="/welcome/login" mat-stroked-button class="secondary-button full-width">Login</button>
 
 </div> 
