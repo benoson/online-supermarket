@@ -13,7 +13,7 @@ export class ShopInfoSectionComponent implements OnInit {
 
   public totalProductsAmount: number;
   public totalOrdersAmount: number;
-  public customerLastOrderDate: string | null;
+  public customerLastOrderDate: string;
 
   constructor(
     private productsService: ProductsService,
@@ -65,7 +65,7 @@ export class ShopInfoSectionComponent implements OnInit {
     else {
       this.customerLastOrderDate = "Your last order was on " + lastOrderValue;
     }
-  }
+  };
 
   public getTotalOrdersAmount = (): void => {
     const observable = this.ordersService.getTotalOrdersAmount();

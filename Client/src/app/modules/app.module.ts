@@ -22,6 +22,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { MatButtonModule } from '@angular/material/button';
     AboutUsSectionComponent,
     ShopInfoSectionComponent,
     NavbarComponent,
-    RegisterComponent
+    RegisterComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

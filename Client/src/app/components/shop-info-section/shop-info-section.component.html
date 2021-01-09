@@ -4,7 +4,11 @@
     <h3 class="sharp">We Have {{totalProductsAmount}} Items Available.</h3>
     <h3 class="sharp">So Far, {{totalOrdersAmount}} Customers Have Enjoyed Buying At Bitten Tomato's.</h3>
 
-    <div *ngIf="customerLastOrderDate !== null && customerLastOrderDate !== undefined ">
+    <div *ngIf="customerLastOrderDate !== undefined ">
         <p class="last-order-text">{{customerLastOrderDate}}</p>
+    </div>
+
+    <div>
+        <p class="last-order-text">You don't have an open cart</p>
     </div>
 </div>
