@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   public passwordInput: FormControl;
 
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     private ordersService: OrdersService,
     private router: Router
   ) { }
@@ -45,23 +45,33 @@ export class LoginComponent implements OnInit {
       const observable = this.userService.login(this.userLoginDetails);
   
       observable.subscribe( succesfulServerResponse => {
-        UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
-        PopupMessages.displaySuccessPopupMessage("logged in succesfully!");
-        this.clearFormInputs();
-        this.getLastOrderDateByCustomer();
+        this.handleSuccesfulLoginResponse(succesfulServerResponse);
 
-        // changing the first name property in the service
-        this.userService.userFirstNameChange.next(succesfulServerResponse.firstName);
-
-        // this.handleRoutingAfterLogin(succesfulServerResponse); -> WHAT TO DO WITH THIS ? DO I NEED THIS ? I NEED TO STAY IN THE WELCOME SCREEN...
-  
       }, badServerResponse => {
         PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+        this.userService.isLoggedInChange.next(true);
       })
     }
     catch (error) {
       PopupMessages.displayErrorPopupMessage(error.message);
     }
+  }
+
+
+  /**
+   * 
+   * @param succesfulServerResponse - handles a succesfull login response from the server
+   */
+  private handleSuccesfulLoginResponse = (succesfulServerResponse: SuccessfulLoginServerResponse): void => {
+
+    UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
+    PopupMessages.displaySuccessPopupMessage("logged in succesfully!");
+    this.clearFormInputs();
+    // updating the users service that the user has logged in
+    this.userService.isLoggedInChange.next(true);
+    this.getLastOrderDateByCustomer();
+    // changing the first name property in the service
+    this.userService.userFirstNameChange.next(succesfulServerResponse.firstName);
   }
 
   private getLastOrderDateByCustomer = (): void => {
@@ -74,17 +84,6 @@ export class LoginComponent implements OnInit {
       PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
     });
   };
-
-  private handleRoutingAfterLogin = (succesfulServerResponse: SuccessfulLoginServerResponse): void => {
-    if (succesfulServerResponse.userType === "ADMIN") {
-      PopupMessages.displaySuccessPopupMessage(`Welcome, ${succesfulServerResponse.firstName}, Logged as an Administrator`);
-      this.router.navigate(['/admin']);
-    }
-    else {
-      PopupMessages.displaySuccessPopupMessage(`Welcome, ${succesfulServerResponse.firstName}`);
-      // this.router.navigate(['/customer']);
-    }
-  }
 
   private assignFormControlsValues = (): void => {
     this.userLoginDetails.email = this.emailInput.value;

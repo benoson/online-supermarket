@@ -150,6 +150,19 @@ class UsersUtils {
     }
 
 
+    // ----- Is logged checker
+
+    static isUserLoggedIn = (request) => {
+        const authorizationString = request.headers['authorization'];
+        const token = authorizationString.substring("Bearer ".length);
+        const userCacheData = usersCache.get(token);
+        if (userCacheData !== undefined) {
+            return true;
+        }
+        return false;
+    }
+
+
     // ----- Caching
 
     /**

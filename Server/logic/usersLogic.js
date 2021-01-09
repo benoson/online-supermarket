@@ -78,6 +78,7 @@ const login = async (userInfo, isFreshUser) => {
     return succesfulLoginServerResponse;
 }
 
+
 module.exports = {
     addUser,
     login

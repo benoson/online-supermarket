@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
+import { CustomerComponent } from '../components/customer/customer.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { PageNotFoundComponent } from '../components/page-not-found/page-not-fou
     ShopInfoSectionComponent,
     NavbarComponent,
     RegisterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    CustomerComponent
   ],
   imports: [
     BrowserModule,

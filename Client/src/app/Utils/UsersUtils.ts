@@ -22,19 +22,28 @@ export default class UsersUtils {
   
         // inserting the user's info to the sessionStorage
         sessionStorage.setItem('userInfo', JSON.stringify(userInfoFromServer));
+        // inserting the 'true' to indicate that a user is logged in
+        sessionStorage.setItem('isLoggedIn', "true");
     }
 
 
     // ----- Is logged checker
 
     /**
-     * this function determines whether the user is logged in
+     * this function determines whether the user is logged in `via the sessionStorage`
      */
     static isUserLoggedIn = (): boolean => {
         const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-        if (userInfo !== null) {
-            if (userInfo.token !== undefined) {
-                return true;
+        const isLogged = JSON.parse(sessionStorage.getItem("isLoggedIn"));
+        console.log("azaza");
+        
+        console.log(isLogged);
+        
+        if (isLogged) {
+            if (userInfo !== null) {
+                if (userInfo.token !== undefined) {
+                    return true;
+                }
             }
         }
         return false;

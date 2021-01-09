@@ -1,4 +1,5 @@
 const express = require('express');
+const { request } = require('http');
 const router = express.Router();
 
 const usersLogic = require('../logic/usersLogic');
@@ -39,7 +40,6 @@ router.post('/login', async (request, response, next) => {
     }
 
     catch (error) {
-                
         // Handling the error with our Error Handler
         return next(error);
     }
