@@ -1,26 +1,46 @@
 <div class="customer-page">
-    <div class="my-cart-section">
-        <mat-drawer-container class="drawer-container" autosize>
-            <mat-drawer #drawer class="drawer-sidenav" mode="side">
-                <p>Auto-resizing sidenav</p>
-            </mat-drawer>
-            
-            <!-- content of the page -->
-            <div class="page-content">
-                <button type="button" mat-stroked-button class="primary-button width-100" (click)="drawer.toggle()">
-                    <mat-icon aria-hidden="false" aria-label="my cart icon">shopping_cart</mat-icon>
-                </button>
+    <mat-drawer-container class="drawer-container" autosize>
+        <mat-drawer #drawer class="drawer-sidenav" mode="side">
+            <p>Auto-resizing sidenav</p>
+        </mat-drawer>
+        
+        <!-- content of the page -->
+        <div class="page-content">
+            <button type="button" mat-stroked-button class="primary-button" (click)="drawer.toggle()">
+                <mat-icon aria-hidden="false" aria-label="my cart icon">shopping_cart</mat-icon>
+            </button>
 
-                <div class="products-section">
-                    <div class="categories-navbar">
-            
+            <div class="products-section">
+                <div class="categories-navbar">
+                    <div class="navbar-category">
+                        <a class="navbarLink" routerLink="">All Products</a>
                     </div>
-                    
-                    <div class="all-products-section">
-            
+                    <div class="navbar-category">
+                        <a class="navbarLink" routerLink="">Dairy</a>
+                    </div>
+                    <div class="navbar-category">
+                        <a class="navbarLink" routerLink="">Meat & Fish</a>
+                    </div>
+                    <div class="navbar-category">
+                        <a class="navbarLink" routerLink="">Vegan</a>
+                    </div>
+                    <div class="navbar-category">
+                        <a class="navbarLink" routerLink="">Drinks</a>
+                    </div>
+                    <div class="navbar-category">
+                        <a class="navbarLink" routerLink="">Health</a>
+                    </div>
+                </div>
+                
+                <!-- all products section -->
+                <div class="all-products-section">
+                    <div *ngFor="let product of allProducts">
+                        <div class="product-card">
+                            <img class="product-card-image" src={{product.imageURL}} alt={{product.name}}>
+                        </div>
                     </div>
                 </div>
             </div>
-        </mat-drawer-container>
-    </div>
+        </div>
+    </mat-drawer-container>
 </div>

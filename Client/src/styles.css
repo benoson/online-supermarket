@@ -2,7 +2,7 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-* { box-sizing: border-box; }
+* { box-sizing: border-box; padding: 0; margin: 0; }
 
 :root {
     --primary-theme-color: #21e6c1;
@@ -42,10 +42,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .full-width {
     width: 100%;
-}
-
-.width-100 {
-    width: 100px;
 }
 
 .sharp {
