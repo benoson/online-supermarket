@@ -10,11 +10,15 @@ import { ProductsService } from 'src/app/services/products.service';
 export class CustomerComponent implements OnInit {
 
   public allProducts: Product[];
+  public currentProductsForDisplay: Product[];
+
   public dairyProducts: Product[];
-  public meatAndFish: Product[];
+  public meatAndFishProducts: Product[];
   public veganProducts: Product[];
-  public drinks: Product[];
+  public drinksProducts: Product[];
   public healthProducts: Product[];
+
+  public searchInputValue: string;
 
   constructor(
     private productsService: ProductsService
@@ -22,10 +26,39 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.allProducts = this.productsService.allProducts;
+    this.currentProductsForDisplay = this.allProducts;
+    this.sortProductsToCategories();
   }
 
   private sortProductsToCategories = () => {
-    // this.milkAndEggs
+    this.dairyProducts = this.allProducts.filter( product => product['category'] === 'Dairy');
+    this.meatAndFishProducts = this.allProducts.filter(product => product['category'] === 'Meat & Fish');
+    this.veganProducts = this.allProducts.filter(product => product['category'] === 'Vegan');
+    this.drinksProducts = this.allProducts.filter(product => product['category'] === 'Drinks');
+    this.healthProducts = this.allProducts.filter(product => product['category'] === 'Health');
   }
 
+  public sortByAllProducts = () => {
+    this.currentProductsForDisplay = this.allProducts;
+  }
+
+  public sortByDairyProducts = () => {
+    this.currentProductsForDisplay = this.dairyProducts;
+  }
+
+  public sortByMeatAndFish = () => {
+    this.currentProductsForDisplay = this.meatAndFishProducts;
+  }
+
+  public sortByVegan = () => {
+    this.currentProductsForDisplay = this.veganProducts;
+  }
+
+  public sortByDrinks = () => {
+    this.currentProductsForDisplay = this.drinksProducts;
+  }
+
+  public sortByHealth = () => {
+    this.currentProductsForDisplay = this.healthProducts;
+  }
 }

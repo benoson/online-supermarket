@@ -6,7 +6,7 @@ let ServerError = require("../errors/serverError");
 const getAllProducts = async () => {
 
     // Creating an SQL query to get all products from the DB
-    const SQL = "SELECT Product_ID as ID, Product_Name as name, (SELECT Category_Name FROM `online-supermarket`.`products-categories` WHERE `online-supermarket`.`products-categories`.Category_ID = ID) as category, Product_Price as price, Product_Image_URL as imageURL FROM products";
+    const SQL = "SELECT Product_ID as ID, Product_Name as name, (SELECT Category_Name FROM `products-categories` WHERE `products-categories`.Category_ID = `products`.Product_Category) as category, Product_Price as price, Product_Image_URL as imageURL FROM products";
     
     try {
         // Sending the SQL query to the 'connection wrapper' preset

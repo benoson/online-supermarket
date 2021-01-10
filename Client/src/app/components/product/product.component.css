@@ -1,0 +1,19 @@
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+
+.product-image {
+    width: 150px;
+    height: 161px;
+    border-bottom: 1px solid rgb(158 158 158 / 32%);
+    padding-bottom: 10px;
+}
+
+.product-name, .product-category, .product-price {
+    align-self: flex-start;
+    margin: 5px;
+    color: var(--primary-button-color);
+}

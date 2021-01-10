@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import { ProductComponent } from '../components/product/product.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MatIconModule } from '@angular/material/icon';
     NavbarComponent,
     RegisterComponent,
     PageNotFoundComponent,
-    CustomerComponent
+    CustomerComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

@@ -13,31 +13,39 @@
             <div class="products-section">
                 <div class="categories-navbar">
                     <div class="navbar-category">
-                        <a class="navbarLink" routerLink="">All Products</a>
+                        <a class="navbarLink" (click)="sortByAllProducts()">All Products</a>
                     </div>
                     <div class="navbar-category">
-                        <a class="navbarLink" routerLink="">Dairy</a>
+                        <a class="navbarLink" (click)="sortByDairyProducts()">Dairy</a>
                     </div>
                     <div class="navbar-category">
-                        <a class="navbarLink" routerLink="">Meat & Fish</a>
+                        <a class="navbarLink" (click)="sortByMeatAndFish()">Meat & Fish</a>
                     </div>
                     <div class="navbar-category">
-                        <a class="navbarLink" routerLink="">Vegan</a>
+                        <a class="navbarLink" (click)="sortByVegan()">Vegan</a>
                     </div>
                     <div class="navbar-category">
-                        <a class="navbarLink" routerLink="">Drinks</a>
+                        <a class="navbarLink" (click)="sortByDrinks()">Drinks</a>
                     </div>
                     <div class="navbar-category">
-                        <a class="navbarLink" routerLink="">Health</a>
+                        <a class="navbarLink" (click)="sortByHealth()">Health</a>
+                    </div>
+                    <div class="navbar-category">
+                        <mat-form-field class="example-form-field">
+                            <mat-label>Search for products</mat-label>
+                            <!-- PIPE HERE????????????? -->
+                            <input matInput type="text" [(ngModel)]="searchInputValue">
+                            <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
+                              <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
                     </div>
                 </div>
                 
                 <!-- all products section -->
                 <div class="all-products-section">
-                    <div *ngFor="let product of allProducts">
-                        <div class="product-card">
-                            <img class="product-card-image" src={{product.imageURL}} alt={{product.name}}>
-                        </div>
+                    <div *ngFor="let product of currentProductsForDisplay">
+                        <app-product [product]="product"></app-product>
                     </div>
                 </div>
             </div>
