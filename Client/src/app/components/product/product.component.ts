@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import CartItem from 'src/app/models/CartItem';
 import Product from 'src/app/models/Product';
+import { CartService } from 'src/app/services/cart.service';
+import PopupMessages from 'src/app/Utils/PopupMessages';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,7 +14,9 @@ export class ProductComponent implements OnInit {
 
   @Input() product: Product;
 
-  constructor() { }
+  constructor(
+    private cartService: CartService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -21,35 +26,34 @@ export class ProductComponent implements OnInit {
       title: this.product.name,
       text: this.product.description,
       imageUrl: this.product.imageURL,
-      html:
-      `
-      <mat-form-field>
-        <mat-label>ID</mat-label>
-        <input [formControl]="IDInput" name="IDInput" matInput type="number" required>
-
-        <mat-error *ngIf="IDInput.errors?.required">
-            ID is <strong>required</strong>
-        </mat-error>
-
-        <mat-error *ngIf="IDInput.errors?.pattern">
-            ID should be <strong>9 digits</strong>
-        </mat-error>
-      </mat-form-field>
-      `,
+      input: 'number',
       showCancelButton: true,
       confirmButtonColor: '#0099cc',
       cancelButtonColor: '#ff1616',
       confirmButtonText: 'Add To Cart'
     }).then((result) => {
+      
       if (result.isConfirmed) {
-        // ADD TO CART HERE--------------------------------------------
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        const quantity = result.value;
+        this.addItemToCart(quantity);
       }
     })
-  }
+  };
 
+  private addItemToCart = (quantity: number) => {
+    const newCartItem: CartItem = new CartItem(this.product.ID, quantity);
+
+    const observable = this.cartService.addItemToCart(newCartItem);
+  
+    observable.subscribe( (succesfulServerResponse: CartItem) => {
+      Swal.fire(
+        'Item Added',
+        'It has been added to your cart succesfully/111111.',
+        'success'
+      );
+
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
+  }
 }

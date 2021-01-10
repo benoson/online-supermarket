@@ -26,7 +26,7 @@ const getCurrentCartItems = async (userID) => {
     }
 }
 
-const getCustomerCurrentCartOpenDate = async (userID) => {
+const getCustomerCurrentCartCreationDate = async (userID) => {
 
     // Creating the SQL query to get the user from the DB
     const SQL = "SELECT DATE_FORMAT(Cart_Creation_Date, '%d/%m/%Y') as cartCreationDate FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open = '1'";
@@ -48,8 +48,31 @@ const getCustomerCurrentCartOpenDate = async (userID) => {
     }
 }
 
+const addItemToCart = async (userID, newCartItem) => {
+
+    // Creating the SQL query to get the user from the DB
+    const SQL = "INSERT INTO `cart-items` (Product_ID, Amount, Total_Price, Cart_ID) VALUES (?)";
+    const parameter = [newCartItem.productID, newCartItem.quantity, userID];
+
+    try {
+        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        const successfulCurrentCartCreationDate = await connection.executeWithParameters(SQL, parameter);
+        if (successfulCurrentCartCreationDate.length === 0) {
+            return null;
+        }
+        // returning current cart creation date of the customer
+        return successfulCurrentCartCreationDate[0].cartCreationDate;
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
+
 
 module.exports = {
     getCurrentCartItems,
-    getCustomerCurrentCartOpenDate
+    getCustomerCurrentCartCreationDate,
+    addItemToCart
 }

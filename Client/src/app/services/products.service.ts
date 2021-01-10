@@ -12,7 +12,7 @@ export class ProductsService {
   public allProducts: Product[];
   // creating a Subject (subscription-enabler) for this property changes
   public allProductsChange: Subject<Product[]> = new Subject<Product[]>();
-  
+
 
   constructor(private http: HttpClient) {
     // listening for changes in the prodcuts, and updating accordingly

@@ -10,15 +10,23 @@ const getCurrentCartItems = async (request) => {
     return successfulCurrentCartItemsData;
 }
 
-const getCustomerCurrentCartOpenDate = async (request) => {
+const getCustomerCurrentCartCreationDate = async (request) => {
     const userCacheData = UsersUtils.extractUserInfoFromCache(request);
     const userID = userCacheData.ID;
-    const successfulCurrentCartCreationDate = await cartDao.getCustomerCurrentCartOpenDate(userID);
+    const successfulCurrentCartCreationDate = await cartDao.getCustomerCurrentCartCreationDate(userID);
     return successfulCurrentCartCreationDate;
+}
+
+const addItemToCart = async (request, newCartItem) => {
+    const userCacheData = UsersUtils.extractUserInfoFromCache(request);
+    const userID = userCacheData.ID;
+    const succesfulItemAdditionResponse = await cartDao.addItemToCart(userID, newCartItem);
+    return succesfulItemAdditionResponse;
 }
 
 
 module.exports = {
     getCurrentCartItems,
-    getCustomerCurrentCartOpenDate
+    getCustomerCurrentCartCreationDate,
+    addItemToCart
 }

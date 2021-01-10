@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import CartItem from '../models/CartItem';
-import Product from '../models/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +29,10 @@ export class CartService {
 
   public getCurrentCartItems = (): Observable<CartItem[] | null> => {
     return this.http.get<CartItem[] | null>("http://localhost:3001/cart/currentItems");
+  };
+
+  public addItemToCart = (newCartItem: CartItem): Observable<CartItem> => {
+    return this.http.post<CartItem>("http://localhost:3001/cart/addItem", newCartItem);
   };
 
   public getCustomerCurrentCartCreationDate = (): Observable<string | null> => {
