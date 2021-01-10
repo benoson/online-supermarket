@@ -97,14 +97,17 @@
                 <!-- city input -->
                 <mat-form-field>
                     <mat-label>City</mat-label>
-                    <input [formControl]="cityInput" matInput type="text" required>
+                    <mat-select disableRipple [formControl]="cityInput" required>
+                      <mat-option value="Chicago">Chicago</mat-option>
+                      <mat-option value="Los Angeles">Los Angeles</mat-option>
+                      <mat-option value="New York">New York</mat-option>
+                      <mat-option value="London">London</mat-option>
+                      <mat-option value="Liverpool">Liverpool</mat-option>
+                      <mat-option value="Nottingham">Nottingham</mat-option>
+                    </mat-select>
 
                     <mat-error *ngIf="cityInput.errors?.required">
                         City name is <strong>required</strong>
-                    </mat-error>
-
-                    <mat-error *ngIf="cityInput.errors?.minlength || cityInput.errors?.maxlength">
-                        City name should be <strong>2 - 15 chars</strong>
                     </mat-error>
                 </mat-form-field>
 

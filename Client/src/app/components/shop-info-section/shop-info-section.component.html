@@ -9,6 +9,9 @@
     </div>
 
     <div>
-        <p class="last-order-text">FINISH THIS LINE -> You don't have an open cart</p>
+        <p *ngIf="currentCartCreationDate !== null; else noOpenCartText" class="open-cart-text">You have an open cart from {{currentCartCreationDate}}</p>
+        <ng-template #noOpenCartText>
+            <p class="open-cart-text">You don't have an open cart</p>
+        </ng-template>
     </div>
 </div>

@@ -149,8 +149,6 @@ const ErrorType = {
         isShowStackTrace: true,
     },
 
-    
-  
     BAD_IMAGE: {
         id: 11,
         httpCode: 406,

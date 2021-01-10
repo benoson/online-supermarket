@@ -16,7 +16,7 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {
     // listening for changes in the prodcuts, and updating accordingly
-    this.allProductsChange.subscribe(( value) => {
+    this.allProductsChange.subscribe( (value: Product[]) => {
       this.allProducts = value;
     });
   };

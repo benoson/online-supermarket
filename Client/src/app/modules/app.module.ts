@@ -17,6 +17,10 @@ import { ShopInfoSectionComponent } from '../components/shop-info-section/shop-i
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 import { CustomerComponent } from '../components/customer/customer.component';
 
+// Pipes
+import { ProductsPipe } from '../pipes/products.pipe';
+
+
 // Sweet Alert
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
@@ -27,6 +31,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductComponent } from '../components/product/product.component';
+import { MyCartComponent } from '../components/my-cart/my-cart.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -40,7 +46,9 @@ import { ProductComponent } from '../components/product/product.component';
     RegisterComponent,
     PageNotFoundComponent,
     CustomerComponent,
-    ProductComponent
+    ProductComponent,
+    ProductsPipe,
+    MyCartComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +61,7 @@ import { ProductComponent } from '../components/product/product.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
+    MatSelectModule,
     SweetAlert2Module.forRoot()
   ],
   providers: [

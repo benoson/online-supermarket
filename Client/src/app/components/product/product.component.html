@@ -1,5 +1,5 @@
 <div class="product-card">
-    <img class="product-image" src={{product.imageURL}} alt={{product.name}}>
+    <img (click)=[showProductModal()] class="product-image" src={{product.imageURL}} alt={{product.name}}>
     <p class="product-name">{{product.name}}</p>
     <p class="product-category">{{product.category}}</p>
     <p class="product-price">{{product.price}} $</p>

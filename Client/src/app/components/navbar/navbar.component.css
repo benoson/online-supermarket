@@ -7,6 +7,7 @@
     padding: 5px 1.5rem;
     background-color: #21e6c1;
     box-shadow: 0px 3px 10px 0px #9E9E9E;
+    z-index: 99;
 }
 
 .nav-username-section {

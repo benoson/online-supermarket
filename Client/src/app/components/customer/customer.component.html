@@ -1,7 +1,7 @@
 <div class="customer-page">
     <mat-drawer-container class="drawer-container" autosize>
         <mat-drawer #drawer class="drawer-sidenav" mode="side">
-            <p>Auto-resizing sidenav</p>
+            <app-my-cart></app-my-cart>
         </mat-drawer>
         
         <!-- content of the page -->
@@ -19,21 +19,20 @@
                         <a class="navbarLink" (click)="sortByDairyProducts()">Dairy</a>
                     </div>
                     <div class="navbar-category">
-                        <a class="navbarLink" (click)="sortByMeatAndFish()">Meat & Fish</a>
+                        <a class="navbarLink" (click)="sortByMeatAndFishProducts()">Meat & Fish</a>
                     </div>
                     <div class="navbar-category">
-                        <a class="navbarLink" (click)="sortByVegan()">Vegan</a>
+                        <a class="navbarLink" (click)="sortByVeganProducts()">Vegan</a>
                     </div>
                     <div class="navbar-category">
                         <a class="navbarLink" (click)="sortByDrinks()">Drinks</a>
                     </div>
                     <div class="navbar-category">
-                        <a class="navbarLink" (click)="sortByHealth()">Health</a>
+                        <a class="navbarLink" (click)="sortByHealthProducts()">Health</a>
                     </div>
                     <div class="navbar-category">
                         <mat-form-field class="example-form-field">
                             <mat-label>Search for products</mat-label>
-                            <!-- PIPE HERE????????????? -->
                             <input matInput type="text" [(ngModel)]="searchInputValue">
                             <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
                               <mat-icon>close</mat-icon>
@@ -44,7 +43,7 @@
                 
                 <!-- all products section -->
                 <div class="all-products-section">
-                    <div *ngFor="let product of currentProductsForDisplay">
+                    <div *ngFor="let product of currentProductsForDisplay|products: searchInputValue.trim()">
                         <app-product [product]="product"></app-product>
                     </div>
                 </div>
