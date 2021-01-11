@@ -12,8 +12,12 @@ function authenticateJwtRequestToken() {
     return expressJwt({ secret, algorithms: ['HS256'] }).unless({
         path: [
             // public routes that don't require authentication
-            '/welcome/login',
-            '/welcome/register'
+            '/users/login',
+            '/users/register',
+            '/products/',
+            '/orders/totalAmount',
+            '/cart/currentItems',
+            '/cart/creationDate'
         ]
     });
 }

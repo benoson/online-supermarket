@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import CartItem from 'src/app/models/CartItem';
 import Product from 'src/app/models/Product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
 
@@ -22,17 +24,19 @@ export class CustomerComponent implements OnInit {
   public searchInputValue: string = "";
 
   constructor(
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
     this.checkIfShouldGetAllProducts();
+    this.checkIfShouldGetCartItems();
   }
 
   private checkIfShouldGetAllProducts = () => {
     // if there aren't any products in the products service, get them from the server
     if (this.productsService.allProducts === undefined) {
-      this.getAllProducts();
+      this.getAllProductsFromServer();
     }
     else {
       this.allProducts = this.productsService.allProducts;
@@ -40,7 +44,14 @@ export class CustomerComponent implements OnInit {
     this.sortProductsToCategories();
   }
 
-  public getAllProducts = (): void => {
+  private checkIfShouldGetCartItems = () => {
+    // if there aren't any cart items in the service, attempt to get them from the server (this is for a case where a user refreshes the customer's page)
+    if (this.cartService.customerCurrentCartItems === undefined) {
+      this.getAllCartItems();
+    }
+  }
+
+  public getAllProductsFromServer = (): void => {
     const observable = this.productsService.getAllProducts();
 
     observable.subscribe( (succesfulServerResponse: Product[]) => {
@@ -48,6 +59,18 @@ export class CustomerComponent implements OnInit {
       this.productsService.allProductsChange.next(succesfulServerResponse);
       this.allProducts = succesfulServerResponse;
       this.sortProductsToCategories();
+
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
+  }
+
+  public getAllCartItems = (): void => {
+    const observable = this.cartService.getCurrentCartItems();
+
+    observable.subscribe( (succesfulServerResponse: CartItem[]) => {
+      // updating the value in the service, letting it know we recieved the cart items
+      this.cartService.customerCurrentCartItemsChange.next(succesfulServerResponse);
 
     }, badServerResponse => {
       PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);

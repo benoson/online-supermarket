@@ -8,8 +8,8 @@ import CartItem from '../models/CartItem';
 })
 export class CartService {
 
-  public customerCurrentCartItems: CartItem[] | null;
-  public customerCurrentCartItemsChange: Subject<CartItem[] | null> = new Subject<CartItem[] | null>();
+  public customerCurrentCartItems: CartItem[];
+  public customerCurrentCartItemsChange: Subject<CartItem[]> = new Subject<CartItem[]>();
 
   public currentCartCreationDate: string | null;
   public currentCartCreationDateChange: Subject<string | null> = new Subject<string | null>();
@@ -17,25 +17,29 @@ export class CartService {
   constructor(private http: HttpClient) {
     
     // listening for changes in the last customer's current cart items, and updating accordingly
-    this.customerCurrentCartItemsChange.subscribe( (value: CartItem[] | null) => {
+    this.customerCurrentCartItemsChange.subscribe( (value: CartItem[]) => {
       this.customerCurrentCartItems = value;
     });
 
-    // listening for changes in the customer's open cart date
+    // listening for changes in the customer's cart creation date
     this.currentCartCreationDateChange.subscribe( (value: string | null) => {
       this.currentCartCreationDate = value;
     });
   };
 
-  public getCurrentCartItems = (): Observable<CartItem[] | null> => {
-    return this.http.get<CartItem[] | null>("http://localhost:3001/cart/currentItems");
+  public getCurrentCartItems = (): Observable<CartItem[]> => {
+    return this.http.get<CartItem[]>("http://localhost:3001/cart/currentItems");
   };
 
   public addItemToCart = (newCartItem: CartItem): Observable<CartItem> => {
     return this.http.post<CartItem>("http://localhost:3001/cart/addItem", newCartItem);
   };
 
+  public updateCartItem = (updatedCartItem: CartItem): Observable<CartItem> => {
+    return this.http.patch<CartItem>("http://localhost:3001/cart/updateItem", updatedCartItem);
+  };
+
   public getCustomerCurrentCartCreationDate = (): Observable<string | null> => {
-    return this.http.get<string | null>("http://localhost:3001/cart/openDate");
+    return this.http.get<string | null>("http://localhost:3001/cart/creationDate");
   };
 }

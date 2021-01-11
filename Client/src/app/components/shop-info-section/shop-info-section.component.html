@@ -5,13 +5,13 @@
     <h3 class="sharp">So Far, {{totalOrdersAmount}} Customers Have Enjoyed Buying At Bitten Tomato's.</h3>
 
     <div *ngIf="customerLastOrderDate !== undefined ">
-        <p class="last-order-text">{{customerLastOrderDate}}</p>
+        <p class="green-info-text">{{customerLastOrderDate}}</p>
     </div>
 
-    <div>
-        <p *ngIf="currentCartCreationDate !== null; else noOpenCartText" class="open-cart-text">You have an open cart from {{currentCartCreationDate}}</p>
+    <div *ngIf="userService.isUserLoggedIn">
+        <p *ngIf="currentCartCreationDate !== null" class="green-info-text">You have an open cart from {{currentCartCreationDate}}</p>
         <ng-template #noOpenCartText>
-            <p class="open-cart-text">You don't have an open cart</p>
+            <p class="green-info-text">You don't have an open cart</p>
         </ng-template>
     </div>
 </div>

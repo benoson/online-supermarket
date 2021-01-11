@@ -6,6 +6,7 @@ import { OrdersService } from 'src/app/services/orders.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { UserService } from 'src/app/services/user.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
+import UsersUtils from 'src/app/Utils/UsersUtils';
 
 @Component({
   selector: 'app-shop-info-section',
@@ -17,7 +18,7 @@ export class ShopInfoSectionComponent implements OnInit {
   public totalProductsAmount: number;
   public totalOrdersAmount: number;
   public customerLastOrderDate: string;
-  public customerCurrentCartItems: CartItem[] | null;
+  public customerCurrentCartItems: CartItem[];
   public currentCartCreationDate: string | null;
 
   constructor(
@@ -49,7 +50,7 @@ export class ShopInfoSectionComponent implements OnInit {
     });
 
     // listening for changes of the customer's current cart items, inside the cart service
-    this.cartService.customerCurrentCartItemsChange.subscribe( (value: CartItem[] | null) => {
+    this.cartService.customerCurrentCartItemsChange.subscribe( (value: CartItem[]) => {
       this.customerCurrentCartItems = value;
     });
 
@@ -60,25 +61,31 @@ export class ShopInfoSectionComponent implements OnInit {
   }
 
   private getCustomerCurrentCartItems = () => {
-    const observable = this.cartService.getCurrentCartItems();
-  
-    observable.subscribe( (succesfulServerResponse: CartItem[] | null) => {
-      this.cartService.customerCurrentCartItemsChange.next(succesfulServerResponse);
 
-    }, badServerResponse => {
-      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
-    });
+    if (this.userService.isUserLoggedIn) {
+      const observable = this.cartService.getCurrentCartItems();
+    
+      observable.subscribe( (succesfulServerResponse: CartItem[]) => {
+        this.cartService.customerCurrentCartItemsChange.next(succesfulServerResponse);
+  
+      }, badServerResponse => {
+        PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+      });
+    }
   }
 
   private getCustomerCurrentCartCreationDate = () => {
-    const observable = this.cartService.getCustomerCurrentCartCreationDate();
-  
-    observable.subscribe( (succesfulServerResponse: string | null) => {
-      this.cartService.currentCartCreationDateChange.next(succesfulServerResponse);
 
-    }, badServerResponse => {
-      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
-    });
+    if (this.userService.isUserLoggedIn) {
+      const observable = this.cartService.getCustomerCurrentCartCreationDate();
+    
+      observable.subscribe( (succesfulServerResponse: string | null) => {
+        this.cartService.currentCartCreationDateChange.next(succesfulServerResponse);
+  
+      }, badServerResponse => {
+        PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+      });
+    }
   }
 
   /**
@@ -86,7 +93,7 @@ export class ShopInfoSectionComponent implements OnInit {
    * if not, it will dispatch a request to get the last order date of the customer.
    */
   private getLastOrderDateByCustomer = (): void => {
-
+    
     if (this.userService.isUserLoggedIn) {
       const observable = this.ordersService.getLastOrderDateByCustomer();
   

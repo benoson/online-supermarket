@@ -41,19 +41,54 @@ export class ProductComponent implements OnInit {
   };
 
   private addItemToCart = (quantity: number) => {
-    const newCartItem: CartItem = new CartItem(this.product.ID, quantity);
+    console.log(this.cartService.customerCurrentCartItems);
+    
+    const cartItem: CartItem = new CartItem(this.product.ID, quantity);
+    const isItemAlreadyExistInCart = this.checkIfItemExistInCart();
+    
+    if (isItemAlreadyExistInCart) {
+      this.updateExistingCartItem(cartItem);
+    }
+    else {
+      this.addNewItemToCart(cartItem);
+    }
+  }
 
+  private addNewItemToCart = (newCartItem: CartItem) => {
     const observable = this.cartService.addItemToCart(newCartItem);
   
-    observable.subscribe( (succesfulServerResponse: CartItem) => {
+    observable.subscribe( () => {
       Swal.fire(
-        'Item Added',
-        'It has been added to your cart succesfully/111111.',
+        'Item Added To Cart!',
+        `Added ${newCartItem.quantity} ${this.product.name} To Your Cart`,
         'success'
       );
 
     }, badServerResponse => {
       PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
     });
+  }
+
+  private updateExistingCartItem = (updatedCartItem: CartItem) => {
+    const observable = this.cartService.updateCartItem(updatedCartItem);
+  
+    observable.subscribe( () => {
+      Swal.fire(
+        'Item Updated In Cart!',
+        `Updated ${this.product.name} To Be ${updatedCartItem.quantity} In Your Cart`,
+        'success'
+      );
+
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
+  }
+
+  private checkIfItemExistInCart = () => {
+    const isItemAlreadyExist = this.cartService.customerCurrentCartItems.filter( (cartItem: CartItem) => cartItem.productID === this.product.ID);
+    if (isItemAlreadyExist.length === 0) {
+      return false;
+    }
+    return true;
   }
 }

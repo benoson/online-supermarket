@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '
 import { Router } from '@angular/router';
 import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserLoginDetails from 'src/app/models/UserLoginDetails';
+import { CartService } from 'src/app/services/cart.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserService } from 'src/app/services/user.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public userService: UserService,
     private ordersService: OrdersService,
-    private router: Router
+    private cartService: CartService
   ) { }
 
 
@@ -70,6 +71,7 @@ export class LoginComponent implements OnInit {
     // updating the users service that the user has logged in
     this.userService.isLoggedInChange.next(true);
     this.getLastOrderDateByCustomer();
+    this.getCustomerCurrentCartCreationDate();
     // changing the first name property in the service
     this.userService.userFirstNameChange.next(succesfulServerResponse.firstName);
   }
@@ -84,6 +86,17 @@ export class LoginComponent implements OnInit {
       PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
     });
   };
+
+  private getCustomerCurrentCartCreationDate = () => {
+    const observable = this.cartService.getCustomerCurrentCartCreationDate();
+  
+    observable.subscribe( (succesfulServerResponse: string | null) => {
+      this.cartService.currentCartCreationDateChange.next(succesfulServerResponse);
+
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
+  }
 
   private assignFormControlsValues = (): void => {
     this.userLoginDetails.email = this.emailInput.value;

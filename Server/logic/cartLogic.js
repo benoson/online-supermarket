@@ -20,13 +20,19 @@ const getCustomerCurrentCartCreationDate = async (request) => {
 const addItemToCart = async (request, newCartItem) => {
     const userCacheData = UsersUtils.extractUserInfoFromCache(request);
     const userID = userCacheData.ID;
-    const succesfulItemAdditionResponse = await cartDao.addItemToCart(userID, newCartItem);
-    return succesfulItemAdditionResponse;
+    await cartDao.addItemToCart(userID, newCartItem);
+}
+
+const updateCartItem = async (request, updatedCartItem) => {
+    const userCacheData = UsersUtils.extractUserInfoFromCache(request);
+    const userID = userCacheData.ID;
+    await cartDao.updateCartItem(userID, updatedCartItem);
 }
 
 
 module.exports = {
     getCurrentCartItems,
     getCustomerCurrentCartCreationDate,
-    addItemToCart
+    addItemToCart,
+    updateCartItem
 }

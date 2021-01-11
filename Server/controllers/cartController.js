@@ -52,5 +52,22 @@ router.post('/addItem', async (request, response, next) => {
     }
 });
 
+router.patch('/updateItem', async (request, response, next) => {
+
+    const updatedCartItem = request.body;
+
+    try {
+        const succesfulItemUpdateResponse = await cartLogic.updateCartItem(request, updatedCartItem);
+
+        // converting the response to JSON before sending it to the client
+        response.json(succesfulItemUpdateResponse);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
 
 module.exports = router;
