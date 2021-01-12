@@ -35,7 +35,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -68,7 +67,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatSelectModule,
     MatBadgeModule,
-    MatDialogModule,
     SweetAlert2Module.forRoot()
   ],
   providers: [

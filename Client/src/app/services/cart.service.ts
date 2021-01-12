@@ -15,11 +15,19 @@ export class CartService {
   public currentCartCreationDate: string | null;
   public currentCartCreationDateChange: Subject<string | null> = new Subject<string | null>();
 
+  public isShowReceipt: boolean;
+  public isShowReceiptChange: Subject<boolean> = new Subject<boolean>();
+
   constructor(private http: HttpClient) {
     
     // listening for changes in the last customer's current cart items, and updating accordingly
     this.customerCurrentCartItemsChange.subscribe( (value: CartItemForDisplay[]) => {
       this.customerCurrentCartItems = value;
+    });
+
+    // listening for changes of the 'show cart' indication
+    this.isShowReceiptChange.subscribe( (value: boolean) => {
+      this.isShowReceipt = value;
     });
 
     // listening for changes in the customer's cart creation date

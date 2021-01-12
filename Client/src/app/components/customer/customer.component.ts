@@ -23,6 +23,7 @@ export class CustomerComponent implements OnInit {
   public healthProducts: Product[];
 
   public searchInputValue: string;
+  public isShowReceipt : boolean;
 
   constructor(
     private productsService: ProductsService,
@@ -31,9 +32,23 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchInputValue = "";
+    this.cartService.isShowReceiptChange.next(false);
     this.checkIfCartHasItems();
     this.checkIfShouldGetAllProducts();
     this.checkIfShouldGetCartItems();
+    this.initiateListeners();
+  }
+
+  private initiateListeners = () => {
+    // listening for changes of the 'show receipt' indication, inside the cart service
+    this.cartService.isShowReceiptChange.subscribe( (value: boolean) => {
+      this.isShowReceipt = value;
+
+      // preparing all the products for when the user will go back to the shopping page (doing it when the receipt is shown, to save time)
+      if (this.isShowReceipt) {
+        this.currentProductsForDisplay = this.allProducts;
+      }
+    });
 
     this.cartService.customerCurrentCartItemsChange.subscribe( (value: CartItemForDisplay[]) => {
       this.customerCurrentCartItems = value;

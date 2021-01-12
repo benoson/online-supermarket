@@ -1,0 +1,29 @@
+.receipt-section {
+    width: 70%;
+    padding: 1rem;
+    min-height: 50vh;
+    margin: auto;
+}
+
+.receipt-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.receipt-buttons-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.border-div {
+    flex: 1;
+    min-width: 10px;
+    border-bottom: 1px solid rgb(0, 225, 255);
+    margin: 0 10px;
+}
+
+.green-text {
+    color: green;
+}

@@ -14,7 +14,6 @@ export class MyCartComponent implements OnInit {
   public customerCurrentCartItems : CartItemForDisplay[];
   public searchInputValue : string;
   public totalPriceOfAllCartItems : number;
-  public isShowReceipt : boolean;
 
   constructor(private cartService: CartService) {
     this.customerCurrentCartItems = this.cartService.customerCurrentCartItems;
@@ -22,17 +21,19 @@ export class MyCartComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchInputValue = "";
-    this.isShowReceipt = false;
     this.checkIfCartHasItems();
+    
     // listening for changes inside the customer's currect cart items, inside the cart service
     this.cartService.customerCurrentCartItemsChange.subscribe( (value: CartItemForDisplay[]) => {
       this.customerCurrentCartItems = value;
       this.updateTotalPriceOfAllCartItems();
     });
+
+    this.updateTotalPriceOfAllCartItems();
   }
 
   public purchaseCartItems = () => {
-    this.isShowReceipt = true;
+    this.cartService.isShowReceiptChange.next(true);
   }
 
   public removeItemFromCart = (cartItem: CartItemForDisplay) => {
@@ -51,6 +52,11 @@ export class MyCartComponent implements OnInit {
   private removeCartItemFromLocalCart = (cartItem: CartItemForDisplay) => {
     const updatedCartItems = this.customerCurrentCartItems.filter( (item: CartItemForDisplay) => item !== cartItem)
     this.cartService.customerCurrentCartItemsChange.next(updatedCartItems);
+
+    // if the cart is empty, close the receipt
+    if (this.cartService.customerCurrentCartItems.length === 0) {
+      this.cartService.isShowReceiptChange.next(false);
+    }
   }
 
   public removeAllCartItems = () => {
@@ -58,6 +64,8 @@ export class MyCartComponent implements OnInit {
 
     observable.subscribe( () => {
       this.removeAllItemsFromLocalCart();
+      // closing the receipt, if it's open
+      this.cartService.isShowReceiptChange.next(false);
       PopupMessages.displaySuccessPopupMessage("All items were succesfully removed from cart");
 
     }, badServerResponse => {
@@ -85,5 +93,8 @@ export class MyCartComponent implements OnInit {
     for (let cartItem of this.customerCurrentCartItems) {
       this.totalPriceOfAllCartItems += +cartItem.totalPrice;
     }
+
+    // limiting the number of decimal places of the total price
+    this.totalPriceOfAllCartItems = +this.totalPriceOfAllCartItems.toFixed(2);
   }
 }

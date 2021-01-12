@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private userService: UserService
-    ) { };
+  ) { };
 
   ngOnInit(): void {
     // listening for changes of the first name, inside the users service

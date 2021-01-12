@@ -12,7 +12,7 @@
             </button>
 
             <div class="products-section">
-                <div class="categories-navbar">
+                <div class="categories-navbar" *ngIf="!isShowReceipt">
                     <div class="navbar-category">
                         <a id="all-products-nav-text" class="navbarLink current-category" (click)="sortByAllProducts()">All Products</a>
                     </div>
@@ -43,11 +43,15 @@
                 </div>
                 
                 <!-- all products section -->
-                <div class="all-products-section">
+                <div *ngIf="!isShowReceipt; else showReceipt" class="all-products-section">
                     <div *ngFor="let product of currentProductsForDisplay|products: searchInputValue.trim()">
                         <app-product [product]="product"></app-product>
                     </div>
                 </div>
+
+                <ng-template #showReceipt>
+                    <app-receipt></app-receipt>
+                </ng-template>
             </div>
         </div>
     </mat-drawer-container>

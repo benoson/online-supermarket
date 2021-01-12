@@ -23,8 +23,6 @@ export class ProductComponent implements OnInit {
   }
 
   public showProductModal = () => {
-    console.log(this.cartService.customerCurrentCartItems);
-    
     Swal.fire({
       title: this.product.name,
       imageUrl: this.product.imageURL,

@@ -1,8 +1,26 @@
-<h2 mat-dialog-title>Install Angular</h2>
-<mat-dialog-content class="mat-typography">
-  <p>This is some text</p>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
-</mat-dialog-actions>
+<div class="receipt-section">
+  <h2 class="sharp">Receipt</h2>
+
+  <div class="receipt-search-input">
+    <mat-form-field>
+        <mat-label>Search in the receipt</mat-label>
+        <input matInput type="text" [(ngModel)]="searchInputValue">
+        <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
+          <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+  </div>
+
+  <div class="receipt-item" *ngFor="let cartItem of currentProductsForDisplay|cartItems: searchInputValue.trim()">
+    <span> <span class="green-text">{{cartItem.amount}} x </span> <span class="cart-product-text">{{cartItem.productName}}</span> </span>
+    <div class="border-div"></div>
+    <span class="green-text cart-item-total-price-text">{{cartItem.totalPrice}} $</span>
+  </div>
+
+  <p class="green-text">Total: {{totalPriceOfAllCartItems}} $</p>
+
+  <div class="receipt-buttons-div">
+    <button mat-stroked-button class="primary-button">Purchase</button>
+    <button mat-stroked-button class="secondary-button" (click)="closeReceipt()">Back To Shopping</button>
+  </div>
+</div>
