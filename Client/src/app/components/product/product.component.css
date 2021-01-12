@@ -9,8 +9,18 @@
 .product-image {
     width: 150px;
     height: 161px;
-    border-bottom: 1px solid rgb(158 158 158 / 32%);
     padding-bottom: 10px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.bottom-border-div {
+    width: 100%;
+    border-bottom: 1px solid rgb(158 158 158 / 32%);
+}
+
+.product-image:hover {
+    transform: scale(1.1);
 }
 
 .product-name, .product-category, .product-price {

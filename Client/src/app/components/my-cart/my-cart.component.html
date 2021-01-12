@@ -1,1 +1,6 @@
-<p>my-cart works!</p>
+<h2 class="sharp">Your Cart</h2>
+<div *ngFor="let cartItem of customerCurrentCartItems" class="cart-item">
+    <span> <span class="green-text">{{cartItem.amount}} x </span> <span class="cart-product-text">{{cartItem.productName}}</span> </span>
+    <div class="border-div"></div>
+    <mat-icon class="remove-cart-item-button">remove_circle_outline</mat-icon>
+</div>

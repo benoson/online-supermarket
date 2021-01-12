@@ -5,16 +5,17 @@ let ServerError = require("../errors/serverError");
 
 
 const getCurrentCartItems = async (userID) => {
-    
+
     // Creating the SQL query to get the user from the DB
     // attempting to get the current cart items of the user
 
-    const SQL = "SELECT c.Item_ID as itemID, c.Product_ID as productID, c.Amount as amount, c.Total_Price as totalPrice, s.Cart_ID as cartID FROM `shopping-carts` s LEFT JOIN `cart-items` c ON s.Cart_ID = c.Cart_ID WHERE s.Cart_Owner = ? AND s.Is_Open = '1'";
+    const SQL = "SELECT c.Product_ID as productID, c.Amount as amount, c.Total_Price as totalPrice, (SELECT Product_Name FROM products WHERE Product_ID = c.Product_ID) as productName FROM `shopping-carts` s LEFT JOIN `cart-items` c ON s.Cart_ID = c.Cart_ID WHERE s.Cart_Owner = ? AND s.Is_Open = '1'";
     const parameter = [userID];
 
     try {
         // Sending the SQL query and the user's login data to the 'connection wrapper' preset
         const customerCurrentCartItems = await connection.executeWithParameters(SQL, parameter);
+        console.log(customerCurrentCartItems);
         // returning all current cart items of the customer
         return customerCurrentCartItems;
     }
@@ -51,7 +52,7 @@ const addItemToCart = async (userID, newCartItem) => {
 
     // Creating the SQL query to get the user from the DB
     const SQL = "INSERT INTO `cart-items` (Product_ID, Amount, Total_Price, Cart_ID) VALUES(?, ?, ((SELECT Product_Price FROM products WHERE Product_ID = ?) * ?), (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ?))";
-    const parameter = [newCartItem.productID, newCartItem.quantity, newCartItem.productID, newCartItem.quantity, userID];
+    const parameter = [newCartItem.productID, newCartItem.amount, newCartItem.productID, newCartItem.amount, userID];
 
     try {
         // Sending the SQL query and the user's login data to the 'connection wrapper' preset
@@ -70,7 +71,7 @@ const updateCartItem = async (userID, updatedCartItem) => {
     // updating the amount of  the item that the client has changed
 
     const SQL = "UPDATE `cart-items` SET Amount = ?, Total_Price = ((SELECT Product_Price FROM products WHERE Product_ID = ?) * ?), Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ?) WHERE Product_ID = ?";
-    const parameter = [updatedCartItem.quantity, updatedCartItem.productID, updatedCartItem.quantity, userID, updatedCartItem.productID];
+    const parameter = [updatedCartItem.amount, updatedCartItem.productID, updatedCartItem.amount, userID, updatedCartItem.productID];
 
     try {
         // Sending the SQL query and the user's login data to the 'connection wrapper' preset

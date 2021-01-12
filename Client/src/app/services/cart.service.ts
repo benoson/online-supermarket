@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import CartItem from '../models/CartItem';
+import CartItemForDisplay from '../models/CartItemForDisplay';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  public customerCurrentCartItems: CartItem[];
-  public customerCurrentCartItemsChange: Subject<CartItem[]> = new Subject<CartItem[]>();
+  public customerCurrentCartItems: CartItemForDisplay[];
+  public customerCurrentCartItemsChange: Subject<CartItemForDisplay[]> = new Subject<CartItemForDisplay[]>();
 
   public currentCartCreationDate: string | null;
   public currentCartCreationDateChange: Subject<string | null> = new Subject<string | null>();
@@ -17,7 +18,7 @@ export class CartService {
   constructor(private http: HttpClient) {
     
     // listening for changes in the last customer's current cart items, and updating accordingly
-    this.customerCurrentCartItemsChange.subscribe( (value: CartItem[]) => {
+    this.customerCurrentCartItemsChange.subscribe( (value: CartItemForDisplay[]) => {
       this.customerCurrentCartItems = value;
     });
 
@@ -27,8 +28,8 @@ export class CartService {
     });
   };
 
-  public getCurrentCartItems = (): Observable<CartItem[]> => {
-    return this.http.get<CartItem[]>("http://localhost:3001/cart/currentItems");
+  public getCurrentCartItems = (): Observable<CartItemForDisplay[]> => {
+    return this.http.get<CartItemForDisplay[]>("http://localhost:3001/cart/currentItems");
   };
 
   public addItemToCart = (newCartItem: CartItem): Observable<CartItem> => {

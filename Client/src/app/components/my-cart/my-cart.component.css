@@ -1,0 +1,26 @@
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.remove-cart-item-button {
+    font-size: 22px;
+    color: #607d8b;
+}
+
+.cart-product-text {
+    margin-right: 10px;
+}
+
+.border-div {
+    flex: 1;
+    min-width: 10px;
+    border-bottom: 1px solid rgb(0, 225, 255);
+    margin-right: 10px;
+}
+
+.green-text {
+    color: green;
+}

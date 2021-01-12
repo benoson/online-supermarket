@@ -6,8 +6,9 @@
         
         <!-- content of the page -->
         <div class="page-content">
-            <button type="button" mat-stroked-button class="primary-button" (click)="drawer.toggle()">
-                <mat-icon aria-hidden="false" aria-label="my cart icon">shopping_cart</mat-icon>
+            <button type="button" matBadge={{customerCurrentCartItems.length}} matBadgePosition="after" matBadgeColor="accent"
+                mat-stroked-button class="primary-button" (click)="drawer.toggle()">
+                    <mat-icon aria-hidden="false" aria-label="my cart icon">shopping_cart</mat-icon>
             </button>
 
             <div class="products-section">

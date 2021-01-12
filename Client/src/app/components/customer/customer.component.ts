@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import CartItem from 'src/app/models/CartItem';
+import CartItemForDisplay from 'src/app/models/CartItemForDisplay';
 import Product from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
@@ -14,6 +14,7 @@ export class CustomerComponent implements OnInit {
 
   public allProducts: Product[] = new Array <Product>();
   public currentProductsForDisplay: Product[];
+  public customerCurrentCartItems: CartItemForDisplay[];
 
   public dairyProducts: Product[];
   public meatAndFishProducts: Product[];
@@ -21,16 +22,22 @@ export class CustomerComponent implements OnInit {
   public drinksProducts: Product[];
   public healthProducts: Product[];
 
-  public searchInputValue: string = "";
+  public searchInputValue: string;
 
   constructor(
     private productsService: ProductsService,
-    private cartService: CartService
+    public cartService: CartService
   ) { }
 
   ngOnInit(): void {
+    this.customerCurrentCartItems = new Array<CartItemForDisplay>();
+    this.searchInputValue = "";
     this.checkIfShouldGetAllProducts();
     this.checkIfShouldGetCartItems();
+
+    this.cartService.customerCurrentCartItemsChange.subscribe( (value: CartItemForDisplay[]) => {
+      this.customerCurrentCartItems = value;
+    })
   }
 
   private checkIfShouldGetAllProducts = () => {
@@ -68,7 +75,7 @@ export class CustomerComponent implements OnInit {
   public getAllCartItems = (): void => {
     const observable = this.cartService.getCurrentCartItems();
 
-    observable.subscribe( (succesfulServerResponse: CartItem[]) => {
+    observable.subscribe( (succesfulServerResponse: CartItemForDisplay[]) => {
       // updating the value in the service, letting it know we recieved the cart items
       this.cartService.customerCurrentCartItemsChange.next(succesfulServerResponse);
 
@@ -88,25 +95,31 @@ export class CustomerComponent implements OnInit {
 
   public sortByAllProducts = () => {
     this.currentProductsForDisplay = this.allProducts;
+    this.searchInputValue = "";
   }
 
   public sortByDairyProducts = () => {
     this.currentProductsForDisplay = this.dairyProducts;
+    this.searchInputValue = "";
   }
 
   public sortByMeatAndFishProducts = () => {
     this.currentProductsForDisplay = this.meatAndFishProducts;
+    this.searchInputValue = "";
   }
 
   public sortByVeganProducts = () => {
     this.currentProductsForDisplay = this.veganProducts;
+    this.searchInputValue = "";
   }
 
   public sortByDrinks = () => {
     this.currentProductsForDisplay = this.drinksProducts;
+    this.searchInputValue = "";
   }
 
   public sortByHealthProducts = () => {
     this.currentProductsForDisplay = this.healthProducts;
+    this.searchInputValue = "";
   }
 }

@@ -33,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProductComponent } from '../components/product/product.component';
 import { MyCartComponent } from '../components/my-cart/my-cart.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSidenavModule,
     MatIconModule,
     MatSelectModule,
+    MatBadgeModule,
     SweetAlert2Module.forRoot()
   ],
   providers: [

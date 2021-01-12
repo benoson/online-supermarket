@@ -13,6 +13,9 @@
   
 .drawer-sidenav {
     padding: 20px;
+    background: url("../../../assets/cart-background.png");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .products-section {

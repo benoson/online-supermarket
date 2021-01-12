@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import CartItem from 'src/app/models/CartItem';
+import CartItemForDisplay from 'src/app/models/CartItemForDisplay';
 import Product from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { UserService } from 'src/app/services/user.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
-import UsersUtils from 'src/app/Utils/UsersUtils';
 
 @Component({
   selector: 'app-shop-info-section',
@@ -24,7 +24,7 @@ export class ShopInfoSectionComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private ordersService: OrdersService,
-    private userService: UserService,
+    public userService: UserService,
     private cartService: CartService
   ) { };
 
@@ -65,7 +65,7 @@ export class ShopInfoSectionComponent implements OnInit {
     if (this.userService.isUserLoggedIn) {
       const observable = this.cartService.getCurrentCartItems();
     
-      observable.subscribe( (succesfulServerResponse: CartItem[]) => {
+      observable.subscribe( (succesfulServerResponse: CartItemForDisplay[]) => {
         this.cartService.customerCurrentCartItemsChange.next(succesfulServerResponse);
   
       }, badServerResponse => {
