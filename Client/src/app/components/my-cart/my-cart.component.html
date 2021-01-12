@@ -1,16 +1,37 @@
-<h2 class="cart-header">Your Cart</h2>
-
-<div *ngFor="let cartItem of customerCurrentCartItems" class="cart-item">
-    <span> <span class="green-text">{{cartItem.amount}} x </span> <span class="cart-product-text">{{cartItem.productName}}</span> </span>
-    <div class="border-div"></div>
-    <span class="green-text cart-item-total-price-text">{{cartItem.totalPrice}} $</span>
-    <mat-icon class="remove-cart-item-button" (click)="removeItemFromCart(cartItem)">remove_circle_outline</mat-icon>
-</div>
-<mat-icon *ngIf="customerCurrentCartItems.length > 0; else emptyCartIcon" class="remove-all-cart-items-button" (click)="removeAllCartItems()">delete_sweep</mat-icon>
-
-<ng-template #emptyCartIcon>
-    <div class="empty-cart-div">
-        <p class="empty-cart-text">Your cart is empty</p>
-        <mat-icon>production_quantity_limits</mat-icon>
+<div class="cart-section">
+    <h2 class="cart-header">Your Cart</h2>
+    
+    <div class="cart-search-input" *ngIf="customerCurrentCartItems.length > 0">
+        <mat-form-field>
+            <mat-label>Search for items in the cart</mat-label>
+            <input matInput type="text" [(ngModel)]="searchInputValue">
+            <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
+              <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
     </div>
-</ng-template>
+    
+    <div *ngFor="let cartItem of customerCurrentCartItems|cartItems: searchInputValue.trim()" class="cart-item">
+        <span> <span class="green-text">{{cartItem.amount}} x </span> <span class="cart-product-text">{{cartItem.productName}}</span> </span>
+        <div class="border-div"></div>
+        <span class="green-text cart-item-total-price-text">{{cartItem.totalPrice}} $</span>
+        <mat-icon class="remove-cart-item-button" (click)="removeItemFromCart(cartItem)">remove_circle_outline</mat-icon>
+    </div>
+    <mat-icon *ngIf="customerCurrentCartItems.length > 0; else emptyCartIcon" class="remove-all-cart-items-button" (click)="removeAllCartItems()">delete_sweep</mat-icon>
+    
+    <ng-template #emptyCartIcon>
+        <div class="empty-cart-div">
+            <p class="empty-cart-text">Your cart is empty</p>
+            <mat-icon>production_quantity_limits</mat-icon>
+        </div>
+    </ng-template>
+    
+    <div class="purchase-cart-div" *ngIf="customerCurrentCartItems.length > 0">
+        <p class="green-text">Total: {{totalPriceOfAllCartItems}} $</p>
+        <button class="purchase-button primary-button" (click)="purchaseCartItems()">Purchase</button>
+    </div>
+</div>
+
+<div class="receipt" *ngIf="isShowReceipt">
+    <app-receipt></app-receipt>
+</div>

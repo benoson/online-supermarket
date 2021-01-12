@@ -10,6 +10,30 @@
     margin-bottom: 1rem;
 }
 
+.cart-search-input {
+    margin-bottom: 1rem;
+}
+
+.purchase-cart-div {
+    margin-top: 2rem;
+}
+
+.purchase-button {
+    width: 100%;
+    background: white;
+    padding: 5px;
+    border: 1px solid var(--primary-theme-color);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease;
+    outline: none;
+}
+
+.purchase-button:hover {
+    background-color: var(--primary-theme-color);
+    color: white;
+}
+
 .remove-cart-item-button {
     font-size: 22px;
     color: #607d8b;

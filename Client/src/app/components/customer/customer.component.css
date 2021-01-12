@@ -13,6 +13,7 @@
   
 .drawer-sidenav {
     padding: 20px;
+    min-width: 200px;
     background: url("../../../assets/cart-background.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -41,6 +42,10 @@
 
 .navbarLink:hover {
     color: var(--primary-theme-color);
+}
+
+.current-category {
+    color: #21e6c1;
 }
 
 .all-products-section {

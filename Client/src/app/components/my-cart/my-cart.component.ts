@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import CartItemForDisplay from 'src/app/models/CartItemForDisplay';
 import { CartService } from 'src/app/services/cart.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-my-cart',
@@ -11,17 +12,27 @@ import PopupMessages from 'src/app/Utils/PopupMessages';
 export class MyCartComponent implements OnInit {
 
   public customerCurrentCartItems : CartItemForDisplay[];
+  public searchInputValue : string;
+  public totalPriceOfAllCartItems : number;
+  public isShowReceipt : boolean;
 
   constructor(private cartService: CartService) {
     this.customerCurrentCartItems = this.cartService.customerCurrentCartItems;
   }
 
   ngOnInit(): void {
+    this.searchInputValue = "";
+    this.isShowReceipt = false;
     this.checkIfCartHasItems();
-    // listening for changes inside the customer's currect cart creation date, inside the cart service
+    // listening for changes inside the customer's currect cart items, inside the cart service
     this.cartService.customerCurrentCartItemsChange.subscribe( (value: CartItemForDisplay[]) => {
       this.customerCurrentCartItems = value;
+      this.updateTotalPriceOfAllCartItems();
     });
+  }
+
+  public purchaseCartItems = () => {
+    this.isShowReceipt = true;
   }
 
   public removeItemFromCart = (cartItem: CartItemForDisplay) => {
@@ -65,6 +76,14 @@ export class MyCartComponent implements OnInit {
     }
     else {
       this.customerCurrentCartItems = new Array<CartItemForDisplay>();
+    }
+  }
+
+  private updateTotalPriceOfAllCartItems = () => {
+    this.totalPriceOfAllCartItems = 0;
+
+    for (let cartItem of this.customerCurrentCartItems) {
+      this.totalPriceOfAllCartItems += +cartItem.totalPrice;
     }
   }
 }

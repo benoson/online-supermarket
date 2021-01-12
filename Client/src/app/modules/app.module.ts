@@ -16,10 +16,13 @@ import { AboutUsSectionComponent } from '../components/about-us-section/about-us
 import { ShopInfoSectionComponent } from '../components/shop-info-section/shop-info-section.component';
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 import { CustomerComponent } from '../components/customer/customer.component';
+import { ReceiptComponent } from '../components/receipt/receipt.component';
+import { ProductComponent } from '../components/product/product.component';
+import { MyCartComponent } from '../components/my-cart/my-cart.component';
 
 // Pipes
 import { ProductsPipe } from '../pipes/products.pipe';
-
+import { CartItemsPipe } from '../pipes/cart-items.pipe';
 
 // Sweet Alert
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -30,10 +33,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
-import { ProductComponent } from '../components/product/product.component';
-import { MyCartComponent } from '../components/my-cart/my-cart.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -49,7 +51,9 @@ import { MatBadgeModule } from '@angular/material/badge';
     CustomerComponent,
     ProductComponent,
     ProductsPipe,
-    MyCartComponent
+    MyCartComponent,
+    CartItemsPipe,
+    ReceiptComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +68,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatIconModule,
     MatSelectModule,
     MatBadgeModule,
+    MatDialogModule,
     SweetAlert2Module.forRoot()
   ],
   providers: [

@@ -39,16 +39,16 @@ export class CartService {
   public updateCartItem = (updatedCartItem: CartItem): Observable<CartItem> => {
     return this.http.patch<CartItem>("http://localhost:3001/cart/updateItem", updatedCartItem);
   };
-
-  public removeItemFromCart = (cartItemID: number): Observable<number> => {
-    return this.http.delete<number>(`http://localhost:3001/cart/${cartItemID}`);
-  }
-
+  
   public removeAllCartItems = (): Observable<number> => {
     return this.http.delete<number>(`http://localhost:3001/cart/`);
   }
-
+  
   public getCustomerCurrentCartCreationDate = (): Observable<string | null> => {
     return this.http.get<string | null>("http://localhost:3001/cart/creationDate");
   };
+  
+  public removeItemFromCart = (cartItemID: number): Observable<number> => {
+    return this.http.delete<number>(`http://localhost:3001/cart/${cartItemID}`);
+  }
 }

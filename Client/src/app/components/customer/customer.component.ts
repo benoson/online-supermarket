@@ -108,30 +108,46 @@ export class CustomerComponent implements OnInit {
   public sortByAllProducts = () => {
     this.currentProductsForDisplay = this.allProducts;
     this.searchInputValue = "";
+    this.setCategoryIndication("all-products-nav-text");
   }
 
   public sortByDairyProducts = () => {
     this.currentProductsForDisplay = this.dairyProducts;
     this.searchInputValue = "";
+    this.setCategoryIndication("dairy-nav-text");
   }
 
   public sortByMeatAndFishProducts = () => {
     this.currentProductsForDisplay = this.meatAndFishProducts;
     this.searchInputValue = "";
+    this.setCategoryIndication("meat-fish-nav-text");
   }
 
   public sortByVeganProducts = () => {
     this.currentProductsForDisplay = this.veganProducts;
     this.searchInputValue = "";
+    this.setCategoryIndication("vegan-nav-text");
   }
 
   public sortByDrinks = () => {
     this.currentProductsForDisplay = this.drinksProducts;
     this.searchInputValue = "";
+    this.setCategoryIndication("drinks-nav-text");
   }
 
   public sortByHealthProducts = () => {
     this.currentProductsForDisplay = this.healthProducts;
     this.searchInputValue = "";
+    this.setCategoryIndication("health-nav-text");
+  }
+
+  private setCategoryIndication = (currentCategory: string) => {
+    const allNavCategoriesTexts = Array.from(document.getElementsByClassName("navbarLink"));
+    for (let categoryText of allNavCategoriesTexts) {
+      categoryText.classList.remove('current-category');
+    }
+
+    const newCategory = document.querySelector(`#${currentCategory}`);
+    newCategory.classList.add('current-category');
   }
 }
