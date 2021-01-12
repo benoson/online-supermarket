@@ -1,3 +1,4 @@
+const { request } = require('http');
 const cartDao = require('../dao/cartDao');
 const UsersUtils = require('../utils/UsersUtils');
 
@@ -29,10 +30,24 @@ const updateCartItem = async (request, updatedCartItem) => {
     await cartDao.updateCartItem(userID, updatedCartItem);
 }
 
+const removeCartItem = async (request, cartItemID) => {
+    const userCacheData = UsersUtils.extractUserInfoFromCache(request);
+    const userID = userCacheData.ID;
+    await cartDao.removeCartItem(userID, cartItemID);
+}
+
+const removeAllCartItems = async (request) => {
+    const userCacheData = UsersUtils.extractUserInfoFromCache(request);
+    const userID = userCacheData.ID;
+    await cartDao.removeAllCartItems(userID);
+}
+
 
 module.exports = {
     getCurrentCartItems,
     getCustomerCurrentCartCreationDate,
     addItemToCart,
-    updateCartItem
+    updateCartItem,
+    removeCartItem,
+    removeAllCartItems
 }

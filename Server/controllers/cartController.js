@@ -69,5 +69,37 @@ router.patch('/updateItem', async (request, response, next) => {
     }
 });
 
+router.delete('/:id', async (request, response, next) => {
+
+    const cartItemID = request.params.id;
+
+    try {
+        const succesfulCartItemRemovalResponse = await cartLogic.removeCartItem(request, cartItemID);
+
+        // converting the response to JSON before sending it to the client
+        response.json(succesfulCartItemRemovalResponse);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
+router.delete('/', async (request, response, next) => {
+
+    try {
+        const succesfulCartItemsRemovalResponse = await cartLogic.removeAllCartItems(request);
+
+        // converting the response to JSON before sending it to the client
+        response.json(succesfulCartItemsRemovalResponse);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
 
 module.exports = router;

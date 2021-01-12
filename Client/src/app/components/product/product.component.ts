@@ -63,7 +63,7 @@ export class ProductComponent implements OnInit {
   private onAddToCartClick = (quantity: number) => {
     console.log(this.cartService.customerCurrentCartItems);
 
-    const newCartItem: CartItemForDisplay = new CartItemForDisplay(this.product.ID, this.product.name, quantity, this.product.price);
+    const newCartItem: CartItemForDisplay = new CartItemForDisplay(this.product.ID, this.product.name, quantity, +(this.product.price * quantity).toFixed(2));
 
     const isItemAlreadyExistInCart = this.checkIfItemExistInCart();
     

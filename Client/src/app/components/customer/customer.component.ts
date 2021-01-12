@@ -30,8 +30,8 @@ export class CustomerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.customerCurrentCartItems = new Array<CartItemForDisplay>();
     this.searchInputValue = "";
+    this.checkIfCartHasItems();
     this.checkIfShouldGetAllProducts();
     this.checkIfShouldGetCartItems();
 
@@ -49,6 +49,18 @@ export class CustomerComponent implements OnInit {
       this.allProducts = this.productsService.allProducts;
     }
     this.sortProductsToCategories();
+  }
+
+  /**
+   * this function checks whether the cart has items, if not, it initializes the class variable with an empty array
+   */
+  private checkIfCartHasItems = () => {
+    if (this.cartService.customerCurrentCartItems !== undefined) {
+      this.customerCurrentCartItems = this.cartService.customerCurrentCartItems;
+    }
+    else {
+      this.customerCurrentCartItems = new Array<CartItemForDisplay>();
+    }
   }
 
   private checkIfShouldGetCartItems = () => {

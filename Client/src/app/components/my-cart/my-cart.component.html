@@ -1,6 +1,16 @@
-<h2 class="sharp">Your Cart</h2>
+<h2 class="cart-header">Your Cart</h2>
+
 <div *ngFor="let cartItem of customerCurrentCartItems" class="cart-item">
     <span> <span class="green-text">{{cartItem.amount}} x </span> <span class="cart-product-text">{{cartItem.productName}}</span> </span>
     <div class="border-div"></div>
-    <mat-icon class="remove-cart-item-button">remove_circle_outline</mat-icon>
+    <span class="green-text cart-item-total-price-text">{{cartItem.totalPrice}} $</span>
+    <mat-icon class="remove-cart-item-button" (click)="removeItemFromCart(cartItem)">remove_circle_outline</mat-icon>
 </div>
+<mat-icon *ngIf="customerCurrentCartItems.length > 0; else emptyCartIcon" class="remove-all-cart-items-button" (click)="removeAllCartItems()">delete_sweep</mat-icon>
+
+<ng-template #emptyCartIcon>
+    <div class="empty-cart-div">
+        <p class="empty-cart-text">Your cart is empty</p>
+        <mat-icon>production_quantity_limits</mat-icon>
+    </div>
+</ng-template>

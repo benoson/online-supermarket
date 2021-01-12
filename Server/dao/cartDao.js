@@ -9,13 +9,12 @@ const getCurrentCartItems = async (userID) => {
     // Creating the SQL query to get the user from the DB
     // attempting to get the current cart items of the user
 
-    const SQL = "SELECT c.Product_ID as productID, c.Amount as amount, c.Total_Price as totalPrice, (SELECT Product_Name FROM products WHERE Product_ID = c.Product_ID) as productName FROM `shopping-carts` s LEFT JOIN `cart-items` c ON s.Cart_ID = c.Cart_ID WHERE s.Cart_Owner = ? AND s.Is_Open = '1'";
+    const SQL = "SELECT c.Product_ID as productID, c.Amount as amount, c.Total_Price as totalPrice, (SELECT Product_Name FROM products WHERE Product_ID = c.Product_ID) as productName FROM `shopping-carts` s LEFT JOIN `cart-items` c ON s.Cart_ID = c.Cart_ID WHERE s.Cart_Owner = ? AND s.Is_Open = '1' AND c.Cart_ID = s.Cart_ID";
     const parameter = [userID];
 
     try {
         // Sending the SQL query and the user's login data to the 'connection wrapper' preset
         const customerCurrentCartItems = await connection.executeWithParameters(SQL, parameter);
-        console.log(customerCurrentCartItems);
         // returning all current cart items of the customer
         return customerCurrentCartItems;
     }
@@ -66,12 +65,42 @@ const addItemToCart = async (userID, newCartItem) => {
 }
 
 const updateCartItem = async (userID, updatedCartItem) => {
-
     // Creating the SQL query to get the user from the DB
     // updating the amount of  the item that the client has changed
-
     const SQL = "UPDATE `cart-items` SET Amount = ?, Total_Price = ((SELECT Product_Price FROM products WHERE Product_ID = ?) * ?), Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ?) WHERE Product_ID = ?";
     const parameter = [updatedCartItem.amount, updatedCartItem.productID, updatedCartItem.amount, userID, updatedCartItem.productID];
+
+    try {
+        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        await connection.executeWithParameters(SQL, parameter);
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
+
+const removeCartItem = async (userID, cartItemID) => {
+    // Creating the SQL query to get the user from the DB
+    const SQL = "DELETE FROM `cart-items` WHERE Product_ID = ? AND Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open = '1')";
+    const parameter = [cartItemID, userID];
+
+    try {
+        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        await connection.executeWithParameters(SQL, parameter);
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
+
+const removeAllCartItems = async (userID) => {
+
+    const SQL = "DELETE FROM `cart-items` WHERE Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open = '1')";
+    const parameter = [userID];
 
     try {
         // Sending the SQL query and the user's login data to the 'connection wrapper' preset
@@ -89,5 +118,7 @@ module.exports = {
     getCurrentCartItems,
     getCustomerCurrentCartCreationDate,
     addItemToCart,
-    updateCartItem
+    updateCartItem,
+    removeCartItem,
+    removeAllCartItems
 }
