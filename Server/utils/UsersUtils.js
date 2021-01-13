@@ -186,6 +186,19 @@ class UsersUtils {
         }
         return userCacheData;
     }
+
+    static deleteUserFromCache = (request) => {
+        // Attempting to get the user from the server's cache, from the Token received from the client
+        const authorizationString = request.headers['authorization'];
+        const userToken = authorizationString.substring("Bearer ".length);
+        const userCacheData = usersCache.get(userToken);
+
+        // If the token that was sent was not found, alert the client that the user is no longer logged in
+        if (userCacheData === undefined) {
+            throw new ServerError(ErrorType.USER_IS_NOT_LOGGED_IN);
+        }
+        usersCache.delete(userToken);
+    }
 }
 
 

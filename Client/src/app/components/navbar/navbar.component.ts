@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
+import PopupMessages from 'src/app/Utils/PopupMessages';
+import UsersUtils from 'src/app/Utils/UsersUtils';
 
 @Component({
   selector: 'app-navbar',
@@ -16,19 +18,24 @@ export class NavbarComponent implements OnInit {
   ) { };
 
   ngOnInit(): void {
+
+    this.userFirstName = this.userService.userFirstName;
+
     // listening for changes of the first name, inside the users service
     this.userService.userFirstNameChange.subscribe( (value: string) => {
       this.userFirstName = value;
     });
-
-    this.displayUserFirstName();
   }
 
-  private displayUserFirstName = () => {
-    const userFirstNameFromLocalStorage = JSON.parse(sessionStorage.getItem('userInfo'));
-    if (userFirstNameFromLocalStorage !== null) {
-      this.userFirstName = userFirstNameFromLocalStorage.firstName;
-    }
+  public logout = () => {
+    const observable = this.userService.logout();
+  
+    observable.subscribe( () => {
+      UsersUtils.handleSuccesfulLogout();
+      this.userService.userFirstNameChange.next(null);
+      this.userService.isLoggedInChange.next(false);
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
   }
-
 }

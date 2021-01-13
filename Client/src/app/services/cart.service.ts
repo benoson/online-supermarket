@@ -36,6 +36,11 @@ export class CartService {
     });
   };
 
+
+  public openNewCustomerCart = (): Observable<any> => {
+    return this.http.post("http://localhost:3001/cart/", {});
+  };
+
   public getCurrentCartItems = (): Observable<CartItemForDisplay[]> => {
     return this.http.get<CartItemForDisplay[]>("http://localhost:3001/cart/currentItems");
   };

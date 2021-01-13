@@ -149,25 +149,39 @@ const ErrorType = {
         isShowStackTrace: true,
     },
 
-    BAD_IMAGE: {
-        id: 11,
-        httpCode: 406,
-        message: "The New Image Is Not Acceptable. Please Try Another One",
-        isShowStackTrace: true,
+    INVALID_PRODUCT_ID: {
+        id: 918,
+        httpCode: 401,
+        message: 'Invalid product ID',
+        isShowStackTrace: true
     },
-  
-    ACTION_NOT_ALLOWED: {
-        id: 12,
-        httpCode: 403,
-        message: "You are not allowed to do that action",
-        isShowStackTrace: true,
+
+    INVALID_PRODUCT_AMOUNT: {
+        id: 918,
+        httpCode: 401,
+        message: 'Product amount can be between 1 - 99',
+        isShowStackTrace: true
     },
-  
-    INVALID_DATA: {
-        id: 13,
-        httpCode: 406,
-        message: "The data you have entered is invalid",
-        isShowStackTrace: true,
+
+    INVALID_DELIVERY_DATE: {
+        id: 919,
+        httpCode: 401,
+        message: 'Invalid delivery date',
+        isShowStackTrace: true
+    },
+    
+    INVALID_CREDIT_CARD: {
+        id: 919,
+        httpCode: 401,
+        message: 'Invalid credit card',
+        isShowStackTrace: true
+    },
+
+    INVALID_CREDIT_CARD_LENGTH: {
+        id: 919,
+        httpCode: 401,
+        message: 'Credit card number should be 16 digits long',
+        isShowStackTrace: true
     },
 };
   

@@ -21,6 +21,21 @@ router.get('/currentItems', async (request, response, next) => {
     }
 });
 
+router.post('/', async (request, response, next) => {
+
+    try {
+        const succesfullNewCartResponse = await cartLogic.openCustomerNewCart(request);
+
+        // converting the response to JSON before sending it to the client
+        response.json(succesfullNewCartResponse);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
 router.get('/creationDate', async (request, response, next) => {
     try {
         const successfulCurrentCartCreationDate = await cartLogic.getCustomerCurrentCartCreationDate(request);

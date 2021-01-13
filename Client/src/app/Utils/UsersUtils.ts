@@ -1,5 +1,6 @@
 import SuccessfulLoginServerResponse from "../models/SuccessfulLoginServerResponse";
 import UserRegistrationDetails from "../models/UserRegistrationDetials";
+import PopupMessages from "./PopupMessages";
 
 
 export default class UsersUtils {
@@ -22,6 +23,14 @@ export default class UsersUtils {
         sessionStorage.setItem('userInfo', JSON.stringify(userInfoFromServer));
         // inserting the 'true' to indicate that a user is logged in
         sessionStorage.setItem('isLoggedIn', "true");
+    }
+
+    // ----- Succesful logout handler
+
+    static handleSuccesfulLogout = (): void => {
+        sessionStorage.removeItem('userInfo');
+        sessionStorage.removeItem('isLoggedIn');
+        PopupMessages.displaySuccessPopupMessage('Logged out succesfully');
     }
 
 

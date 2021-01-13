@@ -3,6 +3,22 @@ let ErrorType = require("../errors/errorType");
 let ServerError = require("../errors/serverError");
 
 
+const openCustomerNewCart = async (userID) => {
+    const SQL = "INSERT INTO `shopping-carts` (Cart_Owner, Cart_Creation_Date) VALUES (?, ?)";
+    const parameter = [userID, new Date()];
+
+    try {
+        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        const succesfullNewCartResponse = await connection.executeWithParameters(SQL, parameter);
+        // returning all current cart items of the customer
+        return succesfullNewCartResponse;
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
 
 const getCurrentCartItems = async (userID) => {
 
@@ -50,7 +66,7 @@ const getCustomerCurrentCartCreationDate = async (userID) => {
 const addItemToCart = async (userID, newCartItem) => {
 
     // Creating the SQL query to get the user from the DB
-    const SQL = "INSERT INTO `cart-items` (Product_ID, Amount, Total_Price, Cart_ID) VALUES(?, ?, ((SELECT Product_Price FROM products WHERE Product_ID = ?) * ?), (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ?))";
+    const SQL = "INSERT INTO `cart-items` (Product_ID, Amount, Total_Price, Cart_ID) VALUES(?, ?, ((SELECT Product_Price FROM products WHERE Product_ID = ?) * ?), (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open ='1'))";
     const parameter = [newCartItem.productID, newCartItem.amount, newCartItem.productID, newCartItem.amount, userID];
 
     try {
@@ -67,8 +83,8 @@ const addItemToCart = async (userID, newCartItem) => {
 const updateCartItem = async (userID, updatedCartItem) => {
     // Creating the SQL query to get the user from the DB
     // updating the amount of  the item that the client has changed
-    const SQL = "UPDATE `cart-items` SET Amount = ?, Total_Price = ((SELECT Product_Price FROM products WHERE Product_ID = ?) * ?), Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ?) WHERE Product_ID = ?";
-    const parameter = [updatedCartItem.amount, updatedCartItem.productID, updatedCartItem.amount, userID, updatedCartItem.productID];
+    const SQL = "UPDATE `cart-items` SET Amount = ?, Total_Price = ((SELECT Product_Price FROM products WHERE Product_ID = ?) * ?) WHERE Product_ID = ? AND Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open = '1')";
+    const parameter = [updatedCartItem.amount, updatedCartItem.productID, updatedCartItem.amount, updatedCartItem.productID, userID];
 
     try {
         // Sending the SQL query and the user's login data to the 'connection wrapper' preset
@@ -115,6 +131,7 @@ const removeAllCartItems = async (userID) => {
 
 
 module.exports = {
+    openCustomerNewCart,
     getCurrentCartItems,
     getCustomerCurrentCartCreationDate,
     addItemToCart,

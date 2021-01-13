@@ -78,7 +78,7 @@ const closeCustomerOpenCart = async (userID) => {
 
 const getAllCartItemsPricesForTotalPriceCalculation = async (userID) => {
     // Creating an SQL query for adding a new order to the DB
-    const SQL = "SELECT Total_Price as price FROM `cart-items` WHERE Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ?)";
+    const SQL = "SELECT Total_Price as price FROM `cart-items` WHERE Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open = '1')";
     const parameter = [userID];
 
     try {

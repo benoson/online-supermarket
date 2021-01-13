@@ -67,7 +67,7 @@ export class ReceiptComponent implements OnInit {
           PopupMessages.displaySuccessPopupMessage("Thank you for purchasing at Bitten Tomato's ! Hope to see you again");
           const emptyCart = new Array <CartItemForDisplay>();
           this.cartService.customerCurrentCartItemsChange.next(emptyCart);
-          this.router.navigate(['/customer']);
+          this.router.navigate(['/welcome/login']);
   
         }, badServerResponse => {
           PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);

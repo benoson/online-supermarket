@@ -1,4 +1,5 @@
 const ordersDao = require('../dao/ordersDao');
+const OrdersUtils = require('../utils/OrdersUtils');
 const UsersUtils = require('../utils/UsersUtils');
 
 
@@ -20,6 +21,9 @@ const getLastOrderDateByOwner = async (request) => {
 }
 
 const addNewOrder = async (request, newOrder) => {
+    // validating the new order details. If the validation fails, the request will not continue
+    OrdersUtils.validateOrderDetails(newOrder);
+
     const userCacheData = UsersUtils.extractUserInfoFromCache(request);
     const userID = userCacheData.ID;
     

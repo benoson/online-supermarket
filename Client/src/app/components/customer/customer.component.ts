@@ -37,6 +37,7 @@ export class CustomerComponent implements OnInit {
     this.checkIfShouldGetAllProducts();
     this.checkIfShouldGetCartItems();
     this.initiateListeners();
+    this.checkIfCustomerNeedsNewCart();
   }
 
   private initiateListeners = () => {
@@ -64,6 +65,18 @@ export class CustomerComponent implements OnInit {
       this.allProducts = this.productsService.allProducts;
     }
     this.sortProductsToCategories();
+  }
+
+  private checkIfCustomerNeedsNewCart = () => {
+    if (this.cartService.currentCartCreationDate === null) {
+      const observable = this.cartService.openNewCustomerCart();
+
+      observable.subscribe( () => {
+        PopupMessages.displaySuccessPopupMessage('Opened a new cart for you :)');
+      }, badServerResponse => {
+        PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+      });
+    }
   }
 
   /**

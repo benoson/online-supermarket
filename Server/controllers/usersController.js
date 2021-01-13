@@ -45,5 +45,20 @@ router.post('/login', async (request, response, next) => {
     }
 });
 
+router.post('/logout', async (request, response, next) => {
+
+    try {
+        const successfullLogoutData = await usersLogic.logout(request);
+
+        // converting the response to JSON before sending it to the client
+        response.json(successfullLogoutData);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
 
 module.exports = router;

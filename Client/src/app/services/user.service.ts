@@ -42,4 +42,8 @@ export class UserService {
   public login = (userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> => {
     return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/login", userLoginDetails);
   }
+
+  public logout = (): Observable<any> => {
+    return this.http.post("http://localhost:3001/users/logout", {});
+  }
 }
