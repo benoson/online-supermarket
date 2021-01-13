@@ -46,8 +46,6 @@ const addUser = async (userInfo) => {
     }
 }
 
-// VALIDATIONS FOR USER LOGIN & REGISTER....................
-
 const login = async (userInfo, isFreshUser) => {
 
     // Checking if the user is fresh (sent here from the registration function)

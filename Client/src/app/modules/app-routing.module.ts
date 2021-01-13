@@ -11,6 +11,7 @@ const routes: Routes = [
   {path:'', redirectTo: '/welcome/login', pathMatch: 'full'},
 
   {path:'welcome', component: WelcomeSectionsComponent, children: [
+    {path:'', redirectTo: '/welcome/login', pathMatch: 'full'},
     {path:'register', component: RegisterComponent},
     {path:'login', component: LoginComponent},
   ]},

@@ -1,0 +1,63 @@
+.page-not-found {
+    border-bottom: 5px solid black;
+    border-top: 5px solid black;
+    display: flex;
+    background-image: url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-smoke.9fd6fa0d.jpg);
+    background-size: auto;
+    background-position: bottom;
+    opacity: .6;
+    -webkit-animation: shift 4s linear infinite;
+    animation: shift 4s linear infinite;
+}
+
+.error-image-animated {
+    margin: 0 auto;
+    width: 400px;
+    height: 400px;
+    background-image: url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-glitch-1.53135c50.png),url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-glitch-2.dd185d09.png),url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-glitch-3.4af0b9c9.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1;
+    pointer-events: none;
+    opacity: .5;
+    -webkit-animation: glitch .5s linear infinite;
+    animation: glitch .5s linear infinite;
+}
+
+.cap-image {
+    width: 620px;
+    height: 600px;
+    background-image: url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-char.4b7f4c07.png);
+    background-repeat: no-repeat;
+}
+
+.page-not-found-text {
+    padding: 3rem;
+}
+
+.page-not-found-text h1 {
+    font-size: 2rem;
+}
+
+.page-not-found-text h2 {
+    font-size: 1.3rem;
+}
+
+@keyframes glitch {
+    0% {
+        background-position: 50%,50%,50%;
+    }
+    
+    25% {
+        background-position: 50%,-5px 2px,4px 5px;
+    }
+    50% {
+        background-position: 50%,2px 6px,-1px -1px;
+    }
+    75% {
+        background-position: 50%,-2px 4px,4px 8px;
+    }
+    100% {
+        background-position: 50%,3px 7px,-3px 0;
+    }
+}

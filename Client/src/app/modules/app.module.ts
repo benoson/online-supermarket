@@ -35,6 +35,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
+import { AdminComponent } from '../components/admin/admin.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     ProductsPipe,
     MyCartComponent,
     CartItemsPipe,
-    ReceiptComponent
+    ReceiptComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
