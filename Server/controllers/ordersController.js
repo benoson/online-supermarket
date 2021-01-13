@@ -36,5 +36,22 @@ router.get('/lastOrderDate', async (request, response, next) => {
     }
 });
 
+router.post('/', async (request, response, next) => {
+
+    const newOrder = request.body;
+
+    try {
+        const successfulNewOrderData = await ordersLogic.addNewOrder(request, newOrder);
+
+        // converting the response to JSON before sending it to the client
+        response.json(successfulNewOrderData);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
 
 module.exports = router;

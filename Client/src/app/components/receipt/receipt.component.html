@@ -19,8 +19,66 @@
 
   <p class="green-text">Total: {{totalPriceOfAllCartItems}} $</p>
 
+  <form #paymentForm="ngForm" [formGroup]="paymentValues" class="receipt-user-details-section">
+    <h2 class="sharp">Shipping Details</h2>
+    <!-- city input -->
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <mat-select disableRipple [formControl]="cityInput" required>
+        <mat-option value="Chicago">Chicago</mat-option>
+        <mat-option value="Los Angeles">Los Angeles</mat-option>
+        <mat-option value="New York">New York</mat-option>
+        <mat-option value="London">London</mat-option>
+        <mat-option value="Liverpool">Liverpool</mat-option>
+        <mat-option value="Nottingham">Nottingham</mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="cityInput.errors?.required">
+          City name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- street input -->
+    <mat-form-field>
+      <mat-label>Street</mat-label>
+      <input [formControl]="streetInput" matInput type="text" required>
+
+      <mat-error *ngIf="streetInput.errors?.required">
+          Street name is <strong>required</strong>
+      </mat-error>
+
+      <mat-error *ngIf="streetInput.errors?.minlength || cityInput.errors?.maxlength">
+          Street name should be <strong>2 - 15 chars</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- shipping date input -->
+    <mat-form-field>
+      <mat-label>Shipping Date</mat-label>
+      <input [formControl]="shippingDateInput" matInput type="date" required>
+
+      <mat-error *ngIf="shippingDateInput.errors?.required">
+          Shipping date is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- credit card input -->
+    <mat-form-field>
+      <mat-label>Credit Card</mat-label>
+      <input [formControl]="creditCardInput" name="creditCardInput" matInput type="number" required>
+
+      <mat-error *ngIf="creditCardInput.errors?.required">
+          credit card is <strong>required</strong>
+      </mat-error>
+
+      <mat-error *ngIf="creditCardInput.errors?.pattern">
+          card number should be <strong>16 digits</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+
   <div class="receipt-buttons-div">
-    <button mat-stroked-button class="primary-button">Purchase</button>
+    <button mat-stroked-button class="primary-button" [disabled]="paymentForm.form.invalid" (click)="onPurchaseClick()">Purchase</button>
     <button mat-stroked-button class="secondary-button" (click)="closeReceipt()">Back To Shopping</button>
   </div>
 </div>

@@ -4,8 +4,7 @@ let ServerError = require("../errors/serverError");
 
 
 const getTotalOrdersAmount = async () => {
-
-    // Creating an SQL query for inserting a new user to the DB
+    // Creating an SQL query for getting the total orders amount
     const SQL = `SELECT COUNT(Order_ID) as totalOrdersAmount from orders`;
     
     try {
@@ -21,11 +20,10 @@ const getTotalOrdersAmount = async () => {
     }
 }
 
-const getLastOrderDateByOwner = async (ID) => {
-    
-    // Creating the SQL query to get the user from the DB
+const getLastOrderDateByOwner = async (userID) => {
+    // Creating an SQL query for getting the customer's last order date
     const SQL = "SELECT DATE_FORMAT(Order_Date, '%d/%m/%Y') as lastOrderDate FROM orders WHERE Order_Owner = ? ORDER BY Order_Date DESC LIMIT 1";
-    const parameter = [ID];
+    const parameter = [userID];
     let ownerLastOrderDate;
 
     try {
@@ -47,8 +45,59 @@ const getLastOrderDateByOwner = async (ID) => {
     return ownerLastOrderDate[0];
 }
 
+const addNewOrder = async (userID, newOrder) => {
+    // Creating an SQL query for adding a new order to the DB
+    const SQL = "INSERT INTO orders (Order_Owner, Cart, Total_Price, Delivery_City, Delivery_Street, Delivery_Date, Order_Date, Last_Four_Card_Digits) VALUES (?, (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open = '1'), ?, ?, ?, ?, ?, ?)";
+    const parameter = [userID, userID, newOrder.totalCartPrice, newOrder.deliveryCity, newOrder.deliveryStreet, newOrder.deliveryDate, newOrder.orderDate, newOrder.creditCardNumber];
+
+    try {
+        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        await connection.executeWithParameters(SQL, parameter);
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
+
+const closeCustomerOpenCart = async (userID) => {
+    const SQL = "UPDATE `shopping-carts` SET Is_Open = '0' WHERE Cart_Owner = ? AND Is_Open = '1'";
+    const parameter = [userID];
+
+    try {
+        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        await connection.executeWithParameters(SQL, parameter);
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
+
+const getAllCartItemsPricesForTotalPriceCalculation = async (userID) => {
+    // Creating an SQL query for adding a new order to the DB
+    const SQL = "SELECT Total_Price as price FROM `cart-items` WHERE Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ?)";
+    const parameter = [userID];
+
+    try {
+        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        const totalPricesOfCartItems = await connection.executeWithParameters(SQL, parameter);
+        return totalPricesOfCartItems;
+    }
+
+    catch (error) {
+        // Technical Error
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
+
 
 module.exports = {
     getTotalOrdersAmount,
-    getLastOrderDateByOwner
+    getLastOrderDateByOwner,
+    addNewOrder,
+    getAllCartItemsPricesForTotalPriceCalculation,
+    closeCustomerOpenCart
 }

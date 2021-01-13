@@ -19,8 +19,45 @@ const getLastOrderDateByOwner = async (request) => {
     return successfullLastDateData;
 }
 
+const addNewOrder = async (request, newOrder) => {
+    const userCacheData = UsersUtils.extractUserInfoFromCache(request);
+    const userID = userCacheData.ID;
+    
+    newOrder.creditCardNumber = getLastFourDigitsOfCreditCard(newOrder.creditCardNumber);
+    newOrder.orderDate = new Date();
+    newOrder.totalCartPrice = await getTotalCartPrice(userID);
+
+    await ordersDao.addNewOrder(userID, newOrder);
+    await closeCustomerOpenCart(userID);
+}
+
+const closeCustomerOpenCart = async (userID) => {
+    await ordersDao.closeCustomerOpenCart(userID);
+}
+
+const getTotalCartPrice = async (userID) => {
+    const allCartItemsPrices = await ordersDao.getAllCartItemsPricesForTotalPriceCalculation(userID);
+    let totalCartPrice = 0;
+    for (cartPrice of allCartItemsPrices) {
+        totalCartPrice += +cartPrice.price;
+    }
+    return totalCartPrice;
+}
+
+const getLastFourDigitsOfCreditCard = (creditCardNumber) => {
+    let lastFourDigits = 0;
+    let creditCardNumberCopy = creditCardNumber;
+    for (let x = 0; x < 4; x ++) {
+        let lastDigit = creditCardNumberCopy % 10;
+        creditCardNumberCopy = Math.trunc(creditCardNumberCopy / 10);
+        lastFourDigits += lastDigit * Math.pow(10, x);
+    }
+    return lastFourDigits;
+}
+
 
 module.exports = {
     getTotalOrdersAmount,
-    getLastOrderDateByOwner
+    getLastOrderDateByOwner,
+    addNewOrder
 }

@@ -47,7 +47,7 @@ export default class UsersUtils {
 
     // ----- UI validations
 
-    static validateAllRegistrationFields = (userRegistrationDetails: UserRegistrationDetails): void | boolean => {
+    static validateAllRegistrationFields = (userRegistrationDetails: UserRegistrationDetails): boolean | void => {
         UsersUtils.validateUserID(userRegistrationDetails.ID);
         UsersUtils.validateUserEmail(userRegistrationDetails.email);
         UsersUtils.validateUserRegistrationPassword(userRegistrationDetails.password, userRegistrationDetails.verifiedPassword);

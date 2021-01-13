@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormGroupDirective, ValidatorFn, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserRegistrationDetails from 'src/app/models/UserRegistrationDetials';
 import { UserService } from 'src/app/services/user.service';
@@ -43,8 +42,8 @@ export class RegisterComponent implements OnInit {
     
     this.assignFormControlsValues();
 
-    // Validating all input fields
     try {
+      // Validating all input fields
       const areAllInputsValid = UsersUtils.validateAllRegistrationFields(this.userRegistrationDetails);
   
       if (areAllInputsValid) {
