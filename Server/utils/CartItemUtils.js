@@ -13,7 +13,7 @@ class CartItemUtils {
     }
 
     static validateProductID = (productID) => {
-        if (typeof productID === "number") {
+        if (typeof +productID === "number") {
             return true;
         }
         throw new ServerError(ErrorType.INVALID_PRODUCT_ID);

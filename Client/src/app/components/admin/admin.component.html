@@ -1,1 +1,14 @@
-<p>admin works!</p>
+<div class="admin-section">
+    <mat-drawer-container class="drawer-container" autosize>
+        <mat-drawer #drawer class="admin-sidebar" mode="side">
+            <admin-sidebar></admin-sidebar>
+        </mat-drawer>
+
+        <div class="all-products-section">
+            <button type="button" mat-stroked-button class="primary-button" (click)="drawer.toggle()">
+                <mat-icon aria-hidden="false" aria-label="my cart icon">shopping_cart</mat-icon>
+            </button>
+            <p>asdasdasd</p>
+        </div>
+    </mat-drawer-container>
+</div>

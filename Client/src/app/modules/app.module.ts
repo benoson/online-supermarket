@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationInterceptor } from '../interceptor/AuthenticationInterceptor';
+import { AdminModule } from './admin.module';
 
 // Components
 import { LayoutComponent } from '../components/layout/layout.component';
@@ -35,7 +36,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
-import { AdminComponent } from '../components/admin/admin.component';
 
 
 @NgModule({
@@ -53,13 +53,13 @@ import { AdminComponent } from '../components/admin/admin.component';
     ProductsPipe,
     MyCartComponent,
     CartItemsPipe,
-    ReceiptComponent,
-    AdminComponent
+    ReceiptComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    AdminModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

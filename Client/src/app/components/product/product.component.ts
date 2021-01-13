@@ -35,7 +35,7 @@ export class ProductComponent implements OnInit {
       cancelButtonColor: '#ff1616',
       confirmButtonText: 'Add To Cart',
       preConfirm: () => {
-        const modalQuantityInput = document.getElementById('modalQuantityInput') as HTMLInputElement;
+        const modalQuantityInput = document.querySelector('#modalQuantityInput') as HTMLInputElement;
         const quantity = modalQuantityInput.valueAsNumber;
 
         // validating that the quantity is between 1 and 99

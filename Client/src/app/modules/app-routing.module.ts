@@ -10,6 +10,8 @@ import { CustomerGuard } from '../guards/customer.guard';
 const routes: Routes = [
   {path:'', redirectTo: '/welcome/login', pathMatch: 'full'},
 
+  {path:'admin', loadChildren: './admin.module#AdminModule'},
+
   {path:'welcome', component: WelcomeSectionsComponent, children: [
     {path:'', redirectTo: '/welcome/login', pathMatch: 'full'},
     {path:'register', component: RegisterComponent},
