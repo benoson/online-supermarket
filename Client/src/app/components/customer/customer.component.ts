@@ -12,7 +12,7 @@ import PopupMessages from 'src/app/Utils/PopupMessages';
 })
 export class CustomerComponent implements OnInit {
 
-  public allProducts: Product[] = new Array <Product>();
+  public allProducts: Product[];
   public currentProductsForDisplay: Product[];
   public customerCurrentCartItems: CartItemForDisplay[];
 
@@ -31,6 +31,7 @@ export class CustomerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.allProducts = new Array <Product>();
     this.searchInputValue = "";
     this.cartService.isShowReceiptChange.next(false);
     this.checkIfCartHasItems();

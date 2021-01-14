@@ -4,11 +4,37 @@
             <admin-sidebar></admin-sidebar>
         </mat-drawer>
 
-        <div class="all-products-section">
+        <div class="page-content">
             <button type="button" mat-stroked-button class="primary-button" (click)="drawer.toggle()">
-                <mat-icon aria-hidden="false" aria-label="my cart icon">shopping_cart</mat-icon>
+                <mat-icon aria-hidden="false" aria-label="my cart icon">create</mat-icon>
             </button>
-            <p>asdasdasd</p>
+
+            <div class="products-section">
+                <!-- search field section-->
+                <div class="search-field-section">
+                    <h1 class="sharp admin-section-header">Choose a product in order to edit it, or, add a new product to the store</h1>
+                    <mat-form-field>
+                        <mat-label>Search for products</mat-label>
+                        <input matInput type="text" [(ngModel)]="searchInputValue">
+                        <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+                <!-- all products section -->
+                <div class="all-products-section">
+                    <div class="add-items-section">
+                        <div class="add-items-button"></div>
+                        <div class="bottom-border-div"></div>
+                    </div>
+
+                    <div *ngFor="let product of allProducts| products: searchInputValue">
+                        <app-product [product]="product" [isEditableByAdmin]="true"></app-product>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </mat-drawer-container>
 </div>

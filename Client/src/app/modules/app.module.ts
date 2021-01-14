@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationInterceptor } from '../interceptor/AuthenticationInterceptor';
 import { AdminModule } from './admin.module';
+import { SharedModule } from './shared.module';
 
 // Components
 import { LayoutComponent } from '../components/layout/layout.component';
@@ -18,11 +19,9 @@ import { ShopInfoSectionComponent } from '../components/shop-info-section/shop-i
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 import { CustomerComponent } from '../components/customer/customer.component';
 import { ReceiptComponent } from '../components/receipt/receipt.component';
-import { ProductComponent } from '../components/product/product.component';
 import { MyCartComponent } from '../components/my-cart/my-cart.component';
 
 // Pipes
-import { ProductsPipe } from '../pipes/products.pipe';
 import { CartItemsPipe } from '../pipes/cart-items.pipe';
 
 // Sweet Alert
@@ -49,14 +48,13 @@ import { MatBadgeModule } from '@angular/material/badge';
     RegisterComponent,
     PageNotFoundComponent,
     CustomerComponent,
-    ProductComponent,
-    ProductsPipe,
     MyCartComponent,
     CartItemsPipe,
     ReceiptComponent
   ],
   imports: [
     BrowserModule,
+    SharedModule,
     AppRoutingModule,
     HttpClientModule,
     AdminModule,

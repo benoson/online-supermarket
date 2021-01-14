@@ -1,5 +1,8 @@
 <div class="product-card">
-    <img (click)=[showProductModal()] class="product-image" src={{product.imageURL}} alt={{product.name}}>
+    <img *ngIf="isEditableByAdmin; else notEditableByAdmin" (click)=[editItem()] class="product-image" src={{product.imageURL}} alt={{product.name}}>
+    <ng-template #notEditableByAdmin>
+        <img (click)=[showProductModal()] class="product-image" src={{product.imageURL}} alt={{product.name}}>
+    </ng-template>
     <div class="bottom-border-div"></div>
     <p class="product-name">{{product.name}}</p>
     <p class="product-category">{{product.category}}</p>

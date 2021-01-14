@@ -1,1 +1,53 @@
-<h2>Choose a product to edit</h2>
+<div class="admin-sidebar">
+    <div *ngIf="currentEditableProduct === undefined; else selectedProduct" class="no-product-selected">
+        <p class="sharp">Choose a product in order to edit it!</p>
+    </div>
+
+    <ng-template #selectedProduct>
+        <h2 class="sharp">Edit - {{currentEditableProduct.name}}</h2>
+
+        <div class="selected-product">
+            <!-- product name -->
+            <div class="edited-product-section">
+                <p class="pre-text">Name</p>
+                <p class="product-info">{{currentEditableProduct.name}}</p>
+                <div class="border-div"></div>
+                <button class="secondary-button custom-admin-sidebar-button">
+                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                </button>
+            </div>
+
+            <!-- product category -->
+            <div class="edited-product-section">
+                <p class="pre-text">Category</p>
+                <p class="product-info">{{currentEditableProduct.category}}</p>
+                <div class="border-div"></div>
+                <button class="secondary-button custom-admin-sidebar-button">
+                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                </button>
+            </div>
+
+            <!-- product price -->
+            <div class="edited-product-section">
+                <p class="pre-text">Price</p>
+                <p class="product-info">{{currentEditableProduct.price}}</p>
+                <div class="border-div"></div>
+                <button class="custom-admin-sidebar-button secondary-button">
+                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                </button>
+            </div>
+
+            <!-- product image -->
+            <div class="edited-product-section">
+                <p class="pre-text">Image</p>
+                <img class="edited-product-image product-info" src={{currentEditableProduct.imageURL}} alt={{currentEditableProduct.name}}>
+                <div class="border-div"></div>
+                <button class="secondary-button custom-admin-sidebar-button">
+                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <button class="custom-admin-sidebar-button primary-button full-width custom-border">Save</button>
+    </ng-template>
+</div>

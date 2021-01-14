@@ -45,7 +45,7 @@
                 <!-- all products section -->
                 <div *ngIf="!isShowReceipt; else showReceipt" class="all-products-section">
                     <div *ngFor="let product of currentProductsForDisplay|products: searchInputValue.trim()">
-                        <app-product [product]="product"></app-product>
+                        <app-product [product]="product" [isEditableByAdmin]="false"></app-product>
                     </div>
                 </div>
 

@@ -6,15 +6,21 @@
   
 .page-content {
     height: 100%;
+    min-height: 800px;
     display: flex;
     align-items: flex-start;
     margin-top: 1rem;
 }
-  
+
+.search-field-section {
+    width: 100%;
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
 .admin-sidebar {
     padding: 20px;
-    min-width: 200px;
-    background: url("../../../assets/cart-background.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -26,4 +32,30 @@
 .all-products-section {
     display: flex;
     flex-wrap: wrap;
+}
+
+.admin-section-header {
+    color: rgb(0, 161, 0);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.add-items-button {
+    background-image: url(https://www.flaticon.com/svg/vstatic/svg/1632/1632686.svg?token=exp=1610634425~hmac=a0cfe9e7997e212c2a4c5d4b65f06da9);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 180px;
+    height: 161px;
+    margin: 1rem 1rem 0 0;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.bottom-border-div {
+    width: 180px;
+    border-bottom: 1px solid var(--primary-theme-color);
+}
+
+.add-items-button:hover {
+    transform: scale(1.1);
 }

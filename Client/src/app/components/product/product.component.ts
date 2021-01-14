@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import CartItem from 'src/app/models/CartItem';
 import CartItemForDisplay from 'src/app/models/CartItemForDisplay';
 import Product from 'src/app/models/Product';
+import { AdminService } from 'src/app/services/admin.service';
 import { CartService } from 'src/app/services/cart.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
 import Swal from 'sweetalert2';
@@ -14,9 +15,11 @@ import Swal from 'sweetalert2';
 export class ProductComponent implements OnInit {
 
   @Input() product: Product;
+  @Input() isEditableByAdmin: boolean;
 
   constructor(
-    private cartService: CartService
+    private cartService: CartService,
+    private adminService: AdminService
   ) { }
 
   ngOnInit(): void {
@@ -127,5 +130,10 @@ export class ProductComponent implements OnInit {
     }
     // returning 'true' and the item iteself
     return true;
+  }
+
+  public editItem = () => {
+    // updating the admin's service with the curernt product for edit
+    this.adminService.currentEditableProductChange.next(this.product);
   }
 }
