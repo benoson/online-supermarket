@@ -4,6 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from '../components/admin/admin.component';
 import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
 import { SharedModule } from './shared.module';
+import { FormsModule } from '@angular/forms';
+
+// Sweet Alert
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 // Material UI imports
 import { MatInputModule } from '@angular/material/input';
@@ -12,7 +16,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
-import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -35,6 +38,7 @@ const routes: Routes = [
     MatIconModule,
     MatSelectModule,
     MatBadgeModule,
+    SweetAlert2Module.forRoot(),
     RouterModule.forChild(routes)
   ],
 })

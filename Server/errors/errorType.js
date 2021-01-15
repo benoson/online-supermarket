@@ -183,6 +183,41 @@ const ErrorType = {
         message: 'Credit card number should be 16 digits long',
         isShowStackTrace: true
     },
+
+    INVALID_PRODUCT_NAME: {
+        id: 920,
+        httpCode: 401,
+        message: 'Invalid product name',
+        isShowStackTrace: true
+    },
+
+    INVALID_PRODUCT_CATEGORY: {
+        id: 921,
+        httpCode: 401,
+        message: 'Invalid product category',
+        isShowStackTrace: true
+    },
+
+    INVALID_PRODUCT_DESCRIPTION: {
+        id: 921,
+        httpCode: 401,
+        message: 'Invalid product description',
+        isShowStackTrace: true
+    },
+
+    INVALID_PRODUCT_PRICE: {
+        id: 921,
+        httpCode: 401,
+        message: 'Invalid product price',
+        isShowStackTrace: true
+    },
+
+    INVALID_PRODUCT_IMAGE_URL: {
+        id: 921,
+        httpCode: 401,
+        message: 'Invalid product image url',
+        isShowStackTrace: true
+    }
 };
   
   module.exports = ErrorType;

@@ -21,5 +21,23 @@ router.get('/', async (request, response, next) => {
     }
 });
 
+router.patch('/:id', async (request, response, next) => {
+
+    const productID = request.params.id;
+    const updatedProduct = request.body;
+
+    try {
+        const succesfullProductUpdateData = await productsLogic.updateProduct(request, updatedProduct, productID);
+
+        // converting the response to JSON before sending it to the client
+        response.json(succesfullProductUpdateData);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
 
 module.exports = router;

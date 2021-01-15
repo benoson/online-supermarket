@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Product from 'src/app/models/Product';
 import { ProductsService } from 'src/app/services/products.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin',
@@ -12,6 +13,7 @@ export class AdminComponent implements OnInit {
 
   public allProducts: Product[];
   public searchInputValue: string;
+  public isShowProductAdditionSection: boolean;
 
   constructor(
     private productsService: ProductsService
@@ -20,6 +22,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.allProducts = new Array <Product>();
     this.searchInputValue = "";
+    this.isShowProductAdditionSection = false;
     this.checkIfShouldGetAllProducts();
   }
 
@@ -44,6 +47,10 @@ export class AdminComponent implements OnInit {
     }, badServerResponse => {
       PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
     });
+  }
+
+  public addNewProductToStore = (): void => {
+    this.isShowProductAdditionSection = true;
   }
 
 }

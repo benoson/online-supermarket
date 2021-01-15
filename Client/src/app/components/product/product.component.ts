@@ -132,7 +132,7 @@ export class ProductComponent implements OnInit {
     return true;
   }
 
-  public editItem = () => {
+  public onProductEditClick = () => {
     // updating the admin's service with the curernt product for edit
     this.adminService.currentEditableProductChange.next(this.product);
   }

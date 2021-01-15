@@ -1,5 +1,5 @@
 <div class="product-card">
-    <img *ngIf="isEditableByAdmin; else notEditableByAdmin" (click)=[editItem()] class="product-image" src={{product.imageURL}} alt={{product.name}}>
+    <img *ngIf="isEditableByAdmin; else notEditableByAdmin" (click)="onProductEditClick()" class="product-image" src={{product.imageURL}} alt={{product.name}}>
     <ng-template #notEditableByAdmin>
         <img (click)=[showProductModal()] class="product-image" src={{product.imageURL}} alt={{product.name}}>
     </ng-template>

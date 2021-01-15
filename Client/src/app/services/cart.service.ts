@@ -50,12 +50,12 @@ export class CartService {
   };
 
   public updateCartItem = (updatedCartItem: CartItem): Observable<CartItem> => {
-    return this.http.patch<CartItem>("http://localhost:3001/cart/updateItem", updatedCartItem);
+    return this.http.patch<CartItem>(`http://localhost:3001/cart/${updatedCartItem.productID}`, updatedCartItem);
   };
   
   public removeAllCartItems = (): Observable<number> => {
     return this.http.delete<number>(`http://localhost:3001/cart/`);
-  }
+  };
   
   public getCustomerCurrentCartCreationDate = (): Observable<string | null> => {
     return this.http.get<string | null>("http://localhost:3001/cart/creationDate");
@@ -63,5 +63,5 @@ export class CartService {
   
   public removeItemFromCart = (cartItemID: number): Observable<number> => {
     return this.http.delete<number>(`http://localhost:3001/cart/${cartItemID}`);
-  }
+  };
 }

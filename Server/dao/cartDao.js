@@ -80,11 +80,11 @@ const addItemToCart = async (userID, newCartItem) => {
     }
 }
 
-const updateCartItem = async (userID, updatedCartItem) => {
+const updateCartItem = async (userID, updatedCartItem, cartItemID) => {
     // Creating the SQL query to get the user from the DB
     // updating the amount of  the item that the client has changed
     const SQL = "UPDATE `cart-items` SET Amount = ?, Total_Price = ((SELECT Product_Price FROM products WHERE Product_ID = ?) * ?) WHERE Product_ID = ? AND Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open = '1')";
-    const parameter = [updatedCartItem.amount, updatedCartItem.productID, updatedCartItem.amount, updatedCartItem.productID, userID];
+    const parameter = [updatedCartItem.amount, cartItemID, updatedCartItem.amount, cartItemID, userID];
 
     try {
         // Sending the SQL query and the user's login data to the 'connection wrapper' preset

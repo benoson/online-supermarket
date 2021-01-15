@@ -1,6 +1,7 @@
 <div class="admin-sidebar">
     <div *ngIf="currentEditableProduct === undefined; else selectedProduct" class="no-product-selected">
         <p class="sharp">Choose a product in order to edit it!</p>
+        <mat-icon class="no-product-selected-icon" aria-hidden="false" aria-label="my cart icon">touch_app</mat-icon>
     </div>
 
     <ng-template #selectedProduct>
@@ -12,7 +13,7 @@
                 <p class="pre-text">Name</p>
                 <p class="product-info">{{currentEditableProduct.name}}</p>
                 <div class="border-div"></div>
-                <button class="secondary-button custom-admin-sidebar-button">
+                <button (click)="editProductName()" class="secondary-button custom-admin-sidebar-button">
                     <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
                 </button>
             </div>
@@ -22,7 +23,17 @@
                 <p class="pre-text">Category</p>
                 <p class="product-info">{{currentEditableProduct.category}}</p>
                 <div class="border-div"></div>
-                <button class="secondary-button custom-admin-sidebar-button">
+                <button (click)="editProductCategory()" class="secondary-button custom-admin-sidebar-button">
+                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                </button>
+            </div>
+
+            <!-- product description -->
+            <div class="edited-product-section product-description-section">
+                <p class="pre-text">Description</p>
+                <p class="product-info product-description-info">{{currentEditableProduct.description}}</p>
+                <div class="border-div"></div>
+                <button (click)="editProductDescription()" class="secondary-button custom-admin-sidebar-button">
                     <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
                 </button>
             </div>
@@ -30,9 +41,9 @@
             <!-- product price -->
             <div class="edited-product-section">
                 <p class="pre-text">Price</p>
-                <p class="product-info">{{currentEditableProduct.price}}</p>
+                <p class="product-info">{{currentEditableProduct.price}} $</p>
                 <div class="border-div"></div>
-                <button class="custom-admin-sidebar-button secondary-button">
+                <button (click)="editProductPrice()" class="custom-admin-sidebar-button secondary-button">
                     <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
                 </button>
             </div>
@@ -42,7 +53,7 @@
                 <p class="pre-text">Image</p>
                 <img class="edited-product-image product-info" src={{currentEditableProduct.imageURL}} alt={{currentEditableProduct.name}}>
                 <div class="border-div"></div>
-                <button class="secondary-button custom-admin-sidebar-button">
+                <button (click)="editProductImage()" class="secondary-button custom-admin-sidebar-button">
                     <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
                 </button>
             </div>

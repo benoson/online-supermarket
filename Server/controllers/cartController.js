@@ -67,12 +67,13 @@ router.post('/addItem', async (request, response, next) => {
     }
 });
 
-router.patch('/updateItem', async (request, response, next) => {
+router.patch('/:id', async (request, response, next) => {
 
     const updatedCartItem = request.body;
+    const cartItemID = request.params.id;
 
     try {
-        const succesfulItemUpdateResponse = await cartLogic.updateCartItem(request, updatedCartItem);
+        const succesfulItemUpdateResponse = await cartLogic.updateCartItem(request, updatedCartItem, cartItemID);
 
         // converting the response to JSON before sending it to the client
         response.json(succesfulItemUpdateResponse);

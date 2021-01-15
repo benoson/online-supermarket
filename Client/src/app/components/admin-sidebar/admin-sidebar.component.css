@@ -57,3 +57,26 @@
 .edit-icon {
     font-size: 18px;
 }
+
+.no-product-selected {
+    text-align: center;
+}
+
+.no-product-selected-icon {
+    height: 100px;
+    width: 100px;
+    font-size: 100px;
+    color: var(--primary-theme-color);
+}
+
+.product-description-section {
+    min-width: 100%;
+    max-width: 300px;
+}
+
+.product-description-info {
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

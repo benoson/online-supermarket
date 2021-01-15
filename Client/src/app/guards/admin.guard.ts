@@ -7,8 +7,7 @@ import PopupMessages from '../Utils/PopupMessages';
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerGuard implements CanActivate {
-
+export class AdminGuard implements CanActivate {
   public constructor(
     private router: Router,
     private userService: UserService
@@ -22,15 +21,15 @@ export class CustomerGuard implements CanActivate {
       const userType = userInfo.userType;
 
       // if the user is logged in, and he is a customer
-      if (this.userService.isUserLoggedIn && userType === "CUSTOMER") {
-        PopupMessages.displaySuccessPopupMessage('Welcome !');
+      if (this.userService.isUserLoggedIn && userType === "ADMIN") {
+        PopupMessages.displaySuccessPopupMessage('Welcome, Admin !');
         return true;
       }
     }
 
     // in case the user is not logged in, or, not a customer, throw him to the `welcome` page in order for him to login again
     this.router.navigateByUrl('/welcome/login');
-    PopupMessages.displayErrorPopupMessage('Please log in first');
+    PopupMessages.displayErrorPopupMessage('You are not authorized to go there');
     return false;
   }
   

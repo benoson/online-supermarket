@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserLoginDetails from 'src/app/models/UserLoginDetails';
 import { CartService } from 'src/app/services/cart.service';
@@ -18,6 +17,7 @@ import UsersUtils from 'src/app/Utils/UsersUtils';
 export class LoginComponent implements OnInit {
 
   public userLoginDetails: UserLoginDetails;
+  public userTypeFromServer: string;
 
   public loginValues: FormGroup;
   public emailInput: FormControl;
@@ -32,7 +32,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.userLoginDetails = new UserLoginDetails("", "");
+    this.userTypeFromServer = this.userService.userTypeFromServer;
     this.initializeFormControlsValidations();
+
+    // listening for changes of the user type in the service
+    this.userService.userTypeFromServerChange.subscribe( (value: string) => {
+      this.userTypeFromServer = value;
+    });
   }
 
   public login = (): void => {
@@ -47,6 +53,7 @@ export class LoginComponent implements OnInit {
   
       observable.subscribe( succesfulServerResponse => {
         this.handleSuccesfulLoginResponse(succesfulServerResponse);
+        this.userService.userTypeFromServerChange.next(succesfulServerResponse.userType);
 
       }, badServerResponse => {
         PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);

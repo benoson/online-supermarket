@@ -82,9 +82,17 @@ const logout = (request) => {
     UsersUtils.deleteUserFromCache(request);
 }
 
+const getUserType = (request) => {
+    const userCacheData = UsersUtils.extractUserInfoFromCache(request);
+    const userType = userCacheData.userType;
+
+    return userType;
+}
+
 
 module.exports = {
     addUser,
     login,
-    logout
+    logout,
+    getUserType
 }

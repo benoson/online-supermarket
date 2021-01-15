@@ -60,5 +60,20 @@ router.post('/logout', async (request, response, next) => {
     }
 });
 
+router.get('/type', async (request, response, next) => {
+
+    try {
+        const successfullUserTypeData = await usersLogic.getUserType(request);
+
+        // converting the response to JSON before sending it to the client
+        response.json(successfullUserTypeData);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
 
 module.exports = router;

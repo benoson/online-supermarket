@@ -33,13 +33,13 @@ const addItemToCart = async (request, newCartItem) => {
     await cartDao.addItemToCart(userID, newCartItem);
 }
 
-const updateCartItem = async (request, updatedCartItem) => {
+const updateCartItem = async (request, updatedCartItem, cartItemID) => {
     // validating the updated cart item. If it fails, it will throw an error and will not continue
     CartItemUtils.validateCartItem(updatedCartItem);
 
     const userCacheData = UsersUtils.extractUserInfoFromCache(request);
     const userID = userCacheData.ID;
-    await cartDao.updateCartItem(userID, updatedCartItem);
+    await cartDao.updateCartItem(userID, updatedCartItem, cartItemID);
 }
 
 const removeCartItem = async (request, cartItemID) => {

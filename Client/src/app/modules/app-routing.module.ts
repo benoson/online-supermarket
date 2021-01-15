@@ -6,11 +6,12 @@ import { RegisterComponent } from '../components/register/register.component';
 import { WelcomeSectionsComponent } from '../components/welcome-sections/welcome-sections.component';
 import { CustomerComponent } from '../components/customer/customer.component';
 import { CustomerGuard } from '../guards/customer.guard';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
   {path:'', redirectTo: '/welcome/login', pathMatch: 'full'},
 
-  {path:'admin', loadChildren: './admin.module#AdminModule'},
+  {path:'admin', canActivate: [AdminGuard], loadChildren: './admin.module#AdminModule'},
 
   {path:'welcome', component: WelcomeSectionsComponent, children: [
     {path:'', redirectTo: '/welcome/login', pathMatch: 'full'},
