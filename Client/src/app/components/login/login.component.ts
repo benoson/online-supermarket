@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
   
       observable.subscribe( succesfulServerResponse => {
         this.handleSuccesfulLoginResponse(succesfulServerResponse);
-        this.userService.userTypeFromServerChange.next(succesfulServerResponse.userType);
 
       }, badServerResponse => {
         PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
@@ -81,6 +80,8 @@ export class LoginComponent implements OnInit {
     this.getCustomerCurrentCartCreationDate();
     // changing the first name property in the service
     this.userService.userFirstNameChange.next(succesfulServerResponse.firstName);
+    // changing the user type property in the service
+    this.userService.userTypeFromServerChange.next(succesfulServerResponse.userType);
   }
 
   private getLastOrderDateByCustomer = (): void => {

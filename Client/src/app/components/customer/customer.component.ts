@@ -69,6 +69,8 @@ export class CustomerComponent implements OnInit {
   }
 
   private checkIfCustomerNeedsNewCart = () => {
+    console.log(this.cartService.currentCartCreationDate);
+    
     if (this.cartService.currentCartCreationDate === null) {
       const observable = this.cartService.openNewCustomerCart();
 
@@ -93,8 +95,9 @@ export class CustomerComponent implements OnInit {
   }
 
   private checkIfShouldGetCartItems = () => {
+    this.initializeCart();
     // if there aren't any cart items in the service, attempt to get them from the server (this is for a case where a user refreshes the customer's page)
-    if (this.cartService.customerCurrentCartItems === undefined) {
+    if (this.cartService.customerCurrentCartItems.length === 0) {
       this.getAllCartItems();
     }
   }
@@ -123,6 +126,11 @@ export class CustomerComponent implements OnInit {
     }, badServerResponse => {
       PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
     });
+  }
+
+  private initializeCart = (): void => {
+    const initializedCartItems = new Array<CartItemForDisplay>(); 
+    this.cartService.customerCurrentCartItemsChange.next(initializedCartItems);
   }
 
   private sortProductsToCategories = () => {

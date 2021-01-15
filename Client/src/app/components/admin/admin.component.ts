@@ -49,7 +49,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  public addNewProductToStore = (): void => {
+  public onAddNewProductClick = (): void => {
     this.isShowProductAdditionSection = true;
   }
 

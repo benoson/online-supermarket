@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import SuccessfulLoginServerResponse from 'src/app/models/SuccessfulLoginServerResponse';
 import UserRegistrationDetails from 'src/app/models/UserRegistrationDetials';
+import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
 import UsersUtils from 'src/app/Utils/UsersUtils';
@@ -29,6 +30,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private cartService: CartService,
     private router: Router
   ) { };
 
@@ -64,12 +66,14 @@ export class RegisterComponent implements OnInit {
 
   private handleSuccesfulRegistrationResponse = (succesfulServerResponse: SuccessfulLoginServerResponse): void => {
     UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
-    PopupMessages.displaySuccessPopupMessage("Registered succesfully, You are now logged in!");
+    this.cartService.currentCartCreationDateChange.next(null);
     this.registrationValues.reset();
     // updating 'is logged' property in the service
     this.userService.isLoggedInChange.next(true);
     // updating the first name property in the service
     this.userService.userFirstNameChange.next(succesfulServerResponse.firstName);
+    // changing the user type property in the service
+    this.userService.userTypeFromServerChange.next(succesfulServerResponse.userType);
     // navigating to the customer page
     this.router.navigate(['/customer']);
   }
