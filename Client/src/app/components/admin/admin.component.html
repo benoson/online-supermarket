@@ -12,7 +12,7 @@
             <div class="products-section">
                 <!-- search field section-->
                 <div class="search-field-section">
-                    <h2 class="sharp admin-section-header green-text">Pick a product in order to edit it</h2>
+                    <h2 class="sharp admin-section-header">You can pick a product to edit it, or add a new one to the store</h2>
                     <mat-form-field>
                         <mat-label>Search for products</mat-label>
                         <input matInput type="text" [(ngModel)]="searchInputValue">
@@ -24,8 +24,8 @@
 
                 <!-- all products section -->
                 <div class="all-products-section">
-                    <div (click)="onAddNewProductClick()" class="add-items-section">
-                        <div class="add-items-button"></div>
+                    <div class="add-items-section">
+                        <div class="add-items-button" (click)="onAddNewProductClick()" ></div>
                     </div>
 
                     <div *ngFor="let product of allProducts| products: searchInputValue">

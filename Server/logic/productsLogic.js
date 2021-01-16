@@ -24,8 +24,33 @@ const updateProduct = async (request, updatedProduct, productID) => {
     }
 }
 
+const addProduct = async (request, newProduct) => {
+    // ProductsUtils.validateProductData(newProduct);
+    
+    const file = request.file;
+    console.log(file.filename);
+
+    // if (!file) {
+    //     const error = new ServerError(ErrorType.INVALID_PRODUCT_IMAGE_URL);
+    //     error.httpStatusCode = 400;
+    //     return next(error);
+    // }
+
+
+    // const userCacheData = UsersUtils.extractUserInfoFromCache(request);
+    // const userType = userCacheData.userType;
+
+    // if (userType === "ADMIN") {
+    //     await productsDao.updateProduct(updatedProduct, productID);
+    // }
+    // else {
+    //     throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
+    // }
+}
+
 
 module.exports = {
     getAllProducts,
+    addProduct,
     updateProduct
 }

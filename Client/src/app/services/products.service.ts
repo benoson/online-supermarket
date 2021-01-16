@@ -25,6 +25,10 @@ export class ProductsService {
     return this.http.get<Product[]>("http://localhost:3001/products/");
   }
 
+  public addProduct = (newProduct: any): Observable<any> => {
+    return this.http.post<any>(`http://localhost:3001/products`, newProduct);
+  }
+
   public updateProduct = (updatedProduct: Product): Observable<Product> => {
     return this.http.patch<Product>(`http://localhost:3001/products/${updatedProduct.ID}`, updatedProduct);
   }

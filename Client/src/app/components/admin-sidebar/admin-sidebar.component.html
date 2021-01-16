@@ -1,11 +1,11 @@
 <div class="admin-sidebar">
-    <div *ngIf="currentEditableProduct === undefined; else selectedProduct" class="no-product-selected">
-        <p class="sharp">Choose a product in order to edit it!</p>
+    <div *ngIf="currentEditableProduct === undefined && isShowProductAdditionSection === false; else selectedProduct" class="no-product-selected">
+        <p class="sharp main-admin-sidebar-header">Choose a product in order to edit it!</p>
         <mat-icon class="no-product-selected-icon" aria-hidden="false" aria-label="my cart icon">touch_app</mat-icon>
     </div>
 
     <ng-template #selectedProduct>
-        <div *ngIf="!isShowProductAdditionSection; else productAdditionSection" >
+        <div *ngIf="!isShowProductAdditionSection; else productAdditionSection">
             <h2 class="sharp">Edit - {{currentEditableProduct.name}}</h2>
     
             <div class="selected-product">
@@ -59,26 +59,73 @@
                     </button>
                 </div>
             </div>
-            
+
             <button class="custom-admin-sidebar-button primary-button full-width custom-border">Save</button>
         </div>
-    </ng-template>
+        
+        <!-- 'add product' section -->
+        <ng-template #productAdditionSection>
+            <h2 class="sharp main-admin-sidebar-header">Add a product to the store</h2>
 
-    <ng-template #productAdditionSection *ngIf="isShowProductAdditionSection">
-        <h2>asdfasdf</h2>
-        THIS IS TA TEST STO SHOW IF THE CHANGES WERE SAVED
-        <!-- ID input -->
-        <!-- <mat-form-field>
-            <mat-label>ID</mat-label>
-            <input [formControl]="IDInput" name="IDInput" matInput type="number" required>
+            <form #newProductForm="ngForm" [formGroup]="newProductValues">
+                <div class="new-product-info-fields">
+                    <!-- new product name input -->
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input [formControl]="newNameInput" name="newNameInput" matInput type="text" required>
+    
+                        <mat-error *ngIf="newNameInput.errors?.required">
+                            The name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <!-- new product category input -->
+                    <mat-form-field>
+                        <mat-label>Category</mat-label>
+                        <mat-select disableRipple [formControl]="newCategoryInput" required>
+                            <mat-option value="Dairy">Dairy</mat-option>
+                            <mat-option value="Meat & Fish">Meat & Fish</mat-option>
+                            <mat-option value="Vegan">Vegan</mat-option>
+                            <mat-option value="Drinks">Drinks</mat-option>
+                            <mat-option value="Health">Health</mat-option>
+                        </mat-select>
+    
+                        <mat-error *ngIf="newCategoryInput.errors?.required">
+                            Category is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <!-- new product description input -->
+                    <mat-form-field>
+                        <mat-label>Description</mat-label>
+                        <input matInput #message maxlength="100" [formControl]="newDescriptionInput" name="newDescriptionInput" matInput type="text" required>
+                        <mat-hint align="end">{{message.value.length}} / 100</mat-hint>
+    
+                        <mat-error *ngIf="newDescriptionInput.errors?.required">
+                            Description is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <!-- new product price input -->
+                    <mat-form-field>
+                        <mat-label>Price</mat-label>
+                        <input [formControl]="newPriceInput" name="newPriceInput" matInput type="number" required>
+    
+                        <mat-error *ngIf="newPriceInput.errors?.required">
+                            Price is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
 
-            <mat-error *ngIf="IDInput.errors?.required">
-                ID is <strong>required</strong>
-            </mat-error>
+                    <mat-label>Image:</mat-label>
+                    <input type="file" #fileUpload id="fileUpload" name="image" class="upload-image-button" (change)="selectImage($event)" />
+                </div>
 
-            <mat-error *ngIf="IDInput.errors?.pattern">
-                ID should be <strong>9 digits</strong>
-            </mat-error>
-        </mat-form-field> -->
+            </form>
+
+            <!-- add new product button -->
+            <button mat-stroked-button class="primary-button full-width" [disabled]="newProductForm.form.invalid" (click)="onAddNewProductClick()">Done</button>
+
+        </ng-template>
+
     </ng-template>
 </div>

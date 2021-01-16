@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from '../components/admin/admin.component';
 import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
 import { SharedModule } from './shared.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Sweet Alert
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -32,6 +32,7 @@ const routes: Routes = [
     CommonModule,
     SharedModule,
     FormsModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
     MatSidenavModule,

@@ -37,10 +37,12 @@
 
 .admin-section-header {
     color: lightslategray;
+    border: 1px solid lightblue;
+    padding: 1rem;
 }
 
 .add-items-button {
-    background-image: url(https://www.flaticon.com/svg/vstatic/svg/1632/1632686.svg?token=exp=1610634425~hmac=a0cfe9e7997e212c2a4c5d4b65f06da9);
+    background-image: url('../../../assets/plus-icon.svg');
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;

@@ -80,3 +80,18 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.new-product-info-fields {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-admin-sidebar-header {
+    color: lightslategray;
+    border: 1px solid lightblue;
+    padding: 0.5rem 1rem;
+}
+
+.upload-image-button {
+    margin: 1rem 0;
+}
