@@ -135,5 +135,7 @@ export class ProductComponent implements OnInit {
   public onProductEditClick = () => {
     // updating the admin's service with the curernt product for edit
     this.adminService.currentEditableProductChange.next(this.product);
+    // removing the 'show addition section' indication from the service
+    this.adminService.isShowProductAdditionSectionChange.next(false);
   }
 }

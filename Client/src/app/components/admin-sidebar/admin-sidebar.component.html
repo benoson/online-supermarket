@@ -5,60 +5,79 @@
     </div>
 
     <ng-template #selectedProduct>
-        <h2 class="sharp">Edit - {{currentEditableProduct.name}}</h2>
-
-        <div class="selected-product">
-            <!-- product name -->
-            <div class="edited-product-section">
-                <p class="pre-text">Name</p>
-                <p class="product-info">{{currentEditableProduct.name}}</p>
-                <div class="border-div"></div>
-                <button (click)="editProductName()" class="secondary-button custom-admin-sidebar-button">
-                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
-                </button>
+        <div *ngIf="!isShowProductAdditionSection; else productAdditionSection" >
+            <h2 class="sharp">Edit - {{currentEditableProduct.name}}</h2>
+    
+            <div class="selected-product">
+                <!-- product name -->
+                <div class="edited-product-section">
+                    <p class="pre-text">Name</p>
+                    <p class="product-info">{{currentEditableProduct.name}}</p>
+                    <div class="border-div"></div>
+                    <button (click)="editProductName()" class="secondary-button custom-admin-sidebar-button">
+                        <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                    </button>
+                </div>
+    
+                <!-- product category -->
+                <div class="edited-product-section">
+                    <p class="pre-text">Category</p>
+                    <p class="product-info">{{currentEditableProduct.category}}</p>
+                    <div class="border-div"></div>
+                    <button (click)="editProductCategory()" class="secondary-button custom-admin-sidebar-button">
+                        <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                    </button>
+                </div>
+    
+                <!-- product description -->
+                <div class="edited-product-section product-description-section">
+                    <p class="pre-text">Description</p>
+                    <p class="product-info product-description-info">{{currentEditableProduct.description}}</p>
+                    <div class="border-div"></div>
+                    <button (click)="editProductDescription()" class="secondary-button custom-admin-sidebar-button">
+                        <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                    </button>
+                </div>
+    
+                <!-- product price -->
+                <div class="edited-product-section">
+                    <p class="pre-text">Price</p>
+                    <p class="product-info">{{currentEditableProduct.price}} $</p>
+                    <div class="border-div"></div>
+                    <button (click)="editProductPrice()" class="custom-admin-sidebar-button secondary-button">
+                        <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                    </button>
+                </div>
+    
+                <!-- product image -->
+                <div class="edited-product-section">
+                    <p class="pre-text">Image</p>
+                    <img class="edited-product-image product-info" src={{currentEditableProduct.imageURL}} alt={{currentEditableProduct.name}}>
+                    <div class="border-div"></div>
+                    <button (click)="editProductImage()" class="secondary-button custom-admin-sidebar-button">
+                        <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
+                    </button>
+                </div>
             </div>
-
-            <!-- product category -->
-            <div class="edited-product-section">
-                <p class="pre-text">Category</p>
-                <p class="product-info">{{currentEditableProduct.category}}</p>
-                <div class="border-div"></div>
-                <button (click)="editProductCategory()" class="secondary-button custom-admin-sidebar-button">
-                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
-                </button>
-            </div>
-
-            <!-- product description -->
-            <div class="edited-product-section product-description-section">
-                <p class="pre-text">Description</p>
-                <p class="product-info product-description-info">{{currentEditableProduct.description}}</p>
-                <div class="border-div"></div>
-                <button (click)="editProductDescription()" class="secondary-button custom-admin-sidebar-button">
-                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
-                </button>
-            </div>
-
-            <!-- product price -->
-            <div class="edited-product-section">
-                <p class="pre-text">Price</p>
-                <p class="product-info">{{currentEditableProduct.price}} $</p>
-                <div class="border-div"></div>
-                <button (click)="editProductPrice()" class="custom-admin-sidebar-button secondary-button">
-                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
-                </button>
-            </div>
-
-            <!-- product image -->
-            <div class="edited-product-section">
-                <p class="pre-text">Image</p>
-                <img class="edited-product-image product-info" src={{currentEditableProduct.imageURL}} alt={{currentEditableProduct.name}}>
-                <div class="border-div"></div>
-                <button (click)="editProductImage()" class="secondary-button custom-admin-sidebar-button">
-                    <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
-                </button>
-            </div>
+            
+            <button class="custom-admin-sidebar-button primary-button full-width custom-border">Save</button>
         </div>
+    </ng-template>
 
-        <button class="custom-admin-sidebar-button primary-button full-width custom-border">Save</button>
+    <ng-template #productAdditionSection *ngIf="isShowProductAdditionSection">
+        <h2>asdfasdf</h2>
+        <!-- ID input -->
+        <!-- <mat-form-field>
+            <mat-label>ID</mat-label>
+            <input [formControl]="IDInput" name="IDInput" matInput type="number" required>
+
+            <mat-error *ngIf="IDInput.errors?.required">
+                ID is <strong>required</strong>
+            </mat-error>
+
+            <mat-error *ngIf="IDInput.errors?.pattern">
+                ID should be <strong>9 digits</strong>
+            </mat-error>
+        </mat-form-field> -->
     </ng-template>
 </div>

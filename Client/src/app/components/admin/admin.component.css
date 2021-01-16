@@ -32,6 +32,7 @@
 .all-products-section {
     display: flex;
     flex-wrap: wrap;
+    transition: 0.3s ease;
 }
 
 .admin-section-header {

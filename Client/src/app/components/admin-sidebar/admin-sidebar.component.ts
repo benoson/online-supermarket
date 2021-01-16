@@ -15,6 +15,7 @@ export class AdminSidebarComponent implements OnInit {
 
   public currentEditableProduct: Product;
   private currentNewProductAfterChanges: Product;
+  public isShowProductAdditionSection: boolean;
 
   constructor(
     private adminService: AdminService,
@@ -28,6 +29,10 @@ export class AdminSidebarComponent implements OnInit {
 
   private initializeDefinitions = () => {
     this.currentEditableProduct = this.adminService.currentEditableProduct;
+    this.isShowProductAdditionSection = false;
+    this.adminService.isShowProductAdditionSectionChange.subscribe( (value: boolean) => {
+      this.isShowProductAdditionSection = value;
+    })
 
     if (this.currentEditableProduct !== undefined) {
       this.currentNewProductAfterChanges = new Product(this.currentEditableProduct.ID, this.currentEditableProduct.name, this.currentEditableProduct.description, this.currentEditableProduct.category, this.currentEditableProduct.price, this.currentEditableProduct.imageURL);
