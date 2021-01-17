@@ -117,9 +117,8 @@
                     </mat-form-field>
 
                     <mat-label>Image:</mat-label>
-                    <input type="file" #fileUpload id="fileUpload" name="image" class="upload-image-button" (change)="selectImage($event)" />
+                    <input type="file" #fileUpload id="fileUpload" name="image" class="upload-image-button" (change)="selectImage($event)" required />
                 </div>
-
             </form>
 
             <!-- add new product button -->

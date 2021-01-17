@@ -5,6 +5,6 @@ export default class Product {
         public description: string,
         public category: string,
         public price: number,
-        public imageURL: any
+        public imageURL: string
     ) {};
 }

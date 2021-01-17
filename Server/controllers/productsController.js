@@ -3,6 +3,8 @@ const router = express.Router();
 
 const productsLogic = require('../logic/productsLogic');
 const multer = require("multer");
+const ServerError = require('../errors/serverError');
+const ErrorType = require('../errors/errorType');
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -32,10 +34,18 @@ router.get('/', async (request, response, next) => {
     }
 });
 
-router.post("/", upload.single('file'), async (request, response, next) => {
+router.post("/images", upload.single('file'), async (request, response, next) => {
+
+    const file = request.file;
+    if (!file) {
+        next(new ServerError(ErrorType.INVALID_PRODUCT_IMAGE_URL));
+    }
+    response.json(file.filename);
+});
+
+router.post("/", async (request, response, next) => {
 
     const newProduct = request.body;
-    console.log(newProduct);
 
     try {
         const successfullNewProductData = await productsLogic.addProduct(request, newProduct);

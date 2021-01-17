@@ -177,8 +177,6 @@ export class AdminSidebarComponent implements OnInit {
       const file = event.target.files[0];
       this.imageToUpload = file;
     }
-    console.log(this.imageToUpload);
-    
   }
 
   public onAddNewProductClick = () => {
@@ -186,16 +184,23 @@ export class AdminSidebarComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('file', this.imageToUpload);
-    this.newProducDetails.imageURL = formData;
-    console.log(formData);
-    
 
-    const observable = this.productsService.addProduct(formData);
-    observable.subscribe(()=> {
-      console.log("success!!!!");
-    }, fail  => {
-      console.log(fail);
+    const imageObservable = this.productsService.addImage(formData);
+    imageObservable.subscribe( (recievedImageName) => {
+      this.newProducDetails.imageURL = recievedImageName;
+
+      const observable = this.productsService.addProduct(this.newProducDetails);
+      observable.subscribe(()=> {
+
+        PopupMessages.displaySuccessPopupMessage('Product added succesfully !');
+      }, badServerResponse  => {
+        PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+      })
+
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
     })
+
   }
 
 

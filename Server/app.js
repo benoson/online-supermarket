@@ -12,6 +12,9 @@ const cartController = require('./controllers/cartController');
 // creating an Express application
 const server = express();
 
+// The default folder for the images is 'uploads'
+server.use(express.static('./uploads'));
+
 // express.json() is parsing the requests recieved to the server side
 server.use(express.json());
 
@@ -20,6 +23,7 @@ server.use(cors({origin: "http://localhost:4200"}));
 
 // Signing the 'login filter' to our server
 server.use(loginFilter());
+
 
 server.use('/users', usersController);
 server.use('/products', productsController);

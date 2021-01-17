@@ -37,8 +37,26 @@ const updateProduct = async (updatedProduct, productID) => {
     }
 }
 
+const addProduct = async (newProduct) => {
+    // Creating an SQL query to add a product to the DB
+    const SQL = "INSERT INTO products (Product_Name, Product_Description, Product_Category, Product_Price, Product_Image_URL) VALUES (?, ?, (SELECT Category_ID FROM `products-categories` WHERE Category_Name = ?), ?, ?)";
+    const parameters = [newProduct.name, newProduct.description, newProduct.category, newProduct.price, newProduct.imageURL]
+
+    try {
+        // Sending the SQL query to the 'connection wrapper' preset
+        await connection.executeWithParameters(SQL, parameters);
+    }
+
+    catch (error) {
+        // Technical Error
+        console.log(error);
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
+
 
 module.exports = {
     getAllProducts,
+    addProduct,
     updateProduct
 }

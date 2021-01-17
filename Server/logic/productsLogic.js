@@ -1,4 +1,3 @@
-const { Server } = require('http');
 const productsDao = require('../dao/productsDao');
 const ErrorType = require('../errors/errorType');
 const ServerError = require('../errors/serverError');
@@ -25,27 +24,19 @@ const updateProduct = async (request, updatedProduct, productID) => {
 }
 
 const addProduct = async (request, newProduct) => {
-    // ProductsUtils.validateProductData(newProduct);
-    
-    const file = request.file;
-    console.log(file.filename);
+    newProduct.imageURL = 'http://localhost:3001/' + newProduct.imageURL
+    newProduct.name = newProduct.name.toUpperCase();
+    ProductsUtils.validateProductData(newProduct);
+    const userCacheData = UsersUtils.extractUserInfoFromCache(request);
+    const userType = userCacheData.userType;
 
-    // if (!file) {
-    //     const error = new ServerError(ErrorType.INVALID_PRODUCT_IMAGE_URL);
-    //     error.httpStatusCode = 400;
-    //     return next(error);
-    // }
-
-
-    // const userCacheData = UsersUtils.extractUserInfoFromCache(request);
-    // const userType = userCacheData.userType;
-
-    // if (userType === "ADMIN") {
-    //     await productsDao.updateProduct(updatedProduct, productID);
-    // }
-    // else {
-    //     throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
-    // }
+    if (userType === "ADMIN") {
+        console.log("all good");
+        await productsDao.addProduct(newProduct);
+    }
+    else {
+        throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
+    }
 }
 
 

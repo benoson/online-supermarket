@@ -25,8 +25,12 @@ export class ProductsService {
     return this.http.get<Product[]>("http://localhost:3001/products/");
   }
 
-  public addProduct = (newProduct: any): Observable<any> => {
-    return this.http.post<any>(`http://localhost:3001/products`, newProduct);
+  public addProduct = (newProduct: Product): Observable<Product> => {
+    return this.http.post<Product>(`http://localhost:3001/products`, newProduct);
+  }
+
+  public addImage = (formData: FormData): Observable<string> => {
+    return this.http.post<string>(`http://localhost:3001/products/images`, formData);
   }
 
   public updateProduct = (updatedProduct: Product): Observable<Product> => {
