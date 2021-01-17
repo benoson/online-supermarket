@@ -9,30 +9,37 @@
                 <mat-icon aria-hidden="false" aria-label="my cart icon">create</mat-icon>
             </button>
 
-            <div class="products-section">
-                <!-- search field section-->
-                <div class="search-field-section">
-                    <h2 class="sharp admin-section-header">You can pick a product to edit it, or add a new one to the store</h2>
-                    <mat-form-field>
-                        <mat-label>Search for products</mat-label>
-                        <input matInput type="text" [(ngModel)]="searchInputValue">
-                        <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
-                          <mat-icon>close</mat-icon>
-                        </button>
-                    </mat-form-field>
-                </div>
-
-                <!-- all products section -->
-                <div class="all-products-section">
-                    <div class="add-items-section">
-                        <div class="add-items-button" (click)="onAddNewProductClick()" ></div>
-                    </div>
-
-                    <div *ngFor="let product of allProducts| products: searchInputValue">
-                        <app-product [product]="product" [isEditableByAdmin]="true"></app-product>
-                    </div>
-                </div>
+            <div *ngIf="allProducts === undefined || allProducts.length === 0; else allProductsSection" class="no-products-section">
+                <img class="no-products-text-image" src="../../../assets/no-products-text.png" alt="">
+                <img class="thor-no-products-image" src="../../../assets/thor-no-products.jpg" alt="">
             </div>
+
+            <ng-template #allProductsSection>
+                <div class="products-section">
+                    <!-- search field section-->
+                    <div class="search-field-section">
+                        <h2 class="sharp admin-section-header">You can pick a product to edit it, or add a new one to the store</h2>
+                        <mat-form-field>
+                            <mat-label>Search for products</mat-label>
+                            <input matInput type="text" [(ngModel)]="searchInputValue">
+                            <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
+                              <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+    
+                    <!-- all products section -->
+                    <div class="all-products-section">
+                        <div class="add-items-section">
+                            <div class="add-items-button" (click)="onAddNewProductClick()" ></div>
+                        </div>
+    
+                        <div *ngFor="let product of allProducts| products: searchInputValue">
+                            <app-product [product]="product" [isEditableByAdmin]="true"></app-product>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
 
         </div>
     </mat-drawer-container>

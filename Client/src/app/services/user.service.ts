@@ -25,6 +25,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     this.isUserLoggedIn = UsersUtils.isUserLoggedIn();
+    this.userFirstName = UsersUtils.getFirstName();
     this.initializeListeners();
     this.getUserType();
   };

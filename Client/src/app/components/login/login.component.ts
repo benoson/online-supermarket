@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit {
 
       }, badServerResponse => {
         PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
-        this.userService.isLoggedInChange.next(true);
       })
     }
     catch (error) {

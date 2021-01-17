@@ -42,6 +42,9 @@ export class ShopInfoSectionComponent implements OnInit {
     // listening for changes of the customer's last order date, inside the orders service
     this.ordersService.customerLastOrderDateChange.subscribe( (value: string | null) => {
       this.assignCustomerLastOrderDateText(value);
+      if (value === undefined) {
+        this.customerLastOrderDate = undefined;
+      }
     });
 
     // listening for changes of the products, inside the products service

@@ -70,3 +70,16 @@
     border-radius: 5px;
     outline: none;
 }
+
+.no-products-section {
+    padding: 3rem;
+}
+
+.no-products-text-image {
+    width: 650px;
+}
+
+.thor-no-products-image {
+    position: fixed;
+    bottom: 0;
+}

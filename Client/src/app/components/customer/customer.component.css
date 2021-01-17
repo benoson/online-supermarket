@@ -52,3 +52,16 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.no-products-section {
+    padding: 3rem;
+}
+
+.no-products-text-image {
+    width: 650px;
+}
+
+.thor-no-products-image {
+    position: fixed;
+    bottom: 0;
+}

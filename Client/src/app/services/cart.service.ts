@@ -37,30 +37,30 @@ export class CartService {
   };
 
 
-  public openNewCustomerCart = (): Observable<any> => {
-    return this.http.post("http://localhost:3001/cart/", {});
-  };
-
   public getCurrentCartItems = (): Observable<CartItemForDisplay[]> => {
     return this.http.get<CartItemForDisplay[]>("http://localhost:3001/cart/currentItems");
+  };
+
+  public getCustomerCurrentCartCreationDate = (): Observable<string | null> => {
+    return this.http.get<string | null>("http://localhost:3001/cart/creationDate");
+  };
+
+  public openNewCustomerCart = (): Observable<any> => {
+    return this.http.post("http://localhost:3001/cart/", {});
   };
 
   public addItemToCart = (newCartItem: CartItem): Observable<CartItem> => {
     return this.http.post<CartItem>("http://localhost:3001/cart/addItem", newCartItem);
   };
 
-  public updateCartItem = (updatedCartItem: CartItem): Observable<CartItem> => {
-    return this.http.patch<CartItem>(`http://localhost:3001/cart/${updatedCartItem.productID}`, updatedCartItem);
-  };
-  
   public removeAllCartItems = (): Observable<number> => {
     return this.http.delete<number>(`http://localhost:3001/cart/`);
   };
   
-  public getCustomerCurrentCartCreationDate = (): Observable<string | null> => {
-    return this.http.get<string | null>("http://localhost:3001/cart/creationDate");
+  public updateCartItem = (updatedCartItem: CartItem): Observable<CartItem> => {
+    return this.http.patch<CartItem>(`http://localhost:3001/cart/${updatedCartItem.productID}`, updatedCartItem);
   };
-  
+
   public removeItemFromCart = (cartItemID: number): Observable<number> => {
     return this.http.delete<number>(`http://localhost:3001/cart/${cartItemID}`);
   };

@@ -67,6 +67,21 @@ router.post('/addItem', async (request, response, next) => {
     }
 });
 
+router.delete('/', async (request, response, next) => {
+
+    try {
+        const succesfulCartItemsRemovalResponse = await cartLogic.removeAllCartItems(request);
+
+        // converting the response to JSON before sending it to the client
+        response.json(succesfulCartItemsRemovalResponse);
+    }
+
+    catch (error) {
+        // Handling the error with our Error Handler
+        return next(error);
+    }
+});
+
 router.patch('/:id', async (request, response, next) => {
 
     const updatedCartItem = request.body;
@@ -94,21 +109,6 @@ router.delete('/:id', async (request, response, next) => {
 
         // converting the response to JSON before sending it to the client
         response.json(succesfulCartItemRemovalResponse);
-    }
-
-    catch (error) {
-        // Handling the error with our Error Handler
-        return next(error);
-    }
-});
-
-router.delete('/', async (request, response, next) => {
-
-    try {
-        const succesfulCartItemsRemovalResponse = await cartLogic.removeAllCartItems(request);
-
-        // converting the response to JSON before sending it to the client
-        response.json(succesfulCartItemsRemovalResponse);
     }
 
     catch (error) {

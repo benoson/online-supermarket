@@ -2,7 +2,7 @@
     border-bottom: 5px solid black;
     border-top: 5px solid black;
     display: flex;
-    background-image: url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-smoke.9fd6fa0d.jpg);
+    background-image: url("../../../assets/cap-not-found-fog.jpg");
     background-size: auto;
     background-position: bottom;
     opacity: .6;
@@ -14,7 +14,7 @@
     margin: 0 auto;
     width: 400px;
     height: 400px;
-    background-image: url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-glitch-1.53135c50.png),url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-glitch-2.dd185d09.png),url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-glitch-3.4af0b9c9.png);
+    background-image: url("../../../assets/hydra-1.png"),url("../../../assets/hydra-2.png"),url("../../../assets/hydra-3.png");
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 1;
@@ -27,7 +27,7 @@
 .cap-image {
     width: 620px;
     height: 600px;
-    background-image: url(https://i.annihil.us/u/prod/marvel/html_pages_assets/error-pages/prod/captain-america-char.4b7f4c07.png);
+    background-image: url("../../../assets/cap-not-found.png");
     background-repeat: no-repeat;
 }
 

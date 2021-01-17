@@ -11,48 +11,55 @@
                     <mat-icon aria-hidden="false" aria-label="my cart icon">shopping_cart</mat-icon>
             </button>
 
-            <div class="products-section">
-                <div class="categories-navbar" *ngIf="!isShowReceipt">
-                    <div class="navbar-category">
-                        <a id="all-products-nav-text" class="navbarLink current-category" (click)="sortByAllProducts()">All Products</a>
-                    </div>
-                    <div class="navbar-category">
-                        <a id="dairy-nav-text" class="navbarLink" (click)="sortByDairyProducts()">Dairy</a>
-                    </div>
-                    <div class="navbar-category">
-                        <a id="meat-fish-nav-text" class="navbarLink" (click)="sortByMeatAndFishProducts()">Meat & Fish</a>
-                    </div>
-                    <div class="navbar-category">
-                        <a id="vegan-nav-text" class="navbarLink" (click)="sortByVeganProducts()">Vegan</a>
-                    </div>
-                    <div class="navbar-category">
-                        <a id="drinks-nav-text" class="navbarLink" (click)="sortByDrinks()">Drinks</a>
-                    </div>
-                    <div class="navbar-category">
-                        <a id="health-nav-text" class="navbarLink" (click)="sortByHealthProducts()">Health</a>
-                    </div>
-                    <div class="navbar-category">
-                        <mat-form-field>
-                            <mat-label>Search for products</mat-label>
-                            <input matInput type="text" [(ngModel)]="searchInputValue">
-                            <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
-                              <mat-icon>close</mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </div>
-                </div>
-                
-                <!-- all products section -->
-                <div *ngIf="!isShowReceipt; else showReceipt" class="all-products-section">
-                    <div *ngFor="let product of currentProductsForDisplay|products: searchInputValue.trim()">
-                        <app-product [product]="product" [isEditableByAdmin]="false"></app-product>
-                    </div>
-                </div>
-
-                <ng-template #showReceipt>
-                    <app-receipt></app-receipt>
-                </ng-template>
+            <div *ngIf="currentProductsForDisplay === undefined || currentProductsForDisplay.length === 0; else allProducts" class="no-products-section">
+                <img class="no-products-text-image" src="../../../assets/no-products-text.png" alt="">
+                <img class="thor-no-products-image" src="../../../assets/thor-no-products.jpg" alt="">
             </div>
+
+            <ng-template #allProducts>
+                <div class="products-section">
+                    <div class="categories-navbar" *ngIf="!isShowReceipt">
+                        <div class="navbar-category">
+                            <a id="all-products-nav-text" class="navbarLink current-category" (click)="sortByAllProducts()">All Products</a>
+                        </div>
+                        <div class="navbar-category">
+                            <a id="dairy-nav-text" class="navbarLink" (click)="sortByDairyProducts()">Dairy</a>
+                        </div>
+                        <div class="navbar-category">
+                            <a id="meat-fish-nav-text" class="navbarLink" (click)="sortByMeatAndFishProducts()">Meat & Fish</a>
+                        </div>
+                        <div class="navbar-category">
+                            <a id="vegan-nav-text" class="navbarLink" (click)="sortByVeganProducts()">Vegan</a>
+                        </div>
+                        <div class="navbar-category">
+                            <a id="drinks-nav-text" class="navbarLink" (click)="sortByDrinks()">Drinks</a>
+                        </div>
+                        <div class="navbar-category">
+                            <a id="health-nav-text" class="navbarLink" (click)="sortByHealthProducts()">Health</a>
+                        </div>
+                        <div class="navbar-category">
+                            <mat-form-field>
+                                <mat-label>Search for products</mat-label>
+                                <input matInput type="text" [(ngModel)]="searchInputValue">
+                                <button mat-button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputValue=''">
+                                  <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <!-- all products section -->
+                    <div *ngIf="!isShowReceipt; else showReceipt" class="all-products-section">
+                        <div *ngFor="let product of currentProductsForDisplay|products: searchInputValue.trim()">
+                            <app-product [product]="product" [isEditableByAdmin]="false"></app-product>
+                        </div>
+                    </div>
+    
+                    <ng-template #showReceipt>
+                        <app-receipt></app-receipt>
+                    </ng-template>
+                </div>
+            </ng-template>
         </div>
     </mat-drawer-container>
 </div>

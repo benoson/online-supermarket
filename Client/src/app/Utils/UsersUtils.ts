@@ -54,6 +54,21 @@ export default class UsersUtils {
     }
 
 
+    // ----- Get first name from sessionStorage
+
+    static getFirstName = () => {
+        const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        if (userInfo !== null) {
+            if (userInfo.firstName !== undefined) {
+                const userFirstName = userInfo.firstName;
+                return userFirstName;
+            }
+        }
+
+        return undefined;
+    }
+
+
     // ----- UI validations
 
     static validateAllRegistrationFields = (userRegistrationDetails: UserRegistrationDetails): boolean | void => {
