@@ -212,10 +212,10 @@ const ErrorType = {
         isShowStackTrace: true
     },
 
-    INVALID_PRODUCT_IMAGE_URL: {
+    INVALID_PRODUCT_IMAGE: {
         id: 921,
         httpCode: 401,
-        message: 'Invalid product image url',
+        message: 'Invalid product image',
         isShowStackTrace: true
     }
 };

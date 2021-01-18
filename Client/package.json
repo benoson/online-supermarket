@@ -24,6 +24,7 @@
     "@sweetalert2/ngx-sweetalert2": "^9.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "file-saver": "^2.0.5",
     "rxjs": "~6.6.0",
     "sweetalert2": "^10.12.7",
     "tslib": "^2.0.0",

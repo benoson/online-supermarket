@@ -45,6 +45,11 @@ const addProduct = async (newProduct) => {
     try {
         // Sending the SQL query to the 'connection wrapper' preset
         await connection.executeWithParameters(SQL, parameters);
+
+        const newlyAddedProductSQL = "SELECT Product_ID as ID, Product_Name as name, Product_Description as description, (SELECT Category_Name FROM `products-categories` WHERE `products-categories`.Category_ID = `products`.Product_Category) as category, Product_Price as price, Product_Image_URL as imageURL FROM products WHERE Product_ID = (SELECT MAX(Product_ID) FROM products)";
+        
+        const newlyAddedProduct = await connection.execute(newlyAddedProductSQL);
+        return newlyAddedProduct[0];
     }
 
     catch (error) {

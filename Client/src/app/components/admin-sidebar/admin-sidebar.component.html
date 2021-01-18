@@ -54,13 +54,9 @@
                     <p class="pre-text">Image</p>
                     <img class="edited-product-image product-info" src={{currentEditableProduct.imageURL}} alt={{currentEditableProduct.name}}>
                     <div class="border-div"></div>
-                    <button (click)="editProductImage()" class="secondary-button custom-admin-sidebar-button">
-                        <mat-icon class="edit-icon" aria-hidden="false" aria-label="my cart icon">create</mat-icon>
-                    </button>
                 </div>
+                <input type="file" #fileUploader id="fileUploader" accept="image" name="image_" class="upload-image-button" (change)="updateProductImage($event)" required />
             </div>
-
-            <button class="custom-admin-sidebar-button primary-button full-width custom-border">Save</button>
         </div>
         
         <!-- 'add product' section -->
@@ -117,7 +113,7 @@
                     </mat-form-field>
 
                     <mat-label>Image:</mat-label>
-                    <input type="file" #fileUpload id="fileUpload" name="image" class="upload-image-button" (change)="selectImage($event)" required />
+                    <input type="file" accept="image/*" #fileUpload id="fileUpload" [formControl]="newImageInput" name="image" class="upload-image-button" (change)="selectImage($event)" required />
                 </div>
             </form>
 

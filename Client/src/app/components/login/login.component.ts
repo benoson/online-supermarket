@@ -64,6 +64,39 @@ export class LoginComponent implements OnInit {
   }
 
 
+  // -------------------------------------------------------------------------------- Model
+
+  /**
+   * attemps to get the last order date of the customer from the server
+   */
+  private getLastOrderDateByCustomer = (): void => {
+    const observable = this.ordersService.getLastOrderDateByCustomer();
+
+    observable.subscribe( (succesfulServerResponse: string | null) => {
+      this.ordersService.customerLastOrderDateChange.next(succesfulServerResponse);
+
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
+  };
+
+  /**
+   * attemps to get the customer current cart creation date from the server
+   */
+  private getCustomerCurrentCartCreationDate = () => {
+    const observable = this.cartService.getCustomerCurrentCartCreationDate();
+  
+    observable.subscribe( (succesfulServerResponse: string | null) => {
+      this.cartService.currentCartCreationDateChange.next(succesfulServerResponse);
+
+    }, badServerResponse => {
+      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+    });
+  }
+
+
+  // -------------------------------------------------------------------------------- Controller
+
   /**
    * 
    * @param succesfulServerResponse - handles a succesfull login response from the server
@@ -83,42 +116,31 @@ export class LoginComponent implements OnInit {
     this.userService.userTypeFromServerChange.next(succesfulServerResponse.userType);
   }
 
-  private getLastOrderDateByCustomer = (): void => {
-    const observable = this.ordersService.getLastOrderDateByCustomer();
-
-    observable.subscribe( (succesfulServerResponse: string | null) => {
-      this.ordersService.customerLastOrderDateChange.next(succesfulServerResponse);
-
-    }, badServerResponse => {
-      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
-    });
-  };
-
-  private getCustomerCurrentCartCreationDate = () => {
-    const observable = this.cartService.getCustomerCurrentCartCreationDate();
-  
-    observable.subscribe( (succesfulServerResponse: string | null) => {
-      this.cartService.currentCartCreationDateChange.next(succesfulServerResponse);
-
-    }, badServerResponse => {
-      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
-    });
-  }
-
+  /**
+   * assigns the form control values
+   */
   private assignFormControlsValues = (): void => {
     this.userLoginDetails.email = this.emailInput.value;
     this.userLoginDetails.password = this.passwordInput.value;
   }
 
+  /**
+   * initializes the form control validations
+   */
   private initializeFormControlsValidations = (): void => {
+    // creating the validators of the form's fields
     this.emailInput = new FormControl("", [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,3}$'), Validators.maxLength(35)]);
     this.passwordInput = new FormControl("");
 
+    // creating a new form group
     this.loginValues = new FormGroup({
       email: this.emailInput,
       password: this.passwordInput
     });
   }
+
+
+  // -------------------------------------------------------------------------------- View
 
   /**
    * clears the form's inputs and `login` button validation

@@ -11,7 +11,7 @@ class ProductsUtils {
         ProductsUtils.validateProductCategory(orderDetails.category);
         ProductsUtils.validateProductDescription(orderDetails.description);
         ProductsUtils.validateProductPrice(orderDetails.price);
-        ProductsUtils.validateProductImageURL(orderDetails.imageURL);
+        ProductsUtils.validateProductImage(orderDetails.imageURL);
 
         return true;
     }
@@ -54,14 +54,19 @@ class ProductsUtils {
         throw new ServerError(ErrorType.INVALID_PRODUCT_PRICE);
     }
 
-    static validateProductImageURL = (imageURL) => {
+    static validateProductImage = (imageURL) => {
         if (typeof imageURL === "string") {
             const imageURLTrimmed = imageURL.trim();
             if (imageURLTrimmed !== "") {
-                return true;
+                const splitImageURL = imageURL.split(".");
+
+                // checking for the file extension, if it is not an image, throw an error and do not valdiate the product
+                if (splitImageURL[splitImageURL.length - 1] == "jpg" || splitImageURL[splitImageURL.length - 1] == "jpeg" || splitImageURL[splitImageURL.length - 1] == "png") {
+                    return true;
+                }
             }
         }
-        throw new ServerError(ErrorType.INVALID_PRODUCT_IMAGE_URL);
+        throw new ServerError(ErrorType.INVALID_PRODUCT_IMAGE);
     }
 }
 

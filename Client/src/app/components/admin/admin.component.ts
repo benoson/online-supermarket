@@ -3,7 +3,6 @@ import Product from 'src/app/models/Product';
 import { AdminService } from 'src/app/services/admin.service';
 import { ProductsService } from 'src/app/services/products.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +12,6 @@ import Swal from 'sweetalert2';
 export class AdminComponent implements OnInit {
 
   public allProducts: Product[];
-  public searchInputValue: string;
 
   constructor(
     private productsService: ProductsService,
@@ -21,25 +19,24 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.allProducts = new Array <Product>();
-    this.searchInputValue = "";
+    this.allProducts = new Array<Product>();
+
+    this.productsService.allProductsChange.subscribe((value: Product[]) => {
+      this.allProducts = value;
+      console.log(this.allProducts);
+    })
     this.checkIfShouldGetAllProducts();
   }
 
-  private checkIfShouldGetAllProducts = () => {
-    // if there aren't any products in the products service, get them from the server
-    if (this.productsService.allProducts === undefined) {
-      this.getAllProductsFromServer();
-    }
-    else {
-      this.allProducts = this.productsService.allProducts;
-    }
-  }
+  // -------------------------------------------------------------------------------- Model
 
+  /**
+   * gets all the products from the server
+  */
   public getAllProductsFromServer = (): void => {
     const observable = this.productsService.getAllProducts();
 
-    observable.subscribe( (succesfulServerResponse: Product[]) => {
+    observable.subscribe((succesfulServerResponse: Product[]) => {
       // updating the value in the service, letting it know we recieved the products
       this.productsService.allProductsChange.next(succesfulServerResponse);
       this.allProducts = succesfulServerResponse;
@@ -49,7 +46,26 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  // -------------------------------------------------------------------------------- Controller
+
+  /**
+   * checks whether should get the products from the server
+  */
+  private checkIfShouldGetAllProducts = (): void => {
+    // if there aren't any products in the products service, get them from the server
+    if (this.productsService.allProducts === undefined) {
+      this.getAllProductsFromServer();
+    }
+    else {
+      this.allProducts = this.productsService.allProducts;
+    }
+  }
+
+  /**
+   * this function is called whenever the 'add product' button is clicked
+  */
   public onAddNewProductClick = (): void => {
+    // updating the service
     this.adminService.isShowProductAdditionSectionChange.next(true);
   }
 

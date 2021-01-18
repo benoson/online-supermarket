@@ -4,7 +4,9 @@ import Product from 'src/app/models/Product';
 import { AdminService } from 'src/app/services/admin.service';
 import { ProductsService } from 'src/app/services/products.service';
 import PopupMessages from 'src/app/Utils/PopupMessages';
+import ProductsUtils from 'src/app/Utils/ProductsUtils';
 import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -17,16 +19,17 @@ export class AdminSidebarComponent implements OnInit {
   public currentEditableProduct: Product;
   private currentNewProductAfterChanges: Product;
   public isShowProductAdditionSection: boolean;
-
   public newProducDetails: Product;
+  private imageToUpload: any;
 
+  // form variables
   public newProductValues: FormGroup;
   public newNameInput: FormControl;
   public newCategoryInput: FormControl;
   public newDescriptionInput: FormControl;
   public newPriceInput: FormControl;
+  public newImageInput: FormControl;
 
-  private imageToUpload: any;
 
 
   constructor(
@@ -39,30 +42,203 @@ export class AdminSidebarComponent implements OnInit {
     this.initializeListeners();
   }
 
-  private initializeDefinitions = () => {
+  // -------------------------------------------------------------------------------- Model
+
+  /**
+   * this function creates and tries to update the product in the server
+  */
+  private updateProduct = (): void => {
+    // creating the updated product
+    const updatedProduct = new Product(this.currentNewProductAfterChanges.ID, this.currentNewProductAfterChanges.name, this.currentNewProductAfterChanges.description, this.currentNewProductAfterChanges.category, this.currentNewProductAfterChanges.price, this.currentNewProductAfterChanges.imageURL);
+
+    try {
+      // checking if the product's data is valid
+      const isProductDataValid = ProductsUtils.validateProductData(updatedProduct);
+      if (isProductDataValid) {
+        const observable = this.productsService.updateProduct(updatedProduct);
+
+        observable.subscribe(() => {
+          PopupMessages.displaySuccessPopupMessage('The product has updated!');
+
+        }, badServerResponse => {
+          PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+        });
+      }
+    }
+    catch (error) {
+      PopupMessages.displayErrorPopupMessage(error);
+    }
+  }
+
+  /**
+ * this function tries to update the product image in the server
+ * 
+*/
+  public updateProductImage = (event?: any): void => {
+    // creating the updated product
+    const updatedProduct = new Product(this.currentNewProductAfterChanges.ID, this.currentNewProductAfterChanges.name, this.currentNewProductAfterChanges.description, this.currentNewProductAfterChanges.category, this.currentNewProductAfterChanges.price, this.currentNewProductAfterChanges.imageURL);
+
+    try {
+      // checking if the product's data is valid
+      const isProductDataValid = ProductsUtils.validateProductData(updatedProduct);
+      if (isProductDataValid) {
+
+        // checking if the file that was inserted is not empty
+        if (event.target.files.length > 0) {
+          const file = event.target.files[0];
+          const formData = new FormData();
+          formData.append('file', file);
+
+          const imageObservable = this.productsService.addImage(formData);
+
+          imageObservable.subscribe((recievedImageName) => {
+
+            // once the image was uploaded succesfully to the server, update the image name according tot he name recieved from the server's response
+            updatedProduct.imageURL = recievedImageName;
+            const observable = this.productsService.updateProduct(updatedProduct);
+
+            // attempting to update the product in the server
+            observable.subscribe(() => {
+              PopupMessages.displaySuccessPopupMessage('The product has updated!');
+
+            }, badServerResponse => {
+              PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+            });
+
+          }, badServerResponse => {
+            PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+          })
+        }
+      }
+    }
+    catch (error) {
+      PopupMessages.displayErrorPopupMessage(error);
+    }
+  }
+
+  /**
+ * this function is called when the 'add new product' button is clicked
+*/
+  public onAddNewProductClick = (): void => {
+    this.assignFormControlsValues();
+    try {
+      // validting the new product's data
+      const isProductDataValid = ProductsUtils.validateProductData(this.newProducDetails);
+      if (isProductDataValid) {
+        const formData = new FormData();
+        formData.append('file', this.imageToUpload);
+
+        const imageObservable = this.productsService.addImage(formData);
+        imageObservable.subscribe((recievedImageName) => {
+          // once the image was uploaded succesfully to the server, update the image name according tot he name recieved from the server's response
+          this.newProducDetails.imageURL = recievedImageName;
+
+          // attempting to update the product in the server
+          const observable = this.productsService.addProduct(this.newProducDetails);
+          observable.subscribe((newProductFromServer: Product) => {
+
+            // updating the products service with the new products
+            const allProducts = this.productsService.allProducts;
+            allProducts.push(newProductFromServer);
+            this.productsService.allProductsChange.next(allProducts);
+            this.clearFormInputs();
+
+            PopupMessages.displaySuccessPopupMessage('Product added succesfully !');
+          }, badServerResponse => {
+            PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+          })
+
+        }, badServerResponse => {
+          PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
+        })
+      }
+    }
+    catch (error) {
+      PopupMessages.displayErrorPopupMessage(error);
+    }
+  }
+
+  // -------------------------------------------------------------------------------- controller
+
+  /**
+   * initializes the definitions of this component
+   */
+  private initializeDefinitions = (): void => {
     this.newProducDetails = new Product(null, "", "", "", null, "");
     this.currentEditableProduct = this.adminService.currentEditableProduct;
-    this.initializeFormControlsValidations();
     this.isShowProductAdditionSection = false;
+    this.initializeFormControlsValidations();
 
+    // initiating the current editable product
     if (this.currentEditableProduct !== undefined) {
       this.currentNewProductAfterChanges = new Product(this.currentEditableProduct.ID, this.currentEditableProduct.name, this.currentEditableProduct.description, this.currentEditableProduct.category, this.currentEditableProduct.price, this.currentEditableProduct.imageURL);
     }
   }
 
-  private initializeListeners = () => {
-    this.adminService.isShowProductAdditionSectionChange.subscribe( (value: boolean) => {
+  /**
+   * initializes the listeners of this components
+   */
+  private initializeListeners = (): void => {
+    // listening for changes in the indication of displaying the product addition section
+    this.adminService.isShowProductAdditionSectionChange.subscribe((value: boolean) => {
       this.isShowProductAdditionSection = value;
     })
 
     // listening for changes in the admin's current product to be edited
-    this.adminService.currentEditableProductChange.subscribe( (value: Product) => {
+    this.adminService.currentEditableProductChange.subscribe((value: Product) => {
       this.currentEditableProduct = value;
       this.currentNewProductAfterChanges = value;
     });
   }
 
-  public editProductName = () => {
+  /**
+   * this function is called after a change in the image input
+   * @param event
+   */
+  public selectImage = (event: any): void => {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      // updating the class avriable with the file that was inserted to the file input
+      this.imageToUpload = file;
+    }
+  }
+
+  /**
+ * assings the component's form control values
+ */
+  private assignFormControlsValues = (): void => {
+    this.newProducDetails.name = this.newNameInput.value;
+    this.newProducDetails.category = this.newCategoryInput.value;
+    this.newProducDetails.description = this.newDescriptionInput.value;
+    this.newProducDetails.price = this.newPriceInput.value;
+  }
+
+  /**
+   * initializes the form controls validations
+  */
+  private initializeFormControlsValidations = (): void => {
+    this.newNameInput = new FormControl("", [Validators.required]);
+    this.newCategoryInput = new FormControl("", [Validators.required]);
+    this.newDescriptionInput = new FormControl("", [Validators.required]);
+    this.newPriceInput = new FormControl("", [Validators.required]);
+    this.newImageInput = new FormControl(null, [Validators.required]);
+
+    // creating the form group, containing all the form fields
+    this.newProductValues = new FormGroup({
+      name: this.newNameInput,
+      category: this.newCategoryInput,
+      description: this.newDescriptionInput,
+      price: this.newPriceInput,
+      image: this.newImageInput
+    });
+  }
+
+  // -------------------------------------------------------------------------------- view
+
+  /**
+   * displays a modal for editing the product name
+   */
+  public editProductName = (): void => {
     Swal.fire({
       title: `Set a new name to ${this.currentEditableProduct.name}`,
       input: 'text',
@@ -80,7 +256,10 @@ export class AdminSidebarComponent implements OnInit {
     });
   }
 
-  public editProductCategory = () => {
+  /**
+   * displays a modal for editing the product category
+  */
+  public editProductCategory = (): void => {
     Swal.fire({
       title: `Set a new category to ${this.currentEditableProduct.name}`,
       input: 'select',
@@ -105,7 +284,10 @@ export class AdminSidebarComponent implements OnInit {
     });
   }
 
-  public editProductDescription = () => {
+  /**
+   * displays a modal for editing the product description
+  */
+  public editProductDescription = (): void => {
     Swal.fire({
       title: `Set a new description to ${this.currentEditableProduct.name}`,
       input: 'text',
@@ -123,7 +305,10 @@ export class AdminSidebarComponent implements OnInit {
     });
   }
 
-  public editProductPrice = () => {
+  /**
+   * displays a modal for editing the product price
+  */
+  public editProductPrice = (): void => {
     Swal.fire({
       title: `Set a new price to ${this.currentEditableProduct.name}`,
       input: 'text',
@@ -142,87 +327,14 @@ export class AdminSidebarComponent implements OnInit {
     });
   }
 
-  public editProductImage = () => {
-    Swal.fire({
-      title: `Set a new image to ${this.currentEditableProduct.name}`,
-      imageUrl: this.currentEditableProduct.imageURL,
-      input: 'text',
-      showCancelButton: true,
-      confirmButtonText: 'Update',
-      preConfirm: (newProductImage: string) => {
-        if (newProductImage.length > 0) {
-          this.currentNewProductAfterChanges.imageURL = newProductImage;
-          this.updateProduct();
-        }
-        else {
-          PopupMessages.displayErrorPopupMessage("Image url is not valid");
-        }
-      }
-    });
-  }
-
-  private updateProduct = () => {
-    const updatedProduct = new Product(this.currentNewProductAfterChanges.ID, this.currentNewProductAfterChanges.name, this.currentNewProductAfterChanges.description, this.currentNewProductAfterChanges.category, this.currentNewProductAfterChanges.price, this.currentNewProductAfterChanges.imageURL);
-    const observable = this.productsService.updateProduct(updatedProduct);
-
-    observable.subscribe( () => {
-      PopupMessages.displaySuccessPopupMessage('The product is updated!');
-    }, badServerResponse => {
-      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
-    });
-  }
-
-  public selectImage = (event) => {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.imageToUpload = file;
-    }
-  }
-
-  public onAddNewProductClick = () => {
-    this.assignFormControlsValues();
-
-    const formData = new FormData();
-    formData.append('file', this.imageToUpload);
-
-    const imageObservable = this.productsService.addImage(formData);
-    imageObservable.subscribe( (recievedImageName) => {
-      this.newProducDetails.imageURL = recievedImageName;
-
-      const observable = this.productsService.addProduct(this.newProducDetails);
-      observable.subscribe(()=> {
-
-        PopupMessages.displaySuccessPopupMessage('Product added succesfully !');
-      }, badServerResponse  => {
-        PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
-      })
-
-    }, badServerResponse => {
-      PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
-    })
-
-  }
-
-
-  private assignFormControlsValues = (): void => {
-    this.newProducDetails.name = this.newNameInput.value;
-    this.newProducDetails.category = this.newCategoryInput.value;
-    this.newProducDetails.description = this.newDescriptionInput.value;
-    this.newProducDetails.price = this.newPriceInput.value;
-  }
-
-  private initializeFormControlsValidations = (): void => {
-    this.newNameInput = new FormControl("", [Validators.required]);
-    this.newCategoryInput = new FormControl("", [Validators.required]);
-    this.newDescriptionInput = new FormControl("", [Validators.required]);
-    this.newPriceInput = new FormControl("", [Validators.required]);
-
-    this.newProductValues = new FormGroup({
-      name: this.newNameInput,
-      category: this.newCategoryInput,
-      description: this.newDescriptionInput,
-      price: this.newPriceInput
-    });
+  /**
+   * clears the form inputs
+   */
+  private clearFormInputs = (): void => {
+    this.newNameInput.setValue(" ");
+    this.newDescriptionInput.setValue(" ");
+    this.newCategoryInput.setValue(" ");
+    this.newPriceInput.setValue(" ");
   }
 
 }

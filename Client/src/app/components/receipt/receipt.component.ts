@@ -15,11 +15,11 @@ import PopupMessages from 'src/app/Utils/PopupMessages';
 })
 export class ReceiptComponent implements OnInit {
 
-  public orderDetails : Order;
+  public orderDetails: Order;
 
   public currentProductsForDisplay: CartItemForDisplay[];
-  public totalPriceOfAllCartItems : number;
-  public searchInputValue : string;
+  public totalPriceOfAllCartItems: number;
+  public searchInputValue: string;
 
   public paymentValues: FormGroup;
   public cityInput: FormControl;
@@ -39,7 +39,7 @@ export class ReceiptComponent implements OnInit {
     this.initializeFormControlsValidations();
 
     // listening for changes inside the customer's currect cart items, inside the cart service
-    this.cartService.customerCurrentCartItemsChange.subscribe( (value: CartItemForDisplay[]) => {
+    this.cartService.customerCurrentCartItemsChange.subscribe((value: CartItemForDisplay[]) => {
       this.currentProductsForDisplay = value;
       this.updateTotalPriceOfAllCartItems();
     });
@@ -47,28 +47,31 @@ export class ReceiptComponent implements OnInit {
     this.updateTotalPriceOfAllCartItems();
   }
 
-  private initializeReceipt = () => {
-    this.orderDetails = new Order("", "", "", null);
-    this.searchInputValue = "";
-    this.totalPriceOfAllCartItems = 0;
-  }
-  
+
+  // -------------------------------------------------------------------------------- Model
+
+  /**
+   * this function attempts to purchase a product for the customer
+   */
   public onPurchaseClick = () => {
+    // assigning the form control values
     this.assignFormControlsValues();
 
     try {
       // Validating all input fields
       const areAllInputsValid = OrdersUtils.validateOrderDetails(this.orderDetails);
-  
+
+      // if all the receipt inputs are valid
       if (areAllInputsValid) {
         const observable = this.orderService.addNewOrder(this.orderDetails);
-  
-        observable.subscribe( () => {
+
+        observable.subscribe(() => {
+          // after a succesfull purchase
           PopupMessages.displaySuccessPopupMessage("Thank you for purchasing at Bitten Tomato's ! Hope to see you again");
-          const emptyCart = new Array <CartItemForDisplay>();
+          const emptyCart = new Array<CartItemForDisplay>();
           this.cartService.customerCurrentCartItemsChange.next(emptyCart);
           this.router.navigate(['/welcome/login']);
-  
+
         }, badServerResponse => {
           PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
         });
@@ -79,17 +82,31 @@ export class ReceiptComponent implements OnInit {
     }
   }
 
-  public closeReceipt = () => {
-    this.cartService.isShowReceiptChange.next(false);
+
+  // -------------------------------------------------------------------------------- Controller
+
+  /**
+   * initializes the receipt values
+   */
+  private initializeReceipt = () => {
+    this.orderDetails = new Order("", "", "", null);
+    this.searchInputValue = "";
+    this.totalPriceOfAllCartItems = 0;
   }
 
+  /**
+   * assignigs form control values of the input fields
+   */
   private assignFormControlsValues = (): void => {
     this.orderDetails.creditCardNumber = this.creditCardInput.value;
     this.orderDetails.deliveryCity = this.cityInput.value;
     this.orderDetails.deliveryStreet = this.streetInput.value;
     this.orderDetails.deliveryDate = this.shippingDateInput.value;
   }
-  
+
+  /**
+   * updates the total price of all the cart items
+   */
   private updateTotalPriceOfAllCartItems = () => {
     this.totalPriceOfAllCartItems = 0;
 
@@ -101,17 +118,33 @@ export class ReceiptComponent implements OnInit {
     this.totalPriceOfAllCartItems = +this.totalPriceOfAllCartItems.toFixed(2);
   }
 
+  /**
+   * initializing the form controls validations
+   */
   private initializeFormControlsValidations = (): void => {
+    // initializing the form control values and their validators
     this.cityInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
     this.streetInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
     this.creditCardInput = new FormControl(null, [Validators.required, Validators.pattern('^[0-9]{16}$')]);
     this.shippingDateInput = new FormControl(null, Validators.required);
 
+    // creating a new form group
     this.paymentValues = new FormGroup({
       city: this.cityInput,
       street: this.streetInput,
       payment: this.creditCardInput,
       shippingDate: this.shippingDateInput
     });
+  }
+
+
+  // -------------------------------------------------------------------------------- View
+
+  /**
+   * closes the receipt
+   */
+  public closeReceipt = () => {
+    // updating the 'show receipt' value in the receipt service
+    this.cartService.isShowReceiptChange.next(false);
   }
 }

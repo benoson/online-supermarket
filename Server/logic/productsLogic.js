@@ -10,6 +10,10 @@ const getAllProducts = async () => {
 }
 
 const updateProduct = async (request, updatedProduct, productID) => {
+    if (!updatedProduct.imageURL.includes('http://localhost:3001/')) {
+        updatedProduct.imageURL = 'http://localhost:3001/' + updatedProduct.imageURL
+    }
+    updatedProduct.name = updatedProduct.name.toUpperCase();
     ProductsUtils.validateProductData(updatedProduct);
 
     const userCacheData = UsersUtils.extractUserInfoFromCache(request);
@@ -32,7 +36,8 @@ const addProduct = async (request, newProduct) => {
 
     if (userType === "ADMIN") {
         console.log("all good");
-        await productsDao.addProduct(newProduct);
+        const newProductFromServer = await productsDao.addProduct(newProduct);
+        return newProductFromServer;
     }
     else {
         throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
