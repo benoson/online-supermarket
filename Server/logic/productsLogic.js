@@ -23,7 +23,8 @@ const updateProduct = async (request, updatedProduct, productID) => {
 
     // if the user's type is type ADMIN
     if (userType === "ADMIN") {
-        await productsDao.updateProduct(updatedProduct, productID);
+        const newlyUpdatedProduct = await productsDao.updateProduct(updatedProduct, productID);
+        return newlyUpdatedProduct;
     }
     else {
         throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);

@@ -27,6 +27,13 @@ const updateProduct = async (updatedProduct, productID) => {
     try {
         // Sending the SQL query to the 'connection wrapper' preset
         await connection.executeWithParameters(SQL, parameters);
+
+        // creating an SQL query to get the newly updated product from the DB, in order to display it with it's new image in the UI
+        const updatedProductSQL = "SELECT Product_ID as ID, Product_Name as name, Product_Description as description, (SELECT Category_Name FROM `products-categories` WHERE `products-categories`.Category_ID = `products`.Product_Category) as category, Product_Price as price, Product_Image_URL as imageURL FROM products WHERE Product_ID = ?";
+        const updatedProductParameters = [productID];
+        
+        const newlyUpdatedProduct = await connection.executeWithParameters(updatedProductSQL, updatedProductParameters);
+        return newlyUpdatedProduct[0];
     }
     
     catch (error) {

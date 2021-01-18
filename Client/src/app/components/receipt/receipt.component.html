@@ -77,7 +77,7 @@
     </mat-form-field>
   </form>
 
-  <a href="data:application/octet-stream;charset=utf-16le;base64,//5mAG8AbwAgAGIAYQByAAoA">Download Receipt</a>
+  <button mat-button class="primary-button downloadReceiptButton" (click)="onDownloadReceiptClicked()">Download Receipt</button>
 
   <div class="receipt-buttons-div">
     <button mat-stroked-button class="primary-button" [disabled]="paymentForm.form.invalid" (click)="onPurchaseClick()">Purchase</button>

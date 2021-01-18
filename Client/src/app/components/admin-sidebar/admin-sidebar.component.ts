@@ -58,7 +58,7 @@ export class AdminSidebarComponent implements OnInit {
         const observable = this.productsService.updateProduct(updatedProduct);
 
         observable.subscribe(() => {
-          PopupMessages.displaySuccessPopupMessage('The product has updated!');
+          PopupMessages.displaySuccessPopupMessage('The product has been updated!');
 
         }, badServerResponse => {
           PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
@@ -92,14 +92,17 @@ export class AdminSidebarComponent implements OnInit {
           const imageObservable = this.productsService.addImage(formData);
 
           imageObservable.subscribe((recievedImageName) => {
-
+            
             // once the image was uploaded succesfully to the server, update the image name according tot he name recieved from the server's response
             updatedProduct.imageURL = recievedImageName;
-            const observable = this.productsService.updateProduct(updatedProduct);
 
+            const observable = this.productsService.updateProduct(updatedProduct);
+            
             // attempting to update the product in the server
-            observable.subscribe(() => {
-              PopupMessages.displaySuccessPopupMessage('The product has updated!');
+            observable.subscribe((updatedProductResponse: Product) => {
+              // updating the products service with the new products
+              this.currentNewProductAfterChanges.imageURL = updatedProductResponse.imageURL;
+              PopupMessages.displaySuccessPopupMessage('The product has been updated!');
 
             }, badServerResponse => {
               PopupMessages.displayErrorPopupMessage(badServerResponse.error.errorMessage);
@@ -157,6 +160,7 @@ export class AdminSidebarComponent implements OnInit {
       PopupMessages.displayErrorPopupMessage(error);
     }
   }
+
 
   // -------------------------------------------------------------------------------- controller
 
@@ -232,6 +236,7 @@ export class AdminSidebarComponent implements OnInit {
       image: this.newImageInput
     });
   }
+
 
   // -------------------------------------------------------------------------------- view
 
@@ -321,7 +326,7 @@ export class AdminSidebarComponent implements OnInit {
           this.updateProduct();
         }
         else {
-          PopupMessages.displayErrorPopupMessage("Price must be larger than 0");
+          PopupMessages.displayErrorPopupMessage("Price must be a number, and larger than 0");
         }
       }
     });

@@ -34,3 +34,7 @@
 .green-text {
     color: green;
 }
+
+.downloadReceiptButton {
+    margin-bottom: 2rem;
+}

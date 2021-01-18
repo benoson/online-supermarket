@@ -7,6 +7,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import OrdersUtils from 'src/app/Utils/OrdersUtils';
 import PopupMessages from 'src/app/Utils/PopupMessages';
+import { saveAs } from 'file-saver';
 
 
 @Component({
@@ -108,7 +109,7 @@ export class ReceiptComponent implements OnInit {
   /**
    * updates the total price of all the cart items
    */
-  private updateTotalPriceOfAllCartItems = () => {
+  private updateTotalPriceOfAllCartItems = (): void => {
     this.totalPriceOfAllCartItems = 0;
 
     for (let cartItem of this.currentProductsForDisplay) {
@@ -136,6 +137,26 @@ export class ReceiptComponent implements OnInit {
       payment: this.creditCardInput,
       shippingDate: this.shippingDateInput
     });
+  }
+
+  public onDownloadReceiptClicked = () : void => {
+    const receiptText = this.getReceiptDetails();
+    this.exportTextFile(receiptText);
+  }
+
+  private exportTextFile = (receiptText: string): void => {
+    const blob = new Blob([receiptText], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, new Date() + "-receipt.txt");
+  }
+
+  private getReceiptDetails = (): string => {
+    let receiptTextLine = "\n";
+    for (let item of this.cartService.customerCurrentCartItems) {
+      receiptTextLine += `${item.amount} x ${item.productName} ------------- ${item.totalPrice} $\n`;
+    }
+
+    receiptTextLine += `\nTotal Cart Price: ${this.totalPriceOfAllCartItems} $\n\n=====THANK YOU FOR YOUR PURCHASE, Bitten Tomato=====`;
+    return receiptTextLine;
   }
 
 
