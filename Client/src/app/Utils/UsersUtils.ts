@@ -2,7 +2,6 @@ import SuccessfulLoginServerResponse from "../models/SuccessfulLoginServerRespon
 import UserRegistrationDetails from "../models/UserRegistrationDetials";
 import PopupMessages from "./PopupMessages";
 
-
 export default class UsersUtils {
     public constructor() { };
 
@@ -18,7 +17,7 @@ export default class UsersUtils {
         const userType = succesfulServerResponse.userType;
         const firstName = succesfulServerResponse.firstName;
         const userInfoFromServer = new SuccessfulLoginServerResponse(userToken, userType, firstName);
-  
+
         // inserting the user's info to the sessionStorage
         sessionStorage.setItem('userInfo', JSON.stringify(userInfoFromServer));
         // inserting the 'true' to indicate that a user is logged in
@@ -42,7 +41,7 @@ export default class UsersUtils {
     static isUserLoggedIn = (): boolean => {
         const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
         const isLogged = JSON.parse(sessionStorage.getItem("isLoggedIn"));
-        
+
         if (isLogged) {
             if (userInfo !== null) {
                 if (userInfo.token !== undefined) {
@@ -93,10 +92,10 @@ export default class UsersUtils {
         }
         throw Error("Invalid ID");
     };
-    
+
     static validateUserEmail = (email: any): boolean | Error => {
         const trimmedEmail = email.trim();
-    
+
         // validating the email is in valid format, using RegExp
         const emailRegExp = /\S+@\S+\.\S+/;
         const isEmailRegExpValid = emailRegExp.test(trimmedEmail);
@@ -109,7 +108,7 @@ export default class UsersUtils {
         }
         throw Error("Email format should be as follows: john@doe.com");
     };
-    
+
     static validateSinglePassword = (password: any): boolean | Error => {
         const passwordToString = password.toString();
         const trimmedPassword = passwordToString.trim();
@@ -144,7 +143,7 @@ export default class UsersUtils {
         }
         throw Error("First name should be between 2 - 15 characters");
     };
-    
+
     static validateUserLastName = (lastName: string): boolean | Error => {
         const trimmedLastName = lastName.trim();
 
@@ -153,7 +152,7 @@ export default class UsersUtils {
         }
         throw Error("Last name should be between 2 - 15 characters");
     };
-    
+
     static validateUserCity = (city: string): boolean | Error => {
         const trimmedCity = city.trim();
 
@@ -162,7 +161,7 @@ export default class UsersUtils {
         }
         throw Error("City should be between 2 - 15 characters");
     };
-    
+
     static validateUserStreet = (street: string): boolean | Error => {
         const trimmedStreet = street.trim();
 

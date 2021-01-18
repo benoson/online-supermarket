@@ -15,12 +15,12 @@ export class AdminService {
 
   constructor() {
     // listening for changes in the 'show product addition' indication
-    this.isShowProductAdditionSectionChange.subscribe( (value: boolean) => {
+    this.isShowProductAdditionSectionChange.subscribe((value: boolean) => {
       this.isShowProductAdditionSection = value;
     });
 
     // listening for changes in the admin's current product to be edited
-    this.currentEditableProductChange.subscribe( (value: Product) => {
+    this.currentEditableProductChange.subscribe((value: Product) => {
       this.currentEditableProduct = value;
     });
   }

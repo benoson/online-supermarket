@@ -4,9 +4,7 @@ let ServerError = require("../errors/serverError");
 
 
 const login = async (user) => {
-
     // Creating the SQL query to get the user from the DB
-
     const SQL = "SELECT User_ID as ID, User_Type as userType, First_Name as firstName FROM users where User_Name =? and Password =?";
     const parameters = [user.email, user.hashedPassword];
     let userLoginResult;
@@ -31,9 +29,7 @@ const login = async (user) => {
 }
 
 const addUser = async (userInfo) => {
-
     // Creating an SQL query for inserting a new user to the DB
-
     const SQL = "INSERT INTO users (User_ID, First_Name, Last_Name, User_Name, Password, City, Street, User_Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     const parameters = [userInfo.ID, userInfo.firstName, userInfo.lastName, userInfo.email, userInfo.hashedPassword, userInfo.city, userInfo.street, "CUSTOMER"];
     
@@ -50,9 +46,7 @@ const addUser = async (userInfo) => {
 }
 
 const isUserExistByID = async (ID) => {
-
     // Creating an SQL query to check if the user exists by ID
-
     const SQL = "SELECT User_ID FROM users WHERE User_ID =?";
     const parameter = [ID];
 
@@ -76,9 +70,7 @@ const isUserExistByID = async (ID) => {
 }
 
 const isUserExistByEmail = async (email) => {
-
     // Creating an SQL query to check if the user exists by email
-
     const SQL = "SELECT User_Name FROM users WHERE User_Name =?";
     const parameter = [email];
 

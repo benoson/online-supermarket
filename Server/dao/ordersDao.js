@@ -62,11 +62,12 @@ const addNewOrder = async (userID, newOrder) => {
 }
 
 const closeCustomerOpenCart = async (userID) => {
+    // creating an SQL query for closing a customer's open cart
     const SQL = "UPDATE `shopping-carts` SET Is_Open = '0' WHERE Cart_Owner = ? AND Is_Open = '1'";
     const parameter = [userID];
 
     try {
-        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        // Sending the SQL query and the the the 'connection wrapper' preset
         await connection.executeWithParameters(SQL, parameter);
     }
 
@@ -77,12 +78,12 @@ const closeCustomerOpenCart = async (userID) => {
 }
 
 const getAllCartItemsPricesForTotalPriceCalculation = async (userID) => {
-    // Creating an SQL query for adding a new order to the DB
+    // Creating an SQL query for getting all cart items prices, for the total price calculation
     const SQL = "SELECT Total_Price as price FROM `cart-items` WHERE Cart_ID = (SELECT Cart_ID FROM `shopping-carts` WHERE Cart_Owner = ? AND Is_Open = '1')";
     const parameter = [userID];
 
     try {
-        // Sending the SQL query and the user's login data to the 'connection wrapper' preset
+        // Sending the SQL query to the 'connection wrapper' preset
         const totalPricesOfCartItems = await connection.executeWithParameters(SQL, parameter);
         return totalPricesOfCartItems;
     }

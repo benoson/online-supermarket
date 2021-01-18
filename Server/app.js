@@ -24,7 +24,6 @@ server.use(cors({origin: "http://localhost:4200"}));
 // Signing the 'login filter' to our server
 server.use(loginFilter());
 
-
 server.use('/users', usersController);
 server.use('/products', productsController);
 server.use('/orders', ordersController);

@@ -19,7 +19,10 @@ export class WelcomeSectionsComponent implements OnInit {
     this.getAllProducts();
   }
 
+  // -------------------------------------------------------------------------------- Model
+
   public getAllProducts = (): void => {
+    // gets all the products from the products service
     const observable = this.productsService.getAllProducts();
 
     observable.subscribe( (succesfulServerResponse: Product[]) => {

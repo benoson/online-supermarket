@@ -1,12 +1,19 @@
+// Angular built-ins
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
+// Components
+import { WelcomeSectionsComponent } from '../components/welcome-sections/welcome-sections.component';
+import { CustomerComponent } from '../components/customer/customer.component';
 import { LoginComponent } from '../components/login/login.component';
 import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 import { RegisterComponent } from '../components/register/register.component';
-import { WelcomeSectionsComponent } from '../components/welcome-sections/welcome-sections.component';
-import { CustomerComponent } from '../components/customer/customer.component';
-import { CustomerGuard } from '../guards/customer.guard';
+
+// Guards
 import { AdminGuard } from '../guards/admin.guard';
+import { CustomerGuard } from '../guards/customer.guard';
+
+
 
 const routes: Routes = [
   {path:'', redirectTo: '/welcome/login', pathMatch: 'full'},

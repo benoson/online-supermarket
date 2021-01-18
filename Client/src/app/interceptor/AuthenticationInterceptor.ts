@@ -14,6 +14,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         let token: string;
         const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
+        // if the user is logged
         if (userInfo !== null) {
             token = userInfo.token;
             request = request.clone({

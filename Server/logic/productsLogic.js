@@ -10,15 +10,18 @@ const getAllProducts = async () => {
 }
 
 const updateProduct = async (request, updatedProduct, productID) => {
+    // updates the product's image
     if (!updatedProduct.imageURL.includes('http://localhost:3001/')) {
         updatedProduct.imageURL = 'http://localhost:3001/' + updatedProduct.imageURL
     }
     updatedProduct.name = updatedProduct.name.toUpperCase();
+    
+    // validating the product's details
     ProductsUtils.validateProductData(updatedProduct);
-
     const userCacheData = UsersUtils.extractUserInfoFromCache(request);
     const userType = userCacheData.userType;
 
+    // if the user's type is type ADMIN
     if (userType === "ADMIN") {
         await productsDao.updateProduct(updatedProduct, productID);
     }
@@ -28,12 +31,16 @@ const updateProduct = async (request, updatedProduct, productID) => {
 }
 
 const addProduct = async (request, newProduct) => {
+    // updates the product's image
     newProduct.imageURL = 'http://localhost:3001/' + newProduct.imageURL
     newProduct.name = newProduct.name.toUpperCase();
+
+    // valdiating the product's details
     ProductsUtils.validateProductData(newProduct);
     const userCacheData = UsersUtils.extractUserInfoFromCache(request);
     const userType = userCacheData.userType;
 
+    // if the user's type is type ADMIN
     if (userType === "ADMIN") {
         console.log("all good");
         const newProductFromServer = await productsDao.addProduct(newProduct);

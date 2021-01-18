@@ -40,18 +40,26 @@ export class RegisterComponent implements OnInit {
     this.initializeFormControlsValidations();
   }
 
+  // -------------------------------------------------------------------------------- Model
+  
+  /**
+   * this function occurs when the user has clicked the 'register' button
+   */
   public register = (): void => {
     
+    // assigning the form controls values
     this.assignFormControlsValues();
 
     try {
       // Validating all input fields
       const areAllInputsValid = UsersUtils.validateAllRegistrationFields(this.userRegistrationDetails);
   
+      // if all the inputs values are valid
       if (areAllInputsValid) {
         const observable = this.userService.register(this.userRegistrationDetails);
   
         observable.subscribe( succesfulServerResponse => {
+          // handle a succesful registration response from the server
           this.handleSuccesfulRegistrationResponse(succesfulServerResponse);
   
         }, badServerResponse => {
@@ -64,7 +72,15 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  
+  // -------------------------------------------------------------------------------- Controller
+  
+  /**
+   * 
+   * @param succesfulServerResponse handles a succesfull registration response from the server
+   */
   private handleSuccesfulRegistrationResponse = (succesfulServerResponse: SuccessfulLoginServerResponse): void => {
+    // using a custome utils class, in order to insert the user info that was just received from the server, to the session storage
     UsersUtils.insertUserInfoToSessionStorage(succesfulServerResponse);
     this.cartService.currentCartCreationDateChange.next(null);
     this.registrationValues.reset();
@@ -78,6 +94,9 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/customer']);
   }
 
+  /**
+   * assignigs form controls values
+   */
   private assignFormControlsValues = (): void => {
     this.userRegistrationDetails.ID = this.IDInput.value;
     this.userRegistrationDetails.email = this.emailInput.value;
@@ -89,7 +108,11 @@ export class RegisterComponent implements OnInit {
     this.userRegistrationDetails.street = this.streetInput.value;
   }
 
+  /**
+   * initializes form controls validations
+   */
   private initializeFormControlsValidations = (): void => {
+    // initializes form controls values and their validators
     this.IDInput = new FormControl(null, [Validators.required, Validators.pattern('^[0-9]{9}$')]);
     this.emailInput = new FormControl("", [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,3}$'), Validators.maxLength(35)]);
     this.passwordInput = new FormControl("", [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,15}$')]);
@@ -99,6 +122,7 @@ export class RegisterComponent implements OnInit {
     this.cityInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
     this.streetInput = new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]);
 
+    // creates a new registration vvalues form group
     this.registrationValues = new FormGroup({
       ID: this.IDInput,
       email: this.emailInput,
@@ -110,5 +134,4 @@ export class RegisterComponent implements OnInit {
       street: this.streetInput
     });
   }
-
 }

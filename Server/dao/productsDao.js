@@ -4,7 +4,6 @@ let ServerError = require("../errors/serverError");
 
 
 const getAllProducts = async () => {
-
     // Creating an SQL query to get all products from the DB
     const SQL = "SELECT Product_ID as ID, Product_Name as name, Product_Description as description, (SELECT Category_Name FROM `products-categories` WHERE `products-categories`.Category_ID = `products`.Product_Category) as category, Product_Price as price, Product_Image_URL as imageURL FROM products";
     
@@ -46,6 +45,7 @@ const addProduct = async (newProduct) => {
         // Sending the SQL query to the 'connection wrapper' preset
         await connection.executeWithParameters(SQL, parameters);
 
+        // creating an SQL query to get the newly added product from the DB, in order to display it with it's ID in the UI
         const newlyAddedProductSQL = "SELECT Product_ID as ID, Product_Name as name, Product_Description as description, (SELECT Category_Name FROM `products-categories` WHERE `products-categories`.Category_ID = `products`.Product_Category) as category, Product_Price as price, Product_Image_URL as imageURL FROM products WHERE Product_ID = (SELECT MAX(Product_ID) FROM products)";
         
         const newlyAddedProduct = await connection.execute(newlyAddedProductSQL);

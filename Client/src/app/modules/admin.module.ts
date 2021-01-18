@@ -1,10 +1,13 @@
+// Angular built-ins
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from '../components/admin/admin.component';
-import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
 import { SharedModule } from './shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// Components
+import { AdminComponent } from '../components/admin/admin.component';
+import { AdminSidebarComponent } from '../components/admin-sidebar/admin-sidebar.component';
 
 // Sweet Alert
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';

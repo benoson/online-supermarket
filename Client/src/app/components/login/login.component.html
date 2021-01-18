@@ -37,11 +37,13 @@
         <button routerLink="/welcome/register" mat-stroked-button class="secondary-button full-width">Register</button>
     
         <!-- go to admin page button -->
-        <button *ngIf="userTypeFromServer === 'ADMIN'; else customerButton" routerLink="/admin" [disabled]="!userService.isUserLoggedIn" mat-stroked-button class="primary-button full-width">Go To Admin Page</button>
+        <button *ngIf="userTypeFromServer === 'ADMIN'; else customerButton" routerLink="/admin" [disabled]="!userService.isUserLoggedIn"
+            mat-stroked-button class="primary-button full-width">Go To Admin Page
+        </button>
         
         <!-- start shopping button -->
         <ng-template #customerButton>
-            <button routerLink="/customer" [disabled]="!userService.isUserLoggedIn" mat-stroked-button class="primary-button full-width">Start Shopping</button>
+            <button routerLink="/customer" [disabled]="!userService.isUserLoggedIn" mat-stroked-button class="primary-button full-width">Go To Shop</button>
         </ng-template>
     </div>
 </div>

@@ -6,9 +6,6 @@ const SuccesfulLoginServerResponse = require('../models/SuccesfulLoginServerResp
 const ServerCacheDetails = require('../cache/ServerCacheDetails');
 
 
-/**
-  @param userInfo of type `UserRegistrationDetails`
-**/
 const validateUserInfo = (userInfo) => {
     UsersUtils.validateUserID(userInfo.ID);
     UsersUtils.validateUserEmail(userInfo.email);

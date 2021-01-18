@@ -1,7 +1,7 @@
 import Product from "../models/Product";
 
 export default class ProductsUtils {
-    constructor() {}
+    constructor() { }
 
     // ----- product validations
 

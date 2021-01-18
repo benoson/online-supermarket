@@ -8,6 +8,7 @@ import { OrdersService } from 'src/app/services/orders.service';
 import OrdersUtils from 'src/app/Utils/OrdersUtils';
 import PopupMessages from 'src/app/Utils/PopupMessages';
 
+
 @Component({
   selector: 'app-receipt',
   templateUrl: './receipt.component.html',
@@ -53,7 +54,7 @@ export class ReceiptComponent implements OnInit {
   /**
    * this function attempts to purchase a product for the customer
    */
-  public onPurchaseClick = () => {
+  public onPurchaseClick = (): void => {
     // assigning the form control values
     this.assignFormControlsValues();
 
@@ -88,7 +89,7 @@ export class ReceiptComponent implements OnInit {
   /**
    * initializes the receipt values
    */
-  private initializeReceipt = () => {
+  private initializeReceipt = (): void => {
     this.orderDetails = new Order("", "", "", null);
     this.searchInputValue = "";
     this.totalPriceOfAllCartItems = 0;
@@ -143,7 +144,7 @@ export class ReceiptComponent implements OnInit {
   /**
    * closes the receipt
    */
-  public closeReceipt = () => {
+  public closeReceipt = (): void => {
     // updating the 'show receipt' value in the receipt service
     this.cartService.isShowReceiptChange.next(false);
   }

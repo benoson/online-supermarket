@@ -17,6 +17,7 @@ export class AdminGuard implements CanActivate {
 
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
+    // if the user is logged
     if (userInfo !== null) {
       const userType = userInfo.userType;
 

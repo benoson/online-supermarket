@@ -18,6 +18,7 @@ export class CustomerGuard implements CanActivate {
 
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
+    // if the user not logged
     if (userInfo !== null) {
       const userType = userInfo.userType;
 

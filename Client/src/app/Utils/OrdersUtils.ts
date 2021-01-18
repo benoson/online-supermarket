@@ -2,7 +2,7 @@ import Order from "../models/Order";
 import UsersUtils from "./UsersUtils";
 
 export default class OrdersUtils {
-    public constructor() {};
+    public constructor() { };
 
 
     // ----- UI validations
