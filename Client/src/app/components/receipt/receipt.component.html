@@ -80,7 +80,7 @@
   <button mat-button class="primary-button downloadReceiptButton" (click)="onDownloadReceiptClicked()">Download Receipt</button>
 
   <div class="receipt-buttons-div">
-    <button mat-stroked-button class="primary-button" [disabled]="paymentForm.form.invalid" (click)="onPurchaseClick()">Purchase</button>
-    <button mat-stroked-button class="secondary-button" (click)="closeReceipt()">Back To Shopping</button>
+    <button mat-stroked-button class="primary-button shrinked-button" [disabled]="paymentForm.form.invalid" (click)="onPurchaseClick()">Purchase</button>
+    <button mat-stroked-button class="secondary-button shrinked-button" (click)="closeReceipt()">Back To Shopping</button>
   </div>
 </div>

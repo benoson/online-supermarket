@@ -73,3 +73,22 @@ body {
 .bitten-tomato-logo-small {
   width: 85px;
 }
+
+
+@media screen and (max-width: 1350px) {
+  .section {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .section {
+    width: 280px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .section {
+    width: 400px;
+  }
+}

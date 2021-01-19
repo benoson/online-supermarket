@@ -38,3 +38,9 @@
 .downloadReceiptButton {
     margin-bottom: 2rem;
 }
+
+@media screen and (max-width: 800px) {
+    .receipt-section, .receipt-user-details-section {
+        width: 95%;
+    }
+}

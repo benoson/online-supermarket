@@ -95,3 +95,10 @@
 .upload-image-button {
     margin: 1rem 0;
 }
+
+
+@media screen and (max-width: 800px) {
+    .mat-drawer {
+        width: 200px;
+    }
+}

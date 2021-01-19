@@ -3,3 +3,14 @@
     justify-content: space-evenly;
     padding: 3rem;
 }
+
+@media screen and (max-width: 1000px) {
+    .welcome-sections {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .welcome-sections > div {
+        margin: 1rem 0;
+    }
+}
