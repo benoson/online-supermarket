@@ -76,3 +76,20 @@
     position: fixed;
     bottom: 0;
 }
+
+
+@media screen and (max-width: 800px) {
+    .admin-sidebar {
+        width: 200px;
+    }
+    .add-items-section {
+        margin-left: 1rem;
+    }
+    .add-items-button {
+        width: 140px;
+        height: 121px;
+    }
+    .admin-section-header {
+        display: none;
+    }
+}
